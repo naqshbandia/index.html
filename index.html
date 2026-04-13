@@ -11,7 +11,7 @@
             background: transparent; 
             overflow: hidden; 
             font-family: 'Segoe UI', Tahoma, sans-serif; 
-            max-width: 320px; 
+            max-width: 300px; 
             margin: 0px auto; 
             direction: rtl;
         }
@@ -108,7 +108,7 @@
                 const res = await fetch(`https://archive.org/metadata/${audioID}`);
                 const data = await res.json();
                 bayanFiles = data.files.filter(f => f.name.endsWith('.mp3'));
-                render(bayanFiles.slice(0, 4));
+                render(bayanFiles.slice(0, 6));
             } catch (e) { container.innerHTML = "Error loading data."; }
         }
 
@@ -140,11 +140,10 @@
                         </div>
                         
                         <div class="meta-row">
-                            <span>Size: ${size}</span> <span>Khanqah Falah</span> <span>${date}</span>
+                            <span>Size: ${size}</span> <span>ڈاؤن لوڈ کے لیے پلیئر میں موجود تھری ڈاٹ (⋮)پر کلک کریں</span> <span>${date}</span>
                         </div>
 
-                        <span class="dl-guide">ڈاؤن لوڈ کے لیے پلیئر میں موجود تھری ڈاٹ (⋮) پر کلک کریں۔</span>
-                    </div>`;
+                        ;
             });
         }
 
