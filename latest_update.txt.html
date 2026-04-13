@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="ur" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        .master-wrapper { max-width: 480px; margin: 0 auto; font-family: 'Segoe UI', Tahoma, sans-serif; }
+        
+        /* 1. لوگو کا حصہ */
+        .site-logo { text-align: center; padding: 20px 0; }
+        .site-logo img { max-width: 220px; height: auto; filter: drop-shadow(0 4px 8px rgba(0,0,0,0.15)); }
+
+        /* 2. متحرک پٹی (Smart Strip) */
+        .news-link-wrapper { text-decoration: none; display: block; }
+        .smart-strip {
+            background: #004d00; color: #fff; border-top: 3px solid #b08d43;
+            border-bottom: 3px solid #b08d43; padding: 12px 0; overflow: hidden;
+            display: flex; cursor: pointer; transition: 0.3s;
+        }
+        .smart-strip:hover { background: #006400; }
+        .strip-content { display: flex; white-space: nowrap; font-weight: bold; font-size: 15px; animation: scroll-rtl 28s linear infinite; }
+        
+        /* نیو ٹیگ (چمکنے والا) */
+        .new-tag { background: #ff0000; color: white; padding: 2px 10px; border-radius: 5px; font-size: 11px; margin: 0 15px; animation: blinker 1.2s linear infinite; }
+        @keyframes blinker { 50% { opacity: 0; } }
+        
+        /* پٹی کی حرکت */
+        @keyframes scroll-rtl { 0% { transform: translateX(-100%); } 100% { transform: translateX(100%); } }
+    </style>
+</head>
+<body>
+
+    <div class="master-wrapper">
+        <div class="site-logo">
+            <img src="https://archive.org/download/1743133488972_202509/Website-Logo--1760899123543.png" alt="خانقاہ فلاح">
+        </div>
+
+        <a id="github-link" href="#" class="news-link-wrapper" target="_blank">
+            <div class="smart-strip">
+                <div id="strip-text" class="strip-content">
+                    <span class="new-tag">NEW</span> لوڈنگ تازہ ترین اپڈیٹ... براہ کرم انتظار کریں &nbsp; | &nbsp; <span class="new-tag">NEW</span> لوڈنگ تازہ ترین اپڈیٹ...
+                </div>
+            </div>
+        </a>
+    </div>
+
+    <script>
+        // --- گٹ ہب سیٹنگز ---
+        // یہاں اپنی گٹ ہب RAW فائل کا لنک ڈالیں
+        const githubRawUrl = "آپ_کی_گٹ_ہب_RAW_فائل_کا_لنک"; 
+
+        async function initUpdate() {
+            try {
+                const response = await fetch(githubRawUrl);
+                const data = await response.text();
+                
+                // فائل میں اس طرح لکھیں: لنک , پیغام
+                const parts = data.split(',');
+                const link = parts[0].trim();
+                const message = parts[1] ? parts[1].trim() : "تازہ ترین بیان اپ لوڈ کر دیا گیا ہے، سننے کے لیے یہاں کلک کریں۔۔۔";
+
+                // پٹی کو اپڈیٹ کریں
+                document.getElementById('github-link').href = link;
+                document.getElementById('strip-text').innerHTML = `
+                    <span class="new-tag">NEW</span> ${message} &nbsp; | &nbsp; 
+                    <span class="new-tag">NEW</span> ${message} &nbsp; | &nbsp;
+                    <span class="new-tag">NEW</span> ${message}
+                `;
+            } catch(e) { 
+                console.log("GitHub Link Error"); 
+                // اگر لنک نہ ملے تو یہ نظر آئے گا
+                document.getElementById('strip-text').innerText = "تازہ ترین بیانات کے لیے یہاں کلک کریں";
+            }
+        }
+
+        initUpdate();
+    </script>
+
+</body>
+</html>
