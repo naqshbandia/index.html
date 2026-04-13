@@ -3,112 +3,31 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>آڈیو لائبریری - خانقاہ فلاح</title>
-    
     <style>
-        /* بنیادی ترتیبات */
         body { margin: 0; padding: 0; background: transparent; }
-
-        .category-box { 
-            background: transparent; 
-            overflow: hidden; 
-            font-family: 'Segoe UI', Tahoma, sans-serif; 
-            max-width: 320px; 
-            margin: 0 auto; 
-            direction: rtl;
-        }
-        
-        /* ہیڈر: بٹن اب دائیں طرف نظر آئے گا */
-        .cat-header { 
-            background: #006400; 
-            color: #fff; 
-            padding: 5px 10px; 
-            display: flex; 
-            flex-direction: row-reverse; 
-            justify-content: space-between; 
-            align-items: center; 
-            font-weight: bold; 
-            border-bottom: 2px solid #b08d43; 
-            border-radius: 10px 10px 0 0;
-            font-size: 11px;
-        }
-        
-        .view-all-btn { 
-            background: #b08d43; 
-            color: white; 
-            border: none; 
-            padding: 3px 10px; 
-            border-radius: 5px; 
-            cursor: pointer; 
-            font-size: 10px; 
-            font-weight: bold;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.2);
-        }
-        
-        /* آڈیو باکس: کریمی بیک گراؤنڈ اور کم فاصلہ */
-        .audio-item { 
-            padding: 8px; 
-            margin-top: 3px; 
-            background: #fdfaf3; /* خوبصورت کریمی رنگ */
-            text-align: right; 
-            position: relative; 
-            border: 1px solid #d4c4a8; /* ہلکا سنہری بارڈر */
-            border-radius: 10px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-        }
-        
-        .bayan-num { 
-            background: #b08d43; color: #ffffff; width: 20px; height: 20px; 
-            display: inline-flex; align-items: center; justify-content: center; 
-            border-radius: 50%; font-size: 11px; margin-left: 6px; border: 1.5px solid #006400; 
-        }
-        
+        .category-box { background: transparent; overflow: hidden; font-family: 'Segoe UI', Tahoma, sans-serif; max-width: 320px; margin: 0 auto; direction: rtl; }
+        .cat-header { background: #006400; color: #fff; padding: 5px 10px; display: flex; flex-direction: row-reverse; justify-content: space-between; align-items: center; font-weight: bold; border-bottom: 2px solid #b08d43; border-radius: 10px 10px 0 0; font-size: 11px; }
+        .view-all-btn { background: #b08d43; color: white; border: none; padding: 3px 10px; border-radius: 5px; cursor: pointer; font-size: 10px; font-weight: bold; box-shadow: 0 1px 3px rgba(0,0,0,0.2); }
+        .audio-item { padding: 8px; margin-top: 5px; background: #fdfaf3; text-align: right; position: relative; border: 1px solid #d4c4a8; border-radius: 10px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05); }
+        .bayan-num { background: #b08d43; color: #ffffff; width: 20px; height: 20px; display: inline-flex; align-items: center; justify-content: center; border-radius: 50%; font-size: 11px; margin-left: 6px; border: 1.5px solid #006400; }
         .audio-title { font-size: 12.5px; font-weight: bold; color: #004d00; line-height: 1.2; }
         
-        .player-bg {
-            background: linear-gradient(90deg, #004d00, #fff000 ,#004d00);
-            padding: 2px;
-            border-radius: 7px;
-            margin-top: 5px;
-            border: 1px solid #fff;
-        }
+        .new-label { background: #ff0000; color: white; font-size: 9px; padding: 1px 5px; border-radius: 3px; margin-left: 5px; font-weight: bold; animation: blinker 1s linear infinite; display: inline-block; vertical-align: middle; }
+        @keyframes blinker { 50% { opacity: 0; } }
 
-        .spinner-overlay {
-            position: absolute;
-            top: 46px; left: 28px;
-            display: none; width: 14px; height: 14px;
-            border: 2px solid rgba(0, 100, 0, 0.2);
-            border-radius: 50%; border-top-color: #b08d43;
-            animation: spin 0.8s linear infinite; z-index: 10;
-        }
-
+        .player-bg { background: linear-gradient(90deg, #004d00, #fff000 ,#004d00); padding: 2px; border-radius: 7px; margin-top: 5px; border: 1px solid #fff; }
+        .spinner-overlay { position: absolute; top: 46px; left: 28px; display: none; width: 14px; height: 14px; border: 2px solid rgba(0, 100, 0, 0.2); border-radius: 50%; border-top-color: #b08d43; animation: spin 0.8s linear infinite; z-index: 10; }
         @keyframes spin { to { transform: rotate(360deg); } }
-
         audio { width: 100%; height: 32px; }
-        
-        /* میٹا ڈیٹا: سائز، ڈاؤن لوڈ گائیڈ اور تاریخ */
-        .meta-row { 
-            display: flex; 
-            justify-content: space-between; 
-            font-size: 9px; 
-            color: #555; 
-            margin-top: 5px; 
-            padding: 0 3px;
-            direction: ltr; 
-        }
-
-        .dl-text { 
-            color: #8a6d3b; 
-            font-weight: bold; 
-            font-size: 11px; /* واضح اور بڑا فونٹ */
-        }
+        .meta-row { display: flex; justify-content: space-between; font-size: 9px; color: #555; margin-top: 5px; padding: 0 3px; direction: ltr; }
+        .dl-text { color: #8a6d3b; font-weight: bold; font-size: 11px; }
     </style>
 </head>
 <body>
 
     <div class="category-box">
         <div class="cat-header">
-            <span>HAFTAWAR MAJALIS E ZIKAR</span>
+            <span>ISLAHI MAJALIS </span>
             <button id="toggle-btn" class="view-all-btn" onclick="toggleDisplay()">View All +</button>
         </div>
         <div id="bayan-list-container">
@@ -126,9 +45,18 @@
             try {
                 const res = await fetch(`https://archive.org/metadata/${audioID}`);
                 const data = await res.json();
-                bayanFiles = data.files.filter(f => f.name.endsWith('.mp3'));
-                render(bayanFiles.slice(0, 5)); // شروع میں 5 بیانات
-            } catch (e) { container.innerHTML = "ڈیٹا لوڈ کرنے میں دشواری ہو رہی ہے۔"; }
+                
+                // صرف MP3 فائلیں نکالیں اور انہیں الٹا کریں (نیا بیان اوپر لانے کے لیے)
+                if (data.files) {
+                    bayanFiles = data.files.filter(f => f.name.toLowerCase().endsWith('.mp3'));
+                    // تاریخ کے حساب سے ترتیب دینا (تکنیکی طور پر بہتر طریقہ)
+                    bayanFiles.sort((a, b) => (b.mtime || 0) - (a.mtime || 0));
+                    render(bayanFiles.slice(0, 5)); 
+                }
+            } catch (e) { 
+                console.error(e);
+                container.innerHTML = "ڈیٹا لوڈ کرنے میں دشواری ہو رہی ہے۔"; 
+            }
         }
 
         function render(files) {
@@ -139,11 +67,14 @@
                 const size = file.size ? (file.size/(1024*1024)).toFixed(1) + "MB" : "---";
                 const date = file.mtime ? new Date(parseInt(file.mtime)*1000).toLocaleDateString("en-GB") : "Recent";
                 
+                // اگر لسٹ میں پہلا بیان ہے تو NEW ٹیگ لگائیں
+                const isNew = (index === 0 && !showingAll) ? '<span class="new-label">NEW</span> ' : '';
+
                 container.innerHTML += `
                     <div class="audio-item">
                         <div style="display:flex; align-items:center;">
                             <span class="bayan-num">${index + 1}</span>
-                            <span class="audio-title">${file.title || file.name.replace('.mp3','')}</span>
+                            <span class="audio-title">${isNew}${file.title || file.name.replace('.mp3','')}</span>
                         </div>
                         <div id="loader-${index}" class="spinner-overlay"></div>
                         <div class="player-bg">
@@ -174,21 +105,17 @@
                 render(bayanFiles.slice(0, 5));
                 btn.innerText = "View All +";
                 showingAll = false;
-                window.scrollTo({top: 0, behavior: 'smooth'}); 
             }
         }
 
         function stopOthers(currentPlayer) {
             const allPlayers = document.querySelectorAll('.q-player');
             allPlayers.forEach(player => {
-                if (player !== currentPlayer) {
-                    player.pause();
-                }
+                if (player !== currentPlayer) { player.pause(); }
             });
         }
 
         loadList();
     </script>
-
 </body>
 </html>
