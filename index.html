@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="ur" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>آڈیو لائبریری - خانقاہ فلاح</title>
+    <style>
+        body { margin: 0; background: #fdfaf3; font-family: sans-serif; }
+        .header { background: #006400; color: white; padding: 10px; display: flex; justify-content: space-between; align-items: center; border-bottom: 3px solid #b08d43; }
+        .view-all { background: #b08d43; color: white; border: none; padding: 5px 10px; border-radius: 5px; cursor: pointer; font-size: 12px; }
+        .audio-card { background: white; border: 2px solid #006400; border-radius: 15px; margin: 15px; padding: 15px; position: relative; box-shadow: 0 4px 8px rgba(0,0,0,0.1); }
+        .audio-number { position: absolute; left: 15px; top: 15px; background: #006400; color: white; width: 25px; height: 25px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; }
+        .audio-title { color: #004d00; font-weight: bold; margin-bottom: 10px; display: block; text-align: right; padding-left: 35px; }
+        .player-container { background: linear-gradient(90deg, #004d00, #fff000, #004d00); padding: 3px; border-radius: 25px; margin: 10px 0; }
+        audio { width: 100%; height: 35px; }
+        .footer-info { display: flex; justify-content: space-between; font-size: 11px; color: #666; border-top: 1px solid #eee; padding-top: 5px; direction: ltr; }
+    </style>
+</head>
+<body>
+
+<div class="header">
+    <span>HAFTAWAR MAJALIS E ZIKAR</span>
+    <button class="view-all">View All +</button>
+</div>
+
+<div id="list"></div>
+
+<script>
+    const archiveID = "13-2024_202510"; // آپ کی آڈیو آئی ڈی
+    async function loadAudios() {
+        const res = await fetch(`https://archive.org/metadata/${archiveID}`);
+        const data = await res.json();
+        const files = data.files.filter(f => f.name.endsWith('.mp3'));
+        
+        document.getElementById('list').innerHTML = files.map((f, i) => `
+            <div class="audio-card">
+                <div class="audio-number">${i + 1}</div>
+                <span class="audio-title">${f.title || f.name}</span>
+                <div class="player-container">
+                    <audio controls preload="none">
+                        <source src="https://archive.org/download/${archiveID}/${f.name}" type="audio/mpeg">
+                    </audio>
+                </div>
+                <div class="footer-info">
+                    <span>Size: ${(f.size/1048576).toFixed(1)} MB</span>
+                    <span>Khanqah Falah</span>
+                </div>
+            </div>
+        `).join('');
+    }
+    loadAudios();
+</script>
+
+</body>
+</html>
