@@ -3,53 +3,166 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>آڈیو لائبریری - خانقاہ فلاح</title>
+    <title>آڈیو پلیئر - خانقاہ فلاح</title>
+    
     <style>
-        body { margin: 0; background: #fdfaf3; font-family: sans-serif; }
-        .header { background: #006400; color: white; padding: 10px; display: flex; justify-content: space-between; align-items: center; border-bottom: 3px solid #b08d43; }
-        .view-all { background: #b08d43; color: white; border: none; padding: 5px 10px; border-radius: 5px; cursor: pointer; font-size: 12px; }
-        .audio-card { background: white; border: 2px solid #006400; border-radius: 15px; margin: 15px; padding: 15px; position: relative; box-shadow: 0 4px 8px rgba(0,0,0,0.1); }
-        .audio-number { position: absolute; left: 15px; top: 15px; background: #006400; color: white; width: 25px; height: 25px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; }
-        .audio-title { color: #004d00; font-weight: bold; margin-bottom: 10px; display: block; text-align: right; padding-left: 35px; }
-        .player-container { background: linear-gradient(90deg, #004d00, #fff000, #004d00); padding: 3px; border-radius: 25px; margin: 10px 0; }
-        audio { width: 100%; height: 35px; }
-        .footer-info { display: flex; justify-content: space-between; font-size: 11px; color: #666; border-top: 1px solid #eee; padding-top: 5px; direction: ltr; }
+        /* آپ کا دیا ہوا تمام CSS یہاں موجود ہے */
+        .category-box { 
+            background: transparent; 
+            overflow: hidden; 
+            font-family: 'Segoe UI', Tahoma, sans-serif; 
+            max-width: 320px; 
+            margin: 0px auto; 
+            direction: rtl;
+        }
+        
+        .cat-header { 
+            background: #006400; 
+            color: #fff; 
+            padding: 8px 12px; 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            font-weight: bold; 
+            border-bottom: 2px solid #b08d43; 
+            border-radius: 12px 12px 0 0;
+            font-size: 13px;
+        }
+        
+        .view-all-btn { background: #b08d43; color: white; border: none; padding: 3px 8px; border-radius: 4px; cursor: pointer; font-size: 10px; }
+        
+        .audio-item { 
+            padding: 10px; 
+            margin-top: 8px;
+            background: #ffffff; 
+            text-align: right; 
+            position: relative; 
+            border: 1.5px solid #006400; 
+            border-radius: 12px;
+            box-shadow: 0 8px 5px rgba(0, 0, 0, 0.08);
+        }
+        
+        .bayan-num { 
+            background: #006400; color: #fff; width: 20px; height: 20px; 
+            display: inline-flex; align-items: center; justify-content: center; 
+            border-radius: 50%; font-size: 10px; margin-left: 8px; border: 2px solid #b08d43; 
+        }
+        
+        .audio-title { font-size: 13px; font-weight: bold; color: #004d00; line-height: 1.2; }
+        
+        .player-bg {
+            background: linear-gradient(90deg, #004d00, #fff000 ,#004d00);
+            padding: 4px;
+            border-radius: 8px;
+            margin-top: 6px;
+            border: 2px solid #fff;
+        }
+
+        .spinner-overlay {
+            position: absolute;
+            top: 52px; left: 31.5px;
+            display: none; width: 16px; height: 16px;
+            border: 2px solid rgba(0, 100, 0, 0.2);
+            border-radius: 50%; border-top-color: #b08d43;
+            animation: spin 0.8s linear infinite; z-index: 10;
+        }
+
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        audio { width: 100%; height: 32px; }
+        
+        .meta-row { 
+            display: flex; justify-content: space-between; 
+            font-size: 9px; color: #666; 
+            margin-top: 6px; padding: 0 5px;
+            direction: ltr; 
+        }
+
+        .dl-guide { 
+            display: block; font-size: 9px; color: #8a6d3b; 
+            margin-top: 5px; font-weight: bold; 
+            text-align: center; border-top: 1px solid #eee;
+            padding-top: 4px;
+        }
     </style>
 </head>
 <body>
 
-<div class="header">
-    <span>HAFTAWAR MAJALIS E ZIKAR</span>
-    <button class="view-all">View All +</button>
-</div>
+    <div class="category-box">
+        <div class="cat-header">
+            <span>HAFTAWAR MAJALIS E ZIKAR</span>
+            <button id="view-all-btn" class="view-all-btn" onclick="showAllBayans()">View All +</button>
+        </div>
+        <div id="bayan-list-container">
+            <div style="text-align:center; padding:15px; color:#006400; font-size:12px;">لوڈنگ ہو رہی ہے...</div>
+        </div>
+    </div>
 
-<div id="list"></div>
+    <script>
+        const audioID = "13-2024_202510"; 
+        let bayanFiles = [];
 
-<script>
-    const archiveID = "13-2024_202510"; // آپ کی آڈیو آئی ڈی
-    async function loadAudios() {
-        const res = await fetch(`https://archive.org/metadata/${archiveID}`);
-        const data = await res.json();
-        const files = data.files.filter(f => f.name.endsWith('.mp3'));
-        
-        document.getElementById('list').innerHTML = files.map((f, i) => `
-            <div class="audio-card">
-                <div class="audio-number">${i + 1}</div>
-                <span class="audio-title">${f.title || f.name}</span>
-                <div class="player-container">
-                    <audio controls preload="none">
-                        <source src="https://archive.org/download/${archiveID}/${f.name}" type="audio/mpeg">
-                    </audio>
-                </div>
-                <div class="footer-info">
-                    <span>Size: ${(f.size/1048576).toFixed(1)} MB</span>
-                    <span>Khanqah Falah</span>
-                </div>
-            </div>
-        `).join('');
-    }
-    loadAudios();
-</script>
+        async function loadList() {
+            const container = document.getElementById('bayan-list-container');
+            try {
+                const res = await fetch(`https://archive.org/metadata/${audioID}`);
+                const data = await res.json();
+                bayanFiles = data.files.filter(f => f.name.endsWith('.mp3'));
+                render(bayanFiles.slice(0, 4));
+            } catch (e) { container.innerHTML = "Error loading data."; }
+        }
+
+        function render(files) {
+            const container = document.getElementById('bayan-list-container');
+            container.innerHTML = '';
+            files.forEach((file, index) => {
+                const url = `https://archive.org/download/${audioID}/${encodeURIComponent(file.name)}`;
+                const size = file.size ? (file.size/(1024*1024)).toFixed(1) + " MB" : "---";
+                const date = file.mtime ? new Date(parseInt(file.mtime)*1000).toLocaleDateString("en-GB") : "Recent";
+                
+                container.innerHTML += `
+                    <div class="audio-item">
+                        <div style="display:flex; align-items:center;">
+                            <span class="bayan-num">${index + 1}</span>
+                            <span class="audio-title">${file.title || file.name.replace('.mp3','')}</span>
+                        </div>
+                        
+                        <div id="loader-${index}" class="spinner-overlay"></div>
+
+                        <div class="player-bg">
+                            <audio id="player-${index}" class="q-player" controls preload="none" 
+                                onplay="stopOthers(this)"
+                                onwaiting="document.getElementById('loader-${index}').style.display='block'" 
+                                onplaying="document.getElementById('loader-${index}').style.display='none'"
+                                onpause="document.getElementById('loader-${index}').style.display='none'">
+                                <source src="${url}" type="audio/mpeg">
+                            </audio>
+                        </div>
+                        
+                        <div class="meta-row">
+                            <span>Size: ${size}</span> <span>Khanqah Falah</span> <span>${date}</span>
+                        </div>
+
+                        <span class="dl-guide">ڈاؤن لوڈ کے لیے پلیئر میں موجود تھری ڈاٹ (⋮) پر کلک کریں۔</span>
+                    </div>`;
+            });
+        }
+
+        function stopOthers(currentPlayer) {
+            const allPlayers = document.querySelectorAll('.q-player');
+            allPlayers.forEach(player => {
+                if (player !== currentPlayer) {
+                    player.pause();
+                }
+            });
+        }
+
+        function showAllBayans() {
+            render(bayanFiles);
+            document.getElementById('view-all-btn').style.display = 'none';
+        }
+        loadList();
+    </script>
 
 </body>
 </html>
