@@ -77,7 +77,7 @@
                     bayanFiles = data.files.filter(f => f.name.toLowerCase().endsWith('.mp3'));
                     bayanFiles.sort((a, b) => (b.mtime || 0) - (a.mtime || 0));
                     filteredFiles = [...bayanFiles];
-                    render(filteredFiles.slice(0, 5)); 
+                    render(filteredFiles.slice(0, 8)); 
                 }
             } catch (e) { document.getElementById('bayan-list-container').innerHTML = "ڈیٹا لوڈ نہیں ہو سکا۔"; }
         }
