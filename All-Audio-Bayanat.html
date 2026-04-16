@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="ur" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>خانقاہ دارالفلاح - لائبریری</title>
+    <style>
+        :root { --gold: #b08d43; --dark: #4e3b2b; --bg: #fdfaf3; --line: #b08d43; --red: #ff0000; }
+        body { font-family: 'Segoe UI', Tahoma, sans-serif; background: var(--bg); margin: 0; padding-top: 70px; }
+
+        /* ٹاپ بار */
+        .navbar { background: var(--dark); color: white; position: fixed; top: 0; right: 0; left: 0; height: 65px; display: flex; align-items: center; padding: 0 15px; z-index: 1000; border-bottom: 3px solid var(--gold); }
+        
+        /* لوگو اور سرچ بار (320px) */
+        .logo-area { width: 320px; margin: 0 auto 10px auto; background: #3d2e21; display: flex; align-items: center; justify-content: center; overflow: hidden; border: 2px solid var(--gold); }
+        .logo-area img { width: 100%; height: auto; display: block; }
+
+        .search-container { background: var(--dark); padding: 8px 0; border-bottom: 2px solid var(--gold); position: sticky; top: 65px; z-index: 999; }
+        .search-box { display: flex; width: 320px; margin: 0 auto; background: white; border-radius: 4px; overflow: hidden; border: 1px solid var(--gold); }
+        .search-box input { flex: 1; border: none; padding: 8px; outline: none; text-align: right; font-size: 13px; }
+        .search-btn { background: var(--gold); color: white; border: none; padding: 0 12px; font-weight: bold; cursor: pointer; }
+
+        .container { max-width: 320px; margin: 0 auto; padding: 5px; }
+
+        /* کارڈ ڈیزائن */
+        .bayan-card { background: #fff; border: 2.5px solid var(--gold); border-radius: 8px; margin-bottom: 15px; overflow: hidden; box-shadow: 0 4px 10px rgba(0,0,0,0.1); transition: 0.3s; }
+        .bayan-header { background: var(--gold); color: white; padding: 8px 10px; font-weight: bold; display: flex; flex-direction: row-reverse; justify-content: space-between; align-items: center; }
+        .view-all-btn { background: #fff; color: var(--gold); border: none; padding: 2px 8px; border-radius: 4px; font-size: 10px; font-weight: bold; cursor: pointer; }
+
+        /* آڈیو آئٹم - فاصلے کم */
+        .audio-item { padding: 4px 6px; border-bottom: 2px solid var(--line); background: #fffcf5; position: relative; }
+        
+        .title-row { display: flex; align-items: center; gap: 8px; margin-bottom: 4px; }
+        .bayan-num { background: var(--gold); color: white; width: 22px; height: 22px; display: flex; align-items: center; justify-content: center; border-radius: 50%; font-size: 11px; font-weight: bold; flex-shrink: 0; }
+        .audio-title { font-size: 12.5px; font-weight: bold; color: #2c3e50; line-height: 1.2; flex: 1; padding-left: 30px; }
+
+        /* NEW سرخ بیج اینیمیشن کے ساتھ */
+        .new-badge { position: absolute; top: 6px; left: 6px; background: var(--red); color: white; font-size: 8px; padding: 2px 5px; border-radius: 3px; animation: blink 0.8s infinite; z-index: 5; font-weight: bold; }
+        @keyframes blink { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.5; transform: scale(0.9); } }
+
+        /* پلیئر - بلیک بیک گراؤنڈ */
+        .player-area { background: #000; padding: 4px; border-radius: 5px; margin: 3px 0; position: relative; border: 1px solid #333; }
+        audio { width: 100%; height: 32px; filter: invert(100%) hue-rotate(180deg) brightness(1.5); }
+        
+        /* اسپینر */
+        .q-spinner { position: absolute; top: 46.5%; left: 10.2%; transform: translate(-50%, -50%); width: 18px; height: 18px; border: 2px solid rgba(176,141,67,0.2); border-top-color: var(--gold); border-radius: 50%; animation: spin 0.9s linear infinite; display: none; z-index: 10; }
+        @keyframes spin { to { transform: translate(-50%, -50%) rotate(360deg); } }
+
+        .dl-hint { background: var(--gold); color: white; font-size: 9px; text-align: center; padding: 3px; font-weight: bold; display: none; }
+
+        /* میٹا ڈیٹا (ترتیب درست کر دی گئی ہے) */
+        .meta-info { display: flex; justify-content: space-between; font-size: 9px; color: #666; margin-top: 4px; padding-top: 3px; border-top: 1px dotted #ccc; direction: ltr; }
+        .meta-info span { flex: 1; text-align: center; }
+        .loc-text { color: var(--gold); font-weight: bold; direction: rtl; }
+
+        footer { background: var(--dark); color: white; text-align: center; padding: 15px; font-size: 11px; border-top: 4px solid var(--gold); margin-top: 20px; }
+    </style>
+</head>
+<body>
+
+<div class="navbar">
+    <div style="font-weight: bold; color: var(--gold); font-size: 16px;">SHEIH UL HADEES HAZRAT MOLANA PEER MUHAMMAD JAMSHAID NAQSHBANDI DB</div>
+</div>
+
+<div class="search-container">
+    <div class="search-box">
+        <input type="text" id="gSearch" placeholder="بیان کا نام یا مقام لکھیں..." onkeyup="smartSearch()">
+        <button class="search-btn">تلاش</button>
+    </div>
+</div>
+
+<div class="container">
+    <div class="logo-area">
+        <img src="https://archive.org/download/1743133488972_202509/%D8%B5%D8%AF%D8%A7%D8%A6%DB%92-%D9%81%D9%82%DB%8C%D8%B1%D8%A7%D9%86%DB%81--1770981548133.png" alt="Logo">
+    </div>
+    <div id="master-root">
+        <div style="text-align:center; padding:40px; color:var(--gold);">🌿 بیانات لوڈ ہو رہے ہیں، براہِ کرم انتظار کریں...</div>
+    </div>
+</div>
+
+
+<script>
+    // آپ کی تمام آرکائیو آئی ڈیز کی لسٹ
+    const libraryData = [
+        { id: "13-2024_202510", title: "ہفتہ وار مجالسِ ذکر" },
+        { id: "001_20251018", title: "جامعہ دارالہدیٰ میرا خیل" },
+        { id: "20260205_20260205_1013", title: "جلسہ دستارِ فضیلت 2026" },
+        { id: "22-2017_202509", title: "اصلاحی مجالس" },
+        { id: "143_20251113", title: "درسِ قرآن" },
+        { id: "20251018_20251018_0949", title: "تلاوت، حمد و نعت" }
+    ];
+
+    async function loadLibrary() {
+        const root = document.getElementById('master-root');
+        root.innerHTML = '';
+
+        for (const cat of libraryData) {
+            try {
+                const res = await fetch(`https://archive.org/metadata/${cat.id}`);
+                const data = await res.json();
+                let mp3s = data.files.filter(f => f.name.toLowerCase().endsWith('.mp3'));
+
+                if (mp3s.length > 0) {
+                    // تازہ ترین فائلیں اوپر دکھانے کے لیے
+                    mp3s.sort((a, b) => (b.mtime || 0) - (a.mtime || 0));
+
+                    const card = document.createElement('div');
+                    card.className = 'bayan-card';
+                    card.id = `card-${cat.id}`;
+                    card.innerHTML = `
+                        <div class="bayan-header">
+                            <span>${cat.title}</span>
+                            <button class="view-all-btn" onclick="toggleFiles('${cat.id}')" id="btn-${cat.id}">View All +</button>
+                        </div>
+                        <div id="list-${cat.id}"></div>
+                    `;
+                    root.appendChild(card);
+                    card.dataset.fullList = JSON.stringify(mp3s);
+                    renderFiles(cat.id, mp3s.slice(0, 3));
+                }
+            } catch (err) { console.error("Error loading ID:", cat.id); }
+        }
+    }
+
+    function renderFiles(catId, files) {
+        const target = document.getElementById(`list-${catId}`);
+        target.innerHTML = '';
+        
+        // 7 دن کی لمٹ (جو بیان 7 دن کے اندر اپلوڈ ہوا وہ NEW کہلائے گا)
+        const sevenDaysAgo = Math.floor(Date.now() / 1000) - (7 * 24 * 60 * 60);
+
+        files.forEach((file, index) => {
+            const url = `https://archive.org/download/${catId}/${encodeURIComponent(file.name)}`;
+            const size = file.size ? (file.size / (1024 * 1024)).toFixed(1) + " MB" : "--";
+            const dateStr = file.mtime ? new Date(parseInt(file.mtime) * 1000).toLocaleDateString("en-GB") : "Recent";
+            const isNew = file.mtime && parseInt(file.mtime) > sevenDaysAgo;
+            
+            let title = file.title || file.name.replace('.mp3', '');
+            let location = "پاکستان";
+            const locMatch = title.match(/\[(.*?)\]/);
+            if (locMatch) { location = locMatch[1]; title = title.replace(locMatch[0], '').trim(); }
+
+            target.innerHTML += `
+                <div class="audio-item">
+                    ${isNew ? '<div class="new-badge">NEW</div>' : ''}
+                    <div class="title-row">
+                        <span class="bayan-num">${index + 1}</span>
+                        <span class="audio-title">${title}</span>
+                    </div>
+                    <div class="player-area">
+                        <div id="spin-${catId}-${index}" class="q-spinner"></div>
+                        <audio id="aud-${catId}-${index}" controls preload="none" 
+                               onplay="onPlayAction('${catId}', ${index})" 
+                               onwaiting="toggleSpin('${catId}', ${index}, true)" 
+                               onplaying="toggleSpin('${catId}', ${index}, false)">
+                            <source src="${url}" type="audio/mpeg">
+                        </audio>
+                    </div>
+                    <div id="hint-${catId}-${index}" class="dl-hint">ڈاؤن لوڈ کیلئے (⋮) پر کلک کریں۔</div>
+                    <div class="meta-info">
+                        <span>${dateStr}</span>
+                        <span class="loc-text">📍 ${location}</span>
+                        <span>${size}</span>
+                    </div>
+                </div>`;
+        });
+    }
+
+    // اسمارٹ سرچ: اب یہ ہر آئی ڈی کے اندر جا کر سرچ کرے گا
+    function smartSearch() {
+        const query = document.getElementById('gSearch').value.toLowerCase();
+        const cards = document.getElementsByClassName('bayan-card');
+
+        for (let card of cards) {
+            const catId = card.id.replace('card-', '');
+            const allFiles = JSON.parse(card.dataset.fullList);
+            const matched = allFiles.filter(f => (f.title || f.name).toLowerCase().includes(query));
+
+            if (matched.length > 0) {
+                card.style.display = "block";
+                // اگر سرچ ہو رہی ہو تو تمام نتائج دکھائیں، ورنہ صرف 5
+                renderFiles(catId, query === "" ? allFiles.slice(0, 5) : matched);
+                document.getElementById(`btn-${catId}`).style.display = query === "" ? "block" : "none";
+            } else {
+                card.style.display = "none";
+            }
+        }
+    }
+
+    function onPlayAction(catId, idx) {
+        document.querySelectorAll('.dl-hint').forEach(h => h.style.display = 'none');
+        document.getElementById(`hint-${catId}-${idx}`).style.display = 'block';
+        document.querySelectorAll('audio').forEach(a => { if(a.id !== `aud-${catId}-${idx}`) a.pause(); });
+    }
+
+    function toggleSpin(catId, idx, show) {
+        const s = document.getElementById(`spin-${catId}-${idx}`);
+        if(s) s.style.display = show ? 'block' : 'none';
+    }
+
+    function toggleFiles(catId) {
+        const btn = document.getElementById(`btn-${catId}`);
+        const card = document.getElementById(`card-${catId}`);
+        const all = JSON.parse(card.dataset.fullList);
+
+        if (btn.innerText.includes("View All")) {
+            renderFiles(catId, all);
+            btn.innerText = "Show Less -";
+        } else {
+            renderFiles(catId, all.slice(0, 5));
+            btn.innerText = "View All +";
+        }
+    }
+
+    loadLibrary();
+</script>
+</body>
+</html>
+
