@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Khanqah Dar-ul-Falah - Library</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <style>
+        :root { 
+            --gold: #b08d43; 
+            --islamic-green: #006400; 
+            --light-green: #004d00;
+            --bg: #fdfaf3; 
+            --red: #e74c3c;
+        }
+
+        body { font-family: 'Segoe UI', Arial, sans-serif; background: var(--bg); margin: 0; padding-bottom: 20px; overflow-x: hidden; }
+
+        /* Navbar */
+        .navbar { 
+            background: var(--islamic-green); color: white; width: 100%; min-height: 120px; 
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            padding: 20px 0; border-bottom: 4px solid var(--gold); 
+        }
+        .navbar-text { font-size: 16px; text-align: center; width: 100%; font-weight: bold; line-height: 1.4; padding: 0 15px; }
+
+        .header-controls { display: flex; flex-direction: column; align-items: center; gap: 12px; margin-top: 15px; width: 100%; }
+        .sub-btn {
+            background: #25D366; color: white !important; padding: 8px 20px; border-radius: 30px;
+            font-size: 12px !important; font-weight: bold; text-decoration: none; display: flex;
+            align-items: center; gap: 8px; border: 2px solid white; box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+        }
+
+        .header-social { display: flex; gap: 20px; }
+        .header-social a { color: white; font-size: 20px; transition: 0.3s; }
+
+        /* Search Bar */
+        .search-container { background: var(--islamic-green); padding: 12px 0; border-bottom: 2px solid var(--gold); }
+        .search-box { display: flex; max-width: 90%; margin: 0 auto; background: white; border-radius: 8px; overflow: hidden; border: 1.5px solid var(--gold); }
+        .search-box input { flex: 1; border: none; padding: 10px; outline: none; font-size: 14px; text-align: right; direction: rtl; }
+        .search-btn { background: var(--gold); color: white; border: none; padding: 0 15px; cursor: pointer; }
+
+        /* Slider Menu */
+        .slider-wrapper { background: #fff; border-bottom: 2px solid var(--gold); overflow-x: auto; scrollbar-width: none; white-space: nowrap; padding: 15px 0; }
+        .slider-wrapper::-webkit-scrollbar { display: none; }
+        .menu-slider { display: inline-flex; gap: 10px; padding-left: 15px; animation: autoScroll 45s linear infinite; }
+        @keyframes autoScroll { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+
+        .grid-item { 
+            display: inline-block; background: #fff; border: 1.5px solid var(--islamic-green); border-radius: 12px; 
+            padding: 8px; width: 90px; text-align: center; color: var(--islamic-green); 
+            box-shadow: 0 3px 6px rgba(0,0,0,0.05); cursor: pointer; flex-shrink: 0;
+        }
+        .grid-item i { font-size: 20px; margin-bottom: 5px; display: block; color: var(--gold); }
+        .grid-item span { font-size: 9px; font-weight: bold; display: block; white-space: normal; line-height: 1.1; height: 22px; overflow: hidden; }
+
+        .container { max-width: 360px; margin: 0 auto; padding: 10px 5px; }
+        
+        /* Logo Area */
+        .logo-area { width: 100%; margin: 15px auto; background: #3d2e21; border: 2.5px solid var(--gold); border-radius: 12px; overflow: hidden; }
+        .logo-area img { width: 100%; display: block; }
+
+        /* Bayan Card */
+        .bayan-card { background: #fff; border: 2.5px solid var(--islamic-green); border-radius: 15px; margin-bottom: 30px; overflow: hidden; box-shadow: 0 8px 20px rgba(0,0,0,0.1); }
+        .bayan-header { background: var(--islamic-green); color: white; padding: 12px; font-weight: bold; text-align: center; font-size: 15px; border-bottom: 3px solid var(--gold); }
+        
+        /* Audio Item */
+        .audio-item { padding: 1px; border-bottom: .5px solid #eee; background: #fff; position: relative; }
+        .title-row { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; direction: rtl; }
+        .bayan-num { 
+            background: var(--islamic-green); color: #fff; width: 22px; height: 22px; 
+            display: inline-flex; align-items: center; justify-content: center; 
+            border-radius: 50%; font-size: 10px; border: 1.5px solid var(--gold); flex-shrink: 0;
+        }
+        .audio-title { font-size: 13px; font-weight: bold; color: var(--light-green); flex: 1; text-align: right; line-height: 1.3; }
+
+        /* --- NEW BADGE STYLE --- */
+        .new-badge {
+            background: var(--red);
+            color: white;
+            font-size: 8px;
+            padding: 2px 6px;
+            border-radius: 4px;
+            margin-right: 8px;
+            text-transform: uppercase;
+            animation: pulse-red 1.5s infinite;
+            display: inline-block;
+            vertical-align: middle;
+            font-family: sans-serif;
+        }
+
+        @keyframes pulse-red {
+            0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(231, 76, 60, 0.7); }
+            70% { transform: scale(1.05); box-shadow: 0 0 0 6px rgba(231, 76, 60, 0); }
+            100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(231, 76, 60, 0); }
+        }
+
+        /* Player Style */
+        .player-row { 
+            background: linear-gradient(90deg, var(--light-green), #fff000 , var(--light-green));
+            padding: 5px; border-radius: 10px; margin: 8px 0; position: relative; border: 2px solid #fff;
+        }
+        audio { width: 100%; height: 32px; }
+
+        .q-spinner { position: absolute; left: 21px; top: 47%; transform: translateY(-50%); width: 16px; height: 16px; border: 2px solid rgba(0,100,0,0.2); border-top-color: var(--gold); border-radius: 50%; animation: spin 0.8s linear infinite; display: none; z-index: 10; }
+        @keyframes spin { to { transform: translateY(-50%) rotate(360deg); } }
+
+        .meta-info { display: flex; justify-content: space-between; font-size: 10px; color: #555; margin-top: 10px; direction: ltr; padding: 0 5px; font-weight: bold; }
+        .loc-tag { color: var(--gold); direction: rtl; }
+
+        .dl-hint-urdu { font-size: 10px; color: #8a6d3b; text-align: center; padding-top: 8px; border-top: 1px solid #f0f0f0; margin-top: 5px; font-weight: bold; display: none; direction: rtl; }
+
+        .pagination-row { display: flex; gap: 10px; padding: 15px; background: #f9f9f9; }
+        .btn-page { background: var(--islamic-green); color: white; border: 1px solid var(--gold); padding: 10px; border-radius: 6px; font-size: 11px; cursor: pointer; flex: 1; font-weight: bold; }
+        /* مین کنٹینر */
+.social-float {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 999;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+/* آئیکونز والا باکس */
+.social-icons-box {
+  display: none;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+
+/* انفرادی سوشل کارڈز */
+.social-card {
+  display: flex;
+  align-items: center;
+  background: white;
+  padding: 6px 10px;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  font-size: 14px;
+  font-weight: bold;
+  color: black;
+  transition: 0.3s;
+}
+
+.social-card i {
+  font-size: 18px;
+  margin-left: 6px;
+}
+
+/* گلوئنگ (Glowing) مین بٹن */
+.social-toggle {
+  background-color: #0c4128;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  font-size: 20px;
+  cursor: pointer;
+  box-shadow: 0 0 10px #00ffcc, 0 0 20px #00ffcc;
+  animation: glowPulse 5s infinite alternate;
+}
+
+/* گلو اینیمیشن */
+@keyframes glowPulse {
+  0% {
+    box-shadow: 0 0 8px #00ffcc, 0 0 16px #00ffcc;
+    background: linear-gradient(135deg, #006633, #00cc99);
+  }
+  50% {
+    box-shadow: 0 0 15px #ff33cc, 0 0 30px #ff33cc;
+    background: linear-gradient(135deg, #ff6600, #ff0066);
+  }
+  100% {
+    box-shadow: 0 0 10px #00ffff, 0 0 25px #0099ff;
+    background: linear-gradient(135deg, #0044cc, #00ffff);
+  }
+}
+
+    </style>
+</head>
+<body>
+
+<div class="navbar">
+    <div class="navbar-text">
+        SHEIKH-UL-HADEES HAZRAT MAULANA PEER MUHAMMAD JAMSHAID NAQSHBANDI (D.B)<br>
+        <span style="font-size: 11px; color: var(--gold);">KHANQAH DAR-UL-FALAH DIGITAL LIBRARY</span>
+    </div>
+
+    <div class="header-controls">
+        <a href="https://whatsapp.com/channel/0029VaHFtAKDDmFU33nD360K" target="_blank" class="sub-btn">
+            <i class="fab fa-whatsapp"></i> SUBSCRIBE TO CHANNEL
+        </a>
+        <div class="header-social">
+            <a href="https://api.whatsapp.com/send?phone=923329106002" target="_blank"><i class="fab fa-whatsapp"></i></a>
+            <a href="fb://profile/100068373408345" target="_blank"><i class="fab fa-facebook-f"></i></a>
+            <a href="https://youtube.com/@peermolanamuhammadjamshedn1391" target="_blank"><i class="fab fa-youtube"></i></a>
+        </div>
+    </div>
+</div>
+
+<div class="search-container">
+    <div class="search-box">
+        <input type="text" id="gSearch" placeholder="بیان کا نام یا مقام سرچ کریں..." onkeyup="smartSearch()">
+        <button class="search-btn"><i class="fa fa-search"></i></button>
+    </div>
+</div>
+
+<div class="slider-wrapper">
+    <div class="menu-slider" id="catMenu"></div>
+</div>
+
+<div class="container">
+    <div class="logo-area">
+        <img src="https://archive.org/download/1743133488972_202509/%D8%B5%D8%AF%D8%A7%D8%A6%DB%92-%D9%81%D9%82%DB%8C%D8%B1%D8%A7%D9%86%DB%81--1770981548133.png" alt="Sada-e-Faqirana">
+    </div>
+    <div id="master-root">
+        <div style="text-align:center; padding:50px; color:var(--islamic-green); font-weight: bold;">🌿 لائبریری لوڈ ہو رہی ہے...</div>
+    </div>
+</div>
+<div class="social-float">
+  <div class="social-icons-box" id="socialBox">
+
+    <a href="https://wa.me/923329106002" style="text-decoration: none;" target="_blank" title="WhatsApp">
+      <div class="social-card" style="color: #25d366;">
+        WhatsApp <i class="fab fa-whatsapp"></i>
+      </div>
+    </a>
+
+    <a href="https://whatsapp.com/channel/0029VaHFtAKDDmFU33nD360K" style="text-decoration: none;" target="_blank">
+      <div class="social-card" style="color: #128c7e;">
+        W Channel <i class="fab fa-whatsapp"></i>
+      </div>
+    </a>
+
+    <a href="https://youtube.com/@peermolanamuhammadjamshedn1391" style="text-decoration: none;" target="_blank" title="YouTube">
+      <div class="social-card" style="color: red;">
+        YouTube <i class="fab fa-youtube"></i>
+      </div>
+    </a>
+
+    <a href="https://www.facebook.com/profile.php?id=100068373408345" style="text-decoration: none;" target="_blank" title="Facebook">
+      <div class="social-card" style="color: #1877f2;">
+        Facebook <i class="fab fa-facebook-f"></i>
+      </div>
+    </a>
+
+    <a href="https://www.instagram.com/khanqahdarul?igsh=YzljYTk1ODg3Zg==" style="text-decoration: none;" target="_blank" title="Instagram">
+      <div class="social-card" style="color: #c13584;">
+        Instagram <i class="fab fa-instagram"></i>
+      </div>
+    </a>
+
+  </div>
+
+  <button class="social-toggle" onclick="toggleSocial()">
+    <i class="fas fa-share-alt"></i>
+  </button>
+</div>
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+
+
+<script>
+    const libraryData = [
+        { id: "13-2024_202510", title: "HAFTAVAR ZIKER MAJALIS", icon: "fa-microphone-lines" },
+        { id: "001_20251018", title: "DARS E QURAN DARUL HUDA ", icon: "fa-mosque" },
+        { id: "20260205_20260205_1013", title: "DASTAR-E-FAZILAT 2026", icon: "fa-graduation-cap" },
+        { id: "22-2017_202509", title: "ISLAHI MAJALIS IN PAKISTAN", icon: "fa-users-gear" },
+        { id: "143_20251113", title: "DARS-E-QURAN MASJED ISLAMDIN", icon: "fa-book-quran" },
+        { id: "20251018_20251018_0949", title: "TELAWAT HAMD-O-NAAT", icon: "fa-heart" },
+                { id: "20250918_20250918_0142", title: "SULOOK E ILA ALLAH", icon: "fa-seedling" },                             { id: "2_20250901", title: "MEHMAN MASHAIKH ULAMA KERAM", icon: "fa-spa" },       
+                                        { id: "20260220_20260220_0620", title: "RAMAZAN UL MUBARA KI AHAM MASAIL", icon: "fa-star-and-crescent" },       
+    ];
+
+    let cardProgress = {};
+
+    function createSliderMenu() {
+        const menu = document.getElementById('catMenu');
+        [...libraryData, ...libraryData].forEach(item => {
+            const div = document.createElement('div');
+            div.className = 'grid-item';
+            div.innerHTML = `<i class="fa ${item.icon}"></i><span>${item.title}</span>`;
+            div.onclick = () => { document.getElementById(`card-${item.id}`).scrollIntoView({ behavior: 'smooth' }); };
+            menu.appendChild(div);
+        });
+    }
+
+    async function loadLibrary() {
+        createSliderMenu();
+        const root = document.getElementById('master-root');
+        root.innerHTML = '';
+        for (const cat of libraryData) {
+            try {
+                const res = await fetch(`https://archive.org/metadata/${cat.id}`);
+                const data = await res.json();
+                let mp3s = data.files.filter(f => f.name.toLowerCase().endsWith('.mp3'));
+                if (mp3s.length > 0) {
+                    mp3s.sort((a, b) => (b.mtime || 0) - (a.mtime || 0));
+                    cardProgress[cat.id] = 0;
+                    const card = document.createElement('div');
+                    card.className = 'bayan-card';
+                    card.id = `card-${cat.id}`;
+                    card.innerHTML = `<div class="bayan-header">${cat.title}</div><div id="list-${cat.id}"></div>
+                        <div class="pagination-row">
+                            <button class="btn-page" id="back-${cat.id}" onclick="showLess('${cat.id}')" style="display:none; background:#666;">BACK</button>
+                            <button class="btn-page" id="more-${cat.id}" onclick="loadMoreFiles('${cat.id}')">LOAD MORE</button>
+                        </div>`;
+                    root.appendChild(card);
+                    card.dataset.fullList = JSON.stringify(mp3s);
+                    loadMoreFiles(cat.id, 3);
+                }
+            } catch (err) {}
+        }
+    }
+
+    function loadMoreFiles(catId, count = 10) {
+        const card = document.getElementById(`card-${catId}`);
+        const allFiles = JSON.parse(card.dataset.fullList);
+        const start = cardProgress[catId];
+        const end = start + count;
+        renderFiles(catId, allFiles.slice(start, end), false);
+        cardProgress[catId] = end;
+        if(start > 0) document.getElementById(`back-${catId}`).style.display = 'block';
+        if (end >= allFiles.length) document.getElementById(`more-${catId}`).style.display = 'none';
+    }
+
+    function renderFiles(catId, files, clearOld = true) {
+        const target = document.getElementById(`list-${catId}`);
+        if(clearOld) target.innerHTML = '';
+        
+        const now = new Date();
+
+        files.forEach((file, index) => {
+            const globalIdx = clearOld ? index : target.children.length;
+            const url = `https://archive.org/download/${catId}/${encodeURIComponent(file.name)}`;
+            let title = file.title || file.name.replace('.mp3', '');
+            
+            // مقام
+            let location = "پاکستان";
+            const locMatch = title.match(/\[(.*?)\]/);
+            if (locMatch) { location = locMatch[1]; title = title.replace(locMatch[0], '').trim(); }
+
+            // --- NEW BADGE LOGIC ---
+            let newBadgeHTML = "";
+            if(file.mtime) {
+                const fileDate = new Date(parseInt(file.mtime) * 1000);
+                const diffTime = Math.abs(now - fileDate);
+                const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+                if(diffDays <= 7) { 
+                    newBadgeHTML = `<span class="new-badge">NEW</span>`;
+                }
+            }
+
+            target.insertAdjacentHTML('beforeend', `
+                <div class="audio-item">
+                    <div class="title-row">
+                        <span class="bayan-num">${globalIdx + 1}</span>
+                        <span class="audio-title">${newBadgeHTML}${title}</span>
+                    </div>
+                    <div class="player-row">
+                        <div id="spin-${catId}-${globalIdx}" class="q-spinner"></div>
+                        <audio class="q-player" id="aud-${catId}-${globalIdx}" controls preload="none" 
+                            onplay="handlePlay(this, '${catId}', ${globalIdx})" 
+                            onwaiting="toggleSpin('${catId}', ${globalIdx}, true)" 
+                            onplaying="toggleSpin('${catId}', ${globalIdx}, false)">
+                            <source src="${url}" type="audio/mpeg">
+                        </audio>
+                    </div>
+                    <div id="hint-${catId}-${globalIdx}" class="dl-hint-urdu">ڈاؤن لوڈ کے لیے تھری ڈاٹ (⋮) پر کلک کریں۔</div>
+                    <div class="meta-info">
+                        <span>Size: ${(file.size/(1024*1024)).toFixed(1)} MB</span>
+                        <span class="loc-tag">📍 ${location}</span>
+                        <span>${file.mtime ? new Date(parseInt(file.mtime)*1000).toLocaleDateString("en-GB") : 'Recent'}</span>
+                    </div>
+                </div>`);
+        });
+    }
+
+    function handlePlay(currentPlayer, catId, idx) {
+        document.getElementById(`hint-${catId}-${idx}`).style.display = 'block';
+        document.querySelectorAll('.q-player').forEach(a => { 
+            if(a !== currentPlayer) { a.pause(); }
+        });
+    }
+
+    function toggleSpin(catId, idx, show) {
+        const s = document.getElementById(`spin-${catId}-${idx}`);
+        if(s) s.style.display = show ? 'block' : 'none';
+    }
+
+    function showLess(catId) {
+        document.getElementById(`list-${catId}`).innerHTML = '';
+        cardProgress[catId] = 0;
+        loadMoreFiles(catId, 3);
+        document.getElementById(`back-${catId}`).style.display = 'none';
+        document.getElementById(`more-${catId}`).style.display = 'block';
+    }
+
+    function smartSearch() {
+        const query = document.getElementById('gSearch').value.toLowerCase().trim();
+        document.querySelectorAll('.bayan-card').forEach(card => {
+            const catId = card.id.replace('card-', '');
+            const allFiles = JSON.parse(card.dataset.fullList);
+            const matched = allFiles.filter(f => (f.title || f.name).toLowerCase().includes(query));
+            if (matched.length > 0) {
+                card.style.display = "block";
+                if (query !== "") {
+                    renderFiles(catId, matched, true);
+                    card.querySelector('.pagination-row').style.display = 'none';
+                } else {
+                    showLess(catId);
+                    card.querySelector('.pagination-row').style.display = 'flex';
+                }
+            } else { card.style.display = "none"; }
+        });
+    }
+    loadLibrary();
+  function toggleSocial() {
+  const box = document.getElementById("socialBox");
+  // اگر باکس چھپا ہوا ہے تو دکھا دے، ورنہ چھپا دے
+  if (box.style.display === "flex") {
+    box.style.display = "none";
+  } else {
+    box.style.display = "flex";
+  }
+}
+
+</script>
+</body>
+</html>
