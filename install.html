@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="en" dir="ltr">
 <head>
     <meta charset="UTF-8">
@@ -185,8 +185,7 @@
             
             // صرف امیج فائلیں (jpg, png) فلٹر کریں
             const images = data.files.filter(f => 
-                f.name.toLowerCase().endsWith('.jpg') || 
-                f.name.toLowerCase().endsWith('.png') || 
+                   f.name.toLowerCase().endsWith('.png') || 
                 f.name.toLowerCase().endsWith('.jpeg')
             );
 
@@ -213,7 +212,7 @@
             slider.innerHTML = '<div style="padding:20px; text-align:center; width:100%; color:red;">تصاویر لوڈ کرنے میں دشواری پیش آئی۔</div>';
         }
     }
-</script>
+
 
 <style>
     /* سلائیڈر کی اسکرول بار چھپانے کے لیے */
@@ -302,7 +301,7 @@
                         </div>`;
                     root.appendChild(card);
                     card.dataset.fullList = JSON.stringify(mp3s);
-                    loadMoreFiles(cat.id, );
+                    loadMoreFiles(cat.id);
                 }
             } catch (err) {}
         }
@@ -371,108 +370,19 @@
         });
     }
 
-    function handlePlay(currentPlayer, catId, idx) {
-        document.getElementById(`hint-${catId}-${idx}`).style.display = 'block';
-        document.querySelectorAll('.q-player').forEach(a => { 
-            if(a !== currentPlayer) { a.pause(); }
-        });
-    }
-
-    function toggleSpin(catId, idx, show) {
-        const s = document.getElementById(`spin-${catId}-${idx}`);
-        if(s) s.style.display = show ? 'block' : 'none';
-    }
-
-    function showLess(catId) {
-        document.getElementById(`list-${catId}`).innerHTML = '';
-        cardProgress[catId] = 0;
-        loadMoreFiles(catId, 3);
-        document.getElementById(`back-${catId}`).style.display = 'none';
-        document.getElementById(`more-${catId}`).style.display = 'block';
-    }
-
-    function smartSearch() {
-        const query = document.getElementById('gSearch').value.toLowerCase().trim();
-        document.querySelectorAll('.bayan-card').forEach(card => {
-            const catId = card.id.replace('card-', '');
-            const allFiles = JSON.parse(card.dataset.fullList);
-            const matched = allFiles.filter(f => (f.title || f.name).toLowerCase().includes(query));
-            if (matched.length > 0) {
-                card.style.display = "block";
-                if (query !== "") {
-                    renderFiles(catId, matched, true);
-                    card.querySelector('.pagination-row').style.display = 'none';
-                } else {
-                    showLess(catId);
-                    card.querySelector('.pagination-row').style.display = 'flex';
-                }
-            } else { card.style.display = "none"; }
-        });
-    }
-    loadLibrary();
-   const dragElement = document.getElementById("draggableSocial");
-const dragHandle = document.getElementById("dragHandle");
-
-let pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
-
-dragHandle.onmousedown = dragMouseDown;
-dragHandle.ontouchstart = dragMouseDown;
-
-function dragMouseDown(e) {
-  e = e || window.event;
-  // اینیمیشن روک دیں جب صارف اسے پکڑے
-  dragElement.style.animation = "none";
-  
-  if (e.type === 'touchstart') {
-    pos3 = e.touches[0].clientX;
-    pos4 = e.touches[0].clientY;
-  } else {
-    pos3 = e.clientX;
-    pos4 = e.clientY;
-  }
-  
-  document.onmouseup = closeDragElement;
-  document.ontouchend = closeDragElement;
-  document.onmousemove = elementDrag;
-  document.ontouchmove = elementDrag;
+     
+function toggleSpin(catId, idx, show) {
+    const s = document.getElementById(`spin-${catId}-${idx}`);
+    if(s) s.style.display = show ? 'block' : 'none';
 }
 
-function elementDrag(e) {
-  e = e || window.event;
-  let clientX, clientY;
-  
-  if (e.type === 'touchmove') {
-    clientX = e.touches[0].clientX;
-    clientY = e.touches[0].clientY;
-  } else {
-    clientX = e.clientX;
-    clientY = e.clientY;
-  }
-
-  pos1 = pos3 - clientX;
-  pos2 = pos4 - clientY;
-  pos3 = clientX;
-  pos4 = clientY;
-
-  dragElement.style.top = (dragElement.offsetTop - pos2) + "px";
-  dragElement.style.left = (dragElement.offsetLeft - pos1) + "px";
-  dragElement.style.bottom = "auto";
-  dragElement.style.right = "auto";
+function handlePlay(currentPlayer, catId, idx) {
+    document.getElementById(`hint-${catId}-${idx}`).style.display = 'block';
+    document.querySelectorAll('.q-player').forEach(a => { 
+        if(a !== currentPlayer) { a.pause(); }
+    });
 }
-
-function closeDragElement() {
-  document.onmouseup = null;
-  document.onmousemove = null;
-  document.ontouchend = null;
-  document.ontouchmove = null;
-}
-
-function toggleSocial() {
-  const box = document.getElementById("socialBox");
-  box.style.display = (box.style.display === "flex") ? "none" : "flex";
-}
-
-
-</script>
+     </script>
 </body>
 </html>
+         
