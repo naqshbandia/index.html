@@ -210,7 +210,7 @@
     function showLess(catId) {
         document.getElementById(`list-${catId}`).innerHTML = '';
         cardProgress[catId] = 0;
-        loadMoreFiles(catId, 2);
+        loadMoreFiles(catId, 1);
         document.getElementById(`more-${catId}`).style.display = 'block';
         document.getElementById(`back-${catId}`).style.display = 'none';
     }
