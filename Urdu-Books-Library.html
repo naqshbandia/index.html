@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="ur" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+body{
+font-family:sans-serif;
+background:#fdfaf3;
+text-align:center;
+margin:0;
+}
+
+/* card */
+.card{
+max-width:280px;
+margin:auto;
+background:white;
+border:2px solid #b08d43;
+border-radius:10px;
+padding:10px;
+}
+
+.header{
+background:#b08d43;
+color:white;
+padding:6px;
+font-weight:bold;
+}
+
+/* slider */
+.slider{
+position:relative;
+height:260px;
+overflow:hidden;
+}
+
+.slide{
+position:absolute;
+width:100%;
+opacity:0;
+transition:0.4s;
+}
+
+.slide.active{
+opacity:1;
+}
+
+img{
+width:100%;
+height:300px;
+object-fit:contain;
+}
+
+/* buttons */
+.bottom{
+display:flex;
+justify-content:space-between;
+margin-top:8px;
+}
+
+.btn{
+padding:6px 8px;
+border:none;
+border-radius:5px;
+color:white;
+font-size:12px;
+text-decoration:none;
+}
+
+.back{background:#555;}
+.download{background:green;}
+.view{
+background:#2563eb;
+font-weight:bold;
+color:white;
+}
+
+/* dots */
+.dots{
+margin-top:5px;
+}
+
+.dot{
+height:7px;
+width:7px;
+background:#aaa;
+display:inline-block;
+margin:2px;
+border-radius:50%;
+}
+
+.active-dot{
+background:black;
+}
+
+/* 🔥 VIEW ALL GRID (2 COLUMN) */
+.list{
+display:none;
+max-width:340px;
+margin:auto;
+padding:10px;
+
+/* 2 COLUMN SYSTEM */
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:10px;
+}
+
+.list-item{
+background:white;
+border:1px solid #b08d43;
+padding:8px;
+border-radius:8px;
+text-align:center;
+}
+
+.list-item img{
+width:100%;
+height:120px;
+object-fit:contain;
+}
+
+.list-item b{
+font-size:12px;
+display:block;
+margin:5px 0;
+}
+
+.list-item a{
+display:inline-block;
+padding:5px 8px;
+font-size:11px;
+background:green;
+color:white;
+border-radius:5px;
+text-decoration:none;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="card">
+
+<div class="header" id="title">کتاب کا نام</div>
+
+<div class="slider" id="slider"></div>
+
+<div class="dots" id="dots"></div>
+
+<div class="bottom">
+<button class="btn back" onclick="prev()">⬅ BACK</button>
+<a id="downloadBtn" class="btn download" target="_blank">📥 DOWNLOAD</a>
+<button class="btn view" onclick="showAll()">view ALL ➕ </button>
+</div>
+
+</div>
+
+<!-- 📚 VIEW ALL LIST -->
+<div id="list" class="list"></div>
+
+<script>
+
+const data=[
+{
+title:"شجرہ طیبہ",
+img:"https://archive.org/download/screenshot-20260427-111530/Screenshot_20260427-111530.jpg",
+pdf:"https://archive.org/download/20250816/SHAJARA_TAYYEBA.pdf"
+},
+{
+title:"صبح و شام کی دعائیں",
+img:"https://archive.org/download/screenshot-20260427-111530/Screenshot_20260427-164055.jpg",
+pdf:"https://archive.org/download/20250816/%D9%85%D8%B3%D8%AA%D9%86%D8%AF_%D8%A7%D8%AD%D8%A7%D8%AF%DB%8C%D8%AB.pdf"
+}
+];
+
+const slider=document.getElementById("slider");
+const dots=document.getElementById("dots");
+const list=document.getElementById("list");
+
+let index=0;
+
+/* slider */
+data.forEach((item,i)=>{
+
+slider.innerHTML+=`
+<div class="slide ${i==0?'active':''}">
+<img src="${item.img}">
+</div>`;
+
+dots.innerHTML+=`<span class="dot ${i==0?'active-dot':''}"></span>`;
+});
+
+/* list builder */
+function buildList(){
+list.innerHTML="";
+data.forEach(item=>{
+list.innerHTML+=`
+<div class="list-item">
+<img src="${item.img}">
+<b>${item.title}</b>
+<a href="${item.pdf}" target="_blank">📥 Download</a>
+</div>`;
+});
+}
+
+function update(){
+document.getElementById("title").innerText=data[index].title;
+document.getElementById("downloadBtn").href=data[index].pdf;
+
+document.querySelectorAll(".slide").forEach(s=>s.classList.remove("active"));
+document.querySelectorAll(".dot").forEach(d=>d.classList.remove("active-dot"));
+
+document.querySelectorAll(".slide")[index].classList.add("active");
+document.querySelectorAll(".dot")[index].classList.add("active-dot");
+}
+
+function prev(){
+index=(index-1+data.length)%data.length;
+update();
+}
+
+/* ⏱ AUTO SLIDE 8 SEC */
+setInterval(()=>{
+index=(index+1)%data.length;
+update();
+},8000);
+
+/* ➕ VIEW ALL */
+function showAll(){
+document.querySelector(".card").style.display="none";
+list.style.display="grid";
+buildList();
+}
+
+update();
+
+</script>
+
+</body>
+</html>
