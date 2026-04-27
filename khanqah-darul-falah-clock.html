@@ -1,104 +1,130 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="ur">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <style>
-        .prayer-widget-container { 
-            margin: 5px auto; 
-            font-family: 'Tajawal', sans-serif; 
-            max-width: 450px; 
-            direction: rtl;
-        }
-        
-        .islamicBox { 
-            background: #000; 
-            color: #fff; 
-            padding: 12px; 
-            border-radius: 15px; 
-            box-shadow: 0 5px 15px rgba(0,0,0,0.3); 
-            text-align: center; 
-        }
-        
-        .clock { font-size: 26px; color: #00ff99; font-weight: bold; }
-        
-        .date { 
-            font-size: 14px; 
-            margin-bottom: 10px; 
-            color: #d4af37; 
-            border-bottom: 1px solid #222; 
-            padding-bottom: 8px;
-            font-weight: bold;
-            line-height: 1.5;
-        }
-        
-        .tabs { display: flex; gap: 5px; margin-bottom: 10px; }
-        .tabs button { 
-            flex: 1; padding: 8px; border: none; cursor: pointer; 
-            background: #1a1a1a; color: #d4af37; font-weight: bold; 
-            border-radius: 8px; font-size: 12px; 
-        }
-        .tabs button.active { background: #d4af37; color: #000; }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-        .slider-wrapper {
-            width: 100%; overflow-x: auto; white-space: nowrap;
-            display: none; padding: 5px 0; scrollbar-width: none;
-        }
-        .slider-wrapper::-webkit-scrollbar { display: none; }
-        .slider-wrapper.active { display: flex; gap: 8px; }
+<style>
+.prayer-widget-container { 
+    margin: 5px auto; 
+    font-family: 'Tajawal', sans-serif; 
+    max-width: 450px; 
+    direction: rtl;
+}
 
-        .prayer-card {
-            background: linear-gradient(145deg, #111, #000);
-            border: 1px solid #333; padding: 12px; border-radius: 12px;
-            min-width: 105px; display: inline-block; flex-shrink: 0;
-        }
-        .p-name { font-size: 11px; color: #d4af37; margin-bottom: 4px; display: block; }
-        .p-time { font-size: 15px; color: #fff; font-weight: bold; display: block; }
+.islamicBox { 
+    background: #000; 
+    color: #fff; 
+    padding: 12px; 
+    border-radius: 15px; 
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3); 
+    text-align: center; 
+}
 
-        footer {
-            margin-top: 10px; padding-top: 8px; border-top: 1px solid #ffcc00;
-            font-size: 11px; line-height: 1.4; color: #ddd;
-        }
-        .caution-box {
-            background: rgba(255, 204, 0, 0.05); padding: 6px;
-            border-radius: 10px; color: #ffcc00; display: block;
-        }
-        .verify-text { color: #00ff99; font-weight: bold; display: block; margin-bottom: 2px; }
-    </style>
+.clock { font-size: 26px; color: #00ff99; font-weight: bold; }
+
+.date { 
+    font-size: 14px; 
+    margin-bottom: 10px; 
+    color: #d4af37; 
+    border-bottom: 1px solid #222; 
+    padding-bottom: 8px;
+    font-weight: bold;
+    line-height: 1.5;
+}
+
+.tabs { display: flex; gap: 5px; margin-bottom: 10px; }
+.tabs button { 
+    flex: 1; padding: 8px; border: none; cursor: pointer; 
+    background: #1a1a1a; color: #d4af37; font-weight: bold; 
+    border-radius: 8px; font-size: 12px; 
+}
+.tabs button.active { background: #d4af37; color: #000; }
+
+.slider-wrapper {
+    width: 100%; overflow-x: auto; white-space: nowrap;
+    display: none; padding: 5px 0; scrollbar-width: none;
+}
+.slider-wrapper::-webkit-scrollbar { display: none; }
+.slider-wrapper.active { display: flex; gap: 8px; }
+
+.prayer-card {
+    background: linear-gradient(145deg, #111, #000);
+    border: 1px solid #333; padding: 12px; border-radius: 12px;
+    min-width: 105px; display: inline-block; flex-shrink: 0;
+}
+.p-name { font-size: 11px; color: #d4af37; margin-bottom: 4px; display: block; }
+.p-time { font-size: 15px; color: #fff; font-weight: bold; display: block; }
+
+footer {
+    margin-top: 10px; padding-top: 8px; border-top: 1px solid #ffcc00;
+    font-size: 11px; line-height: 1.4; color: #ddd;
+}
+.caution-box {
+    background: rgba(255, 204, 0, 0.05); padding: 6px;
+    border-radius: 10px; color: #ffcc00; display: block;
+}
+.verify-text { color: #00ff99; font-weight: bold; display: block; margin-bottom: 2px; }
+ 
+
+</style>
 </head>
+
 <body>
 
 <div class="prayer-widget-container">
-    <div class="islamicBox">
-        <div id="clock" class="clock">00:00:00</div>
-        <div id="combinedDate" class="date">-- --- ---- / -- --- / -- --- ----</div>
+<div class="islamicBox">
 
-        <div class="tabs">
-            <button id="btn1" class="active" onclick="showPage(1)">اوقاتِ نماز</button>
-            <button id="btn2" onclick="showPage(2)">خانقاہ دارالفلاح کے جماعت </button>
-        </div>
+<div id="clock" class="clock">00:00:00</div>
+<div id="combinedDate" class="date">-- --- ----</div>
 
-        <div id="page1" class="slider-wrapper active"></div>
-
-        <div id="page2" class="slider-wrapper">
-            <div class="prayer-card"><span class="p-name">فجر</span><span class="p-time">05:15 AM</span></div>
-            <div class="prayer-card"><span class="p-name">ظہر</span><span class="p-time">02:15 PM</span></div>
-            <div class="prayer-card"><span class="p-name">عصر</span><span class="p-time">05:40 PM</span></div>
-            <div class="prayer-card"><span class="p-name">مغرب</span><span class="p-time">اذان +5m</span></div>
-            <div class="prayer-card"><span class="p-name">عشاء</span><span class="p-time">08:45 PM</span></div>
-        </div>
-
-        <footer>
-            <div class="caution-box">
-                <span class="verify-text">
- اپنے مستند علماء کرام سے اوقات کی تصدیق ضرور کریں۔</span>
-   سحر و افطار ، نمازوں کے اوقات میں احتیاط لازم ہیں
-            </div>
-        </footer>
-    </div>
+<!-- آج / کل بٹن -->
+<div class="tabs">
+    <button id="todayBtn" class="active" onclick="changeDay(0)">آج</button>
+    <button id="tomorrowBtn" onclick="changeDay(1)">کل</button>
 </div>
 
+<div class="tabs">
+    <button id="btn1" class="active" onclick="showPage(1)">اوقاتِ نماز</button>
+    <button id="btn2" onclick="showPage(2)">خانقاہ دارالفلاح کے جماعت</button>
+</div>
+
+<div id="page1" class="slider-wrapper active"></div>
+
+<div id="page2" class="slider-wrapper">
+    <div class="prayer-card"><span class="p-name">فجر</span><span class="p-time">05:15 AM</span></div>
+    <div class="prayer-card"><span class="p-name">ظہر</span><span class="p-time">02:15 PM</span></div>
+    <div class="prayer-card"><span class="p-name">عصر</span><span class="p-time">05:40 PM</span></div>
+    <div class="prayer-card"><span class="p-name">مغرب</span><span class="p-time"> اذان کے 5منٹ بعد</span></div>
+    <div class="prayer-card"><span class="p-name">عشاء</span><span class="p-time">08:45 PM</span></div>
+</div>
+
+<footer>
+<div class="caution-box">
+ 
+</div>
+</footer>
+<span>یہ اوقات حسابی ہیں، 1 تا 2 منٹ آگے پیچھے ہو سکتے ہیں، اپنے مقامی مستند ذرائع سے تصدیق ضروری ہے۔"</span>
+</div>
+<div style="margin-top:10px;">
+  <a href="https://archive.org/download/20250816/%D9%86%D9%82%D8%B4%DB%81_%D8%A7%D9%88%D9%82%D8%A7%D8%AA.pdf" target="_blank" 
+     style="display:block; text-decoration:none; background:#d4af37; color:#000; padding:10px; border-radius:10px; font-weight:bold; font-size:13px; text-align:center;">
+     
+     📥 12 مہینوں کے مکمل اوقات (PDF) 
+  </a>
+</div>
+</div>
 <script>
+let selectedDay = 0;
+
+function changeDay(day){
+    selectedDay = day;
+    document.getElementById("todayBtn").classList.toggle("active", day===0);
+    document.getElementById("tomorrowBtn").classList.toggle("active", day===1);
+    updatePrayerTimes();
+    updateHijri();
+}
+
 function showPage(n){
     document.getElementById("page1").classList.toggle("active", n===1);
     document.getElementById("page2").classList.toggle("active", n===2);
@@ -108,7 +134,8 @@ function showPage(n){
 
 function updateClock(){
     const now=new Date();
-    document.getElementById("clock").innerText=now.toLocaleTimeString("en-US",{hour:"2-digit",minute:"2-digit",second:"2-digit",hour12:true});
+    document.getElementById("clock").innerText=
+    now.toLocaleTimeString("en-US",{hour:"2-digit",minute:"2-digit",second:"2-digit",hour12:true});
 }
 setInterval(updateClock,1000);
 
@@ -116,13 +143,21 @@ function addMinutes(time, mins){
     const [h, m] = time.split(":").map(Number);
     const d = new Date();
     d.setHours(h, m + mins - 2, 0); 
-    return d.toLocaleTimeString("en-US", {hour:'2-digit', minute:'2-digit', hour12:true});
+    return d.toLocaleTimeString("en-US",{hour:'2-digit',minute:'2-digit',hour12:true});
 }
 
 async function updatePrayerTimes(){
     let lat = 32.9910; let lon = 70.6455;
+
+    const dateObj = new Date();
+    dateObj.setDate(dateObj.getDate() + selectedDay);
+
+    const day = dateObj.getDate();
+    const month = dateObj.getMonth() + 1;
+    const year = dateObj.getFullYear();
+
     try{
-        const res = await fetch(`https://api.aladhan.com/v1/timings?latitude=${lat}&longitude=${lon}&method=1&school=1`);
+        const res = await fetch(`https://api.aladhan.com/v1/timings/${day}-${month}-${year}?latitude=${lat}&longitude=${lon}&method=1&school=1`);
         const data = await res.json();
         const t = data.data.timings;
 
@@ -140,51 +175,40 @@ async function updatePrayerTimes(){
         ];
 
         document.getElementById("page1").innerHTML = prayerData.map(p => `
-            <div class="prayer-card">
-                <span class="p-name">${p.name}</span>
-                <span class="p-time">${p.time}</span>
-            </div>
+        <div class="prayer-card">
+            <span class="p-name">${p.name}</span>
+            <span class="p-time">${p.time}</span>
+        </div>
         `).join('');
     } catch(e){ console.log("Error"); }
 }
 
-updatePrayerTimes();
-
 async function updateHijri(){
     try{
         const today = new Date();
+        today.setDate(today.getDate() + selectedDay);
+
         const res = await fetch(`https://api.aladhan.com/v1/gToH?date=${today.getDate()}-${today.getMonth()+1}-${today.getFullYear()}`);
         const data = await res.json();
         const h = data.data.hijri;
-        
-        const hijriMonths = ["محرم", "صفر", "ربیع الاول", "ربیع الثانی", "جمادی الاول", "جمادی الثانی", "رجب", "شعبان", "رمضان", "شوال", "ذوالقعدہ", "ذوالحجہ"];
-        const hijriMonthName = hijriMonths[parseInt(h.month.number) - 1];
 
-        // دن کا نام اردو میں
-        const days = ["اتوار", "پیر", "منگل", "بدھ", "جمعرات", "جمعہ", "ہفتہ"];
+        const hijriMonths = ["محرم","صفر","ربیع الاول","ربیع الثانی","جمادی الاول","جمادی الثانی","رجب","شعبان","رمضان","شوال","ذوالقعدہ","ذوالحجہ"];
+        const hijriMonthName = hijriMonths[parseInt(h.month.number)-1];
+
+        const days = ["اتوار","پیر","منگل","بدھ","جمعرات","جمعہ","ہفتہ"];
         const dayName = days[today.getDay()];
 
-        // عیسوی تاریخ
-        const gregDay = today.getDate();
-        const gregMonths = ["جنوری", "فروری", "مارچ", "اپریل", "مئی", "جون", "جولائی", "اگست", "ستمبر", "اکتوبر", "نومبر", "دسمبر"];
-        const gregMonthName = gregMonths[today.getMonth()];
-        const gregYear = today.getFullYear();
-        
-        // فائنل ڈسپلے: 17 اپریل 2026 / بروز جمعہ / 29 شوال 1447
-        const finalDate = `${gregDay} ${gregMonthName} ${gregYear} / بروز ${dayName} / ${h.day} ${hijriMonthName} ${h.year}`;
-        document.getElementById("combinedDate").innerText = finalDate;
-    } catch(e) { console.log("Date Error"); }
-}
-updateHijri();
+        const gregMonths = ["جنوری","فروری","مارچ","اپریل","مئی","جون","جولائی","اگست","ستمبر","اکتوبر","نومبر","دسمبر"];
 
-const sliders = document.querySelectorAll('.slider-wrapper');
-sliders.forEach(slider => {
-    let isDown = false; let startX; let scrollLeft;
-    slider.addEventListener('mousedown', (e) => { isDown = true; startX = e.pageX - slider.offsetLeft; scrollLeft = slider.scrollLeft; });
-    slider.addEventListener('mouseleave', () => { isDown = false; });
-    slider.addEventListener('mouseup', () => { isDown = false; });
-    slider.addEventListener('mousemove', (e) => { if(!isDown) return; e.preventDefault(); const x = e.pageX - slider.offsetLeft; const walk = (x - startX) * 2; slider.scrollLeft = scrollLeft - walk; });
-});
+        const finalDate = `${today.getDate()} ${gregMonths[today.getMonth()]} ${today.getFullYear()} / بروز ${dayName} / ${h.day} ${hijriMonthName} ${h.year}`;
+
+        document.getElementById("combinedDate").innerText = finalDate;
+
+    } catch(e){ console.log("Date Error"); }
+}
+
+updatePrayerTimes();
+updateHijri();
 </script>
 
 </body>
