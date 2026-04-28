@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="ur" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+:root { --gold:#b08d43; --dark:#4e3b2b; --bg:#fdfaf3; }
+
+body{
+font-family:sans-serif;
+background:var(--bg);
+margin:0;
+padding:15px;
+}
+
+.container{max-width:360px;margin:auto;}
+
+.lib-card{
+background:#fff;
+border:1px solid #e0d5ba;
+border-radius:10px;
+overflow:hidden;
+box-shadow:0 5px 20px rgba(0,0,0,0.1);
+}
+
+.lib-header{
+background:var(--dark);
+color:#fff;
+padding:10px;
+text-align:center;
+font-weight:bold;
+border-bottom:3px solid var(--gold);
+}
+
+/* slider */
+.slider-area{
+height:380px;
+position:relative;
+overflow:hidden;
+background:white;
+touch-action:pan-y;
+}
+
+.slider-area img{
+width:100%;
+height:100%;
+object-fit:contain;
+position:absolute;
+opacity:0;
+transition:0.5s;
+padding:10px;
+box-sizing:border-box;
+cursor:pointer;
+}
+
+.slider-area img.active{opacity:1;}
+
+/* dots */
+.dots-container{
+text-align:center;
+padding:8px;
+background:#fffcf5;
+}
+
+.dot{
+height:8px;width:8px;
+background:#ccc;
+border-radius:50%;
+display:inline-block;
+margin:3px;
+}
+
+.dot.active{
+background:var(--dark);
+transform:scale(1.2);
+}
+
+/* buttons */
+.footer{
+display:flex;
+gap:8px;
+padding:12px;
+}
+
+.btn{
+flex:1;
+padding:8px;
+border:none;
+border-radius:6px;
+font-size:12px;
+color:white;
+cursor:pointer;
+}
+
+.view{background:#2563eb;}
+
+/* GRID */
+.grid{
+display:none;
+grid-template-columns:1fr 1fr;
+gap:8px;
+margin-top:10px;
+}
+
+.item{
+background:white;
+border:1px solid #ddd;
+border-radius:8px;
+padding:5px;
+}
+
+.item img{
+width:100%;
+height:220px;
+object-fit:contain;
+}
+
+/* FULL SCREEN */
+.fullscreen{
+position:fixed;
+top:0;left:0;
+width:100%;height:100%;
+background:black;
+display:none;
+align-items:center;
+justify-content:center;
+z-index:9999;
+}
+
+.fullscreen img{
+width:100%;
+height:auto;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<div class="lib-card">
+
+<div class="lib-header">📚 News Updates</div>
+
+<div class="slider-area" id="slider"></div>
+
+<div class="dots-container" id="dots"></div>
+
+<div class="footer">
+<button class="btn view" onclick="toggleView()">➕ VIEW ALL</button>
+</div>
+
+</div>
+
+<div id="grid" class="grid"></div>
+
+</div>
+
+<!-- FULL SCREEN VIEW -->
+<div class="fullscreen" id="fs" onclick="closeFS()">
+<img id="fsImg">
+</div>
+
+<script>
+
+const myID="20260422_20260422_1018";
+
+let imgs=[];
+let index=0;
+
+const slider=document.getElementById("slider");
+const dots=document.getElementById("dots");
+const grid=document.getElementById("grid");
+const fs=document.getElementById("fs");
+const fsImg=document.getElementById("fsImg");
+
+/* LOAD */
+async function load(){
+
+let res=await fetch(`https://archive.org/metadata/${myID}`);
+let data=await res.json();
+
+let files=data.files.filter(f=>
+f.name.match(/\.(png|jpeg)$/i)
+);
+
+files.forEach((f,i)=>{
+
+let url=`https://archive.org/download/${myID}/${encodeURIComponent(f.name)}`;
+imgs.push(url);
+
+slider.innerHTML+=`
+<img src="${url}" class="${i==0?'active':''}" onclick="openFS('${url}')">`;
+
+dots.innerHTML+=`<span class="dot ${i==0?'active':''}"></span>`;
+});
+
+initSwipe();
+autoSlide();
+}
+
+/* UPDATE */
+function update(){
+
+let slides=slider.querySelectorAll("img");
+let dotsEl=dots.querySelectorAll(".dot");
+
+slides.forEach(s=>s.classList.remove("active"));
+dotsEl.forEach(d=>d.classList.remove("active"));
+
+slides[index].classList.add("active");
+dotsEl[index].classList.add("active");
+}
+
+/* AUTO */
+function autoSlide(){
+setInterval(()=>{
+index=(index+1)%imgs.length;
+update();
+},8000);
+}
+
+/* SWIPE */
+function initSwipe(){
+let startX=0;
+
+slider.addEventListener("touchstart",e=>{
+startX=e.touches[0].clientX;
+});
+
+slider.addEventListener("touchend",e=>{
+let endX=e.changedTouches[0].clientX;
+
+if(startX-endX>50) index=(index+1)%imgs.length;
+if(endX-startX>50) index=(index-1+imgs.length)%imgs.length;
+
+update();
+});
+}
+
+/* FULL SCREEN */
+function openFS(src){
+fs.style.display="flex";
+fsImg.src=src;
+}
+
+function closeFS(){
+fs.style.display="none";
+}
+
+/* VIEW ALL */
+function toggleView(){
+
+if(grid.style.display=="grid"){
+grid.style.display="none";
+document.querySelector(".lib-card").style.display="block";
+return;
+}
+
+let html="";
+imgs.forEach(i=>{
+html+=`
+<div class="item" onclick="openFS('${i}')">
+<img src="${i}">
+</div>`;
+});
+
+grid.innerHTML=html;
+
+grid.style.display="grid";
+document.querySelector(".lib-card").style.display="none";
+}
+
+load();
+
+</script>
+
+</body>
+</html>
