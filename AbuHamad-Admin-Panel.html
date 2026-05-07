@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="ur" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin - Auto Coupon Generator</title>
+<style>
+    body { font-family: 'Segoe UI', Arial; background: #0f3d2e; color: white; text-align: center; padding: 20px; }
+    .box { background: rgba(0,0,0,0.3); padding: 20px; border-radius: 15px; border: 2px solid #ffd700; max-width: 400px; margin: auto; }
+    input { width: 90%; padding: 15px; font-size: 18px; text-align: center; border-radius: 8px; border: none; margin-top: 10px; outline: none; }
+    .result-box { margin-top: 20px; padding: 15px; background: #ffd700; color: #000; border-radius: 8px; font-weight: bold; font-size: 26px; display: none; box-shadow: 0 0 15px rgba(255,215,0,0.5); }
+    label { font-size: 15px; color: #ffd700; font-weight: bold; }
+    .info { font-size: 12px; color: #ccc; margin-top: 10px; }
+</style>
+</head>
+<body>
+
+    <h2 style="color:#ffd700;">AbuHamad Admin Panel</h2>
+    <div class="box">
+        <label>کسٹمر کا مکمل موبائل نمبر درج کریں:</label><br>
+        <input type="number" id="fullMobile" placeholder="03XXXXXXXXX" oninput="autoGenerate()">
+        
+        <div id="resultArea" class="result-box">
+            <div style="font-size: 14px; margin-bottom: 5px;">تیار کردہ کوپن کوڈ:</div>
+            <span id="finalCode"></span>
+        </div>
+        <p class="info">نمبر مکمل ہوتے ہی کوڈ خود بخود ظاہر ہو جائے گا۔</p>
+    </div>
+
+<script>
+function autoGenerate() {
+    let mobile = document.getElementById("fullMobile").value;
+    let resBox = document.getElementById("resultArea");
+    let display = document.getElementById("finalCode");
+
+    // اگر نمبر 11 ہندسوں کا ہو جائے
+    if (mobile.length === 11) {
+        // آخری 4 ہندسے نکالنا
+        let lastFour = mobile.slice(-4);
+        // 5050 جمع کرنا
+        let code = parseInt(lastFour) + 5050;
+        
+        display.innerText = code;
+        resBox.style.display = "block";
+    } else {
+        resBox.style.display = "none";
+    }
+}
+</script>
+</body>
+</html>
