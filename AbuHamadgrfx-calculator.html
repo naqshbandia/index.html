@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="ur" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AbuHamad GRFX - 03329106002</title>
+<link rel="manifest" href="data:application/manifest+json,{%22name%22:%22AbuHamad%20GRFX%22,%22short_name%22:%22GRFX%20Calc%22,%22start_url%22:%22.%22,%22display%22:%22standalone%22,%22background_color%22:%22#0f3d2e%22,%22theme_color%22:%22#ffd700%22}">
+
+<style>
+/* 🌙 Pro Islamic Design */
+body { font-family: 'Segoe UI', Arial; background: linear-gradient(135deg, #0f3d2e, #145a32); padding: 5px; color: #fff; min-height: 100vh; margin: 0; }
+.container { max-width: 500px; margin: auto; padding: 10px; }
+.eng-header { text-align: center; font-family: Arial, sans-serif; font-size: 18px; color: #ffd700; margin-bottom: 10px; font-weight: bold; letter-spacing: 1px; }
+
+/* 💡 Top Online Notice */
+.offline-notice { background: rgba(255, 215, 0, 0.15); border: 1px solid #ffd700; color: #ffd700; padding: 10px; border-radius: 8px; text-align: center; font-size: 14px; margin-bottom: 15px; line-height: 1.5; }
+
+/* 📑 Compact Tabs */
+.tab-container { display: flex; gap: 3px; margin-bottom: 10px; justify-content: center; }
+.tab-btn { flex: 1; padding: 10px 2px; border: 1px solid #ffd700; background: rgba(0,0,0,0.4); color: #ffd700; font-weight: bold; cursor: pointer; border-radius: 4px; font-size: 14px; white-space: nowrap; }
+.tab-btn.active { background: #ffd700; color: #000; box-shadow: 0 0 8px #ffd700; }
+
+/* 📊 Table Styling */
+table { width: 100%; border-collapse: collapse; background: #000; border: 2px solid #ffd700; border-radius: 5px; }
+th, td { border: 1px solid #ffd700; padding: 6px 2px; text-align: center; font-size: 14px; }
+th { background: #ffd700; color: #000; font-weight: bold; }
+input { width: 55px; padding: 4px; text-align: center; border: 1px solid #ffd700; background: #fff; color: #000; font-weight: bold; outline: none; }
+
+/* 💳 Payment Box & Shine Effect */
+.payment-box { background: rgba(255, 255, 255, 0.1); border: 1px dashed #ffd700; padding: 12px; border-radius: 10px; margin-bottom: 15px; text-align: center; }
+.payment-box p { font-size: 14px; line-height: 1.6; margin: 5px 0; }
+
+.p-highlight { 
+    color: #00ffcc; 
+    font-weight: bold; 
+    font-size: 14px; 
+    display: block; 
+    margin-top: 5px; 
+    border: 1px solid rgba(0,255,204,0.5); 
+    padding: 8px; 
+    border-radius: 5px;
+    position: relative;
+    overflow: hidden;
+    background: rgba(0,0,0,0.3);
+}
+
+/* ✨ Shine Animation Logic */
+.p-highlight::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -150%;
+    width: 100%;
+    height: 200%;
+    background: linear-gradient(to right, transparent, rgba(255,255,255,0.4), transparent);
+    transform: rotate(30deg);
+    animation: shine 3s infinite;
+}
+
+@keyframes shine {
+    0% { left: -150%; }
+    20% { left: 150%; }
+    100% { left: 150%; }
+}
+
+/* UI Elements */
+.hidden { display: none; }
+.main-card { background: rgba(0,0,0,0.5); padding: 20px; border-radius: 15px; border: 2px solid #ffd700; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+.input-row { display: flex; gap: 10px; margin-bottom: 10px; }
+.reg-input { width: 100%; padding: 12px; border-radius: 8px; border: none; box-sizing: border-box; text-align: center; font-weight: bold; }
+.btn-submit { background: #ffd700; color: #000; width: 100%; padding: 14px; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; font-size: 16px; transition: 0.3s; }
+.btn-submit:hover { background: #fff; transform: scale(1.02); }
+.btn-back-reg { background: transparent; color: #ffd700; border: 1px solid #ffd700; width: 100%; padding: 10px; border-radius: 8px; margin-top: 10px; cursor: pointer; font-size: 13px; }
+</style>
+</head>
+<body onload="checkStatus()">
+
+<div class="container">
+
+    <div id="regArea" class="main-card hidden">
+        <div class="offline-notice">
+            📢 <b>ضروری نوٹ:</b> رجسٹریشن کے لیے انٹرنیٹ ہونا ضروری ہے۔ ان لاک ہونے کے بعد آپ اسے آف لائن استعمال کر سکیں گے۔
+        </div>
+
+        <h2 style="text-align: center; color: #ffd700; margin-bottom: 5px;">رجسٹریشن برائے Calculator</h2>
+        <p style="text-align: center; color: #fff; font-size: 14px; margin-top: 0;">رجسٹریشن فیس: <span style="color: #ffd700; font-weight: bold;">350 روپے</span></p>
+        
+        <div class="payment-box">
+            <p>محترم کسٹمر! فیس اس اکاؤنٹ پر ارسال کریں:</p>
+            <span class="p-highlight"> 03329106002 - Qudrat Ullah khan  (EasyPaisa)</span>
+            <p style="color: #ffd700; font-size: 11px; margin-top: 10px;">پیمنٹ کے بعد فارم پُر کریں، پھر واپس آ کر کوپن کوڈ درج کریں۔</p>
+        </div>
+
+        <form action="https://formsubmit.co/Mirakhel2021@gmail.com" method="POST" onsubmit="saveTempData()">
+            <input type="hidden" name="_captcha" value="false">
+            <input type="hidden" name="_subject" value="New Calculator Registration">
+            <input type="hidden" name="_next" id="nextUrl">
+
+            <div class="input-row">
+                <input type="text" name="Name" id="uName" class="reg-input" placeholder="نام لکھیں" required>
+                <input type="number" name="Mobile" id="uMobile" class="reg-input" placeholder="موبائل نمبر" required>
+            </div>
+            
+            <button type="submit" class="btn-submit">ڈیٹا جمع اور رجسٹر کریں</button>
+        </form>
+    </div>
+
+    <div id="lockArea" class="main-card hidden">
+        <h2 style="text-align: center; color: #ffd700;">سیکیورٹی لاک</h2>
+        <p style="text-align: center; font-size: 13px; color: #fff;">محترم کسٹمر! اپنا <b>کوپن کوڈ</b> درج کریں</p>
+        <input type="number" id="otpInput" class="reg-input" placeholder="Coupon Code" style="width: 100%; margin-bottom: 15px; font-size: 22px; letter-spacing: 3px; background: #fff; color: #000;">
+        <button onclick="unlockApp()" class="btn-submit">ان لاک کریں</button>
+        <p style="text-align: center; margin-top: 15px;"><a id="waLink" href="#" style="color: #00ffcc; text-decoration: none; font-weight: bold; font-size: 14px;">📱 واٹس ایپ سے کوپن کوڈ حاصل کریں</a></p>
+        <button class="btn-back-reg" onclick="resetToReg()">دوبارہ رجسٹریشن کریں</button>
+    </div>
+
+    <div id="calcArea" class="hidden">
+        <div class="eng-header">AbuHamad GRFX - 03329106002</div>
+        <div class="tab-container">
+            <button class="tab-btn active" onclick="switchTab(0, this)">ناڑی چک</button>
+            <button class="tab-btn" onclick="switchTab(1, this)">کانا چک</button>
+            <button class="tab-btn" onclick="switchTab(2, this)">پشاوری چک</button>
+            <button class="tab-btn" onclick="switchTab(3, this)">لکی مروت</button>
+        </div>
+
+        <table id="calcTable">
+            <thead>
+                <tr><th>سائز</th><th>کٹنگ</th><th>تعداد</th><th>فٹواری</th><th>سینکڑے</th></tr>
+            </thead>
+            <tbody id="tableBody"></tbody>
+            <tfoot>
+                <tr><td colspan="3">ٹوٹل</td><td id="grandTotal">0</td><td id="grandHundred">0</td></tr>
+            </tfoot>
+        </table>
+
+        <div style="margin-top:10px; background:rgba(0,0,0,0.4); padding:10px; border-radius:10px; border:1px solid #ffd700;">
+            <table style="background:none; border:none;">
+                <tr style="border:none;">
+                    <td style="border:none;">فٹواری ریٹ</td>
+                    <td style="border:none;"><input type="number" id="rateFotwari" oninput="calculate()"></td>
+                    <td id="fotwariResult" style="border:none; color:#00ffcc; font-weight:bold; font-size:16px;">0</td>
+                </tr>
+                <tr style="border:none;">
+                    <td style="border:none;">سینکڑے ریٹ</td>
+                    <td style="border:none;"><input type="number" id="rateHundred" oninput="calculate()"></td>
+                    <td id="hundredResult" style="border:none; color:#00ffcc; font-weight:bold; font-size:16px;">0</td>
+                </tr>
+            </table>
+        </div>
+        <button class="btn-lock" onclick="safeLock()">🔒 کیلکولیٹر لاک کریں</button>
+    </div>
+</div>
+
+<script>
+const SALT = 5050; 
+let activeTab = 0;
+
+const configs = [
+    { name: "ناڑی چک", data: [[18,10],[17,10],[16,10],[15,10],[14,10],[13,10],[12,10],[11,10],[10,10],[9,20],[8,20],[7,20],[6,20],[5,20]] },
+   
+    { name: "کانا چک", data: [[18,10],[17,10],[16,12],[15,12],[14,15],[13,20],[12,25],[11,25],[10,25],[9,25],[8,25],[7,25],[6,25],[5,25]] },
+   
+    { name: "پشاوری چک", data: [[18,20],[17,20],[16,20],[15,20],[14,20],[13,20],[12,20],[11,20],[10,20],[9,20],[8,20],[7,20],[6,20],[5,20]] },
+    { name: "لکی مروت", data: [[18,10],[17,10],[16,12],[15,12],[14,15],[13,20],[12,25],[11,25],[10,25],[9,25],[8,25],[7,25],[6,25],[5,25]] },
+];
+
+function checkStatus() {
+    document.getElementById("nextUrl").value = window.location.href;
+    let status = localStorage.getItem("appStatus");
+    if (status === "unlocked") { showSection("calcArea"); initTable(0); }
+    else if (status === "pending_otp") { showSection("lockArea"); setupWA(); }
+    else { showSection("regArea"); }
+}
+
+function saveTempData() {
+    localStorage.setItem("userPhone", document.getElementById("uMobile").value);
+    localStorage.setItem("appStatus", "pending_otp");
+}
+
+function resetToReg() {
+    if(confirm("کیا آپ واقعی دوبارہ رجسٹریشن کرنا چاہتے ہیں؟")) {
+        localStorage.clear();
+        location.reload();
+    }
+}
+
+function switchTab(index, btn) {
+    activeTab = index;
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    initTable(index);
+}
+
+function initTable(index) {
+    const config = configs[index];
+    let tbody = document.getElementById("tableBody");
+    tbody.innerHTML = "";
+    config.data.forEach(item => {
+        tbody.innerHTML += `<tr><td class="size">${item[0]}</td><td class="cut">${item[1]}</td><td><input type="number" class="qty" oninput="calculate()"></td><td class="rowTotal">0</td><td class="hundred">0</td></tr>`;
+    });
+    calculate();
+}
+
+function calculate() {
+    let gt = 0;
+    document.querySelectorAll("#tableBody tr").forEach(row => {
+        let s = parseFloat(row.children[0].innerText), c = parseFloat(row.children[1].innerText), q = parseFloat(row.querySelector(".qty").value) || 0;
+        let r = s * c * q;
+        row.querySelector(".rowTotal").innerText = r;
+        row.querySelector(".hundred").innerText = (r/100).toFixed(2);
+        gt += r;
+    });
+    document.getElementById("grandTotal").innerText = gt;
+    document.getElementById("grandHundred").innerText = (gt/100).toFixed(2);
+    
+    let rf = parseFloat(document.getElementById("rateFotwari").value) || 0;
+    let rh = parseFloat(document.getElementById("rateHundred").value) || 0;
+    document.getElementById("fotwariResult").innerText = (gt * rf).toFixed(2);
+    document.getElementById("hundredResult").innerText = ((gt/100) * rh).toFixed(2);
+}
+
+function safeLock() {
+    if (confirm("کیا آپ واقعی لاک کرنا چاہتے ہیں؟")) {
+        localStorage.setItem("appStatus", "pending_otp");
+        location.reload();
+    }
+}
+
+function setupWA() {
+    let p = localStorage.getItem("userPhone");
+    document.getElementById("waLink").href = "https://wa.me/923329106002?text=محترم قدرت اللہ! میں نے 350 روپے فیس ارسال کر کے رجسٹریشن کر لی ہے۔ میرا نمبر " + p + " ہے۔ میرا کوپن کوڈ درکار ہے۔";
+}
+
+function unlockApp() {
+    let p = localStorage.getItem("userPhone");
+    if(!p) return alert("ڈیٹا نہیں ملا، دوبارہ رجسٹر کریں");
+    let lastFour = p.slice(-4); 
+    let correctCode = (parseInt(lastFour) + SALT).toString();
+    if (document.getElementById("otpInput").value === correctCode) {
+        localStorage.setItem("appStatus", "unlocked");
+        checkStatus();
+    } else { alert("غلط کوپن کوڈ! فیس کی تصدیق کے بعد صحیح کوڈ درج کریں۔"); }
+}
+
+function showSection(id) {
+    ["regArea", "lockArea", "calcArea"].forEach(a => document.getElementById(a).classList.add("hidden"));
+    document.getElementById(id).classList.remove("hidden");
+}
+</script>
+</body>
+              </html>
+              
