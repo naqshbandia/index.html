@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="ur" dir="rtl">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>AbuHamad GRFX Calculator</title>
+
+<!-- PWA -->
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#0f3d2e">
+
+<style>
+
+body{
+    font-family:'Segoe UI',Arial;
+    background:linear-gradient(135deg,#0f3d2e,#145a32);
+    padding:10px;
+    color:#fff;
+}
+
+h2{
+    text-align:center;
+    font-size:16px;
+    color:#ffd700;
+}
+
+/* Tabs */
+
+.tabs{
+    display:flex;
+    gap:5px;
+    margin-bottom:10px;
+}
+
+.tabs button{
+    flex:1;
+    padding:8px;
+    border:none;
+    border-radius:6px;
+    background:#ffd700;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+.tabs button.active{
+    background:orange;
+}
+
+/* Boxes */
+
+.calcBox{
+    display:none;
+}
+
+/* Table */
+
+table{
+    width:100%;
+    border-collapse:collapse;
+    background:rgba(255,255,255,0.05);
+}
+
+th,td{
+    border:1px solid rgba(255,255,255,0.3);
+    padding:6px;
+    text-align:center;
+}
+
+th{
+    background:#ffd700;
+    color:#000;
+    font-size:12px;
+}
+
+.size{
+    color:#ffd700;
+}
+
+.cut{
+    color:#00ffcc;
+}
+
+input{
+    width:60px;
+    padding:4px;
+    text-align:center;
+    border:none;
+    border-radius:4px;
+}
+
+.rowTotal{
+    color:#00ff99;
+}
+
+.hundred{
+    color:#00ccff;
+}
+
+tfoot td{
+    background:gold;
+    color:black;
+    font-weight:bold;
+}
+
+/* Rate Box */
+
+.rateBox{
+    margin-top:10px;
+    background:#203a43;
+    padding:10px;
+    border-radius:10px;
+}
+
+.rateResult{
+    color:#00ffcc;
+    font-weight:bold;
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- 🔐 LOCK SCREEN -->
+
+<div id="lockScreen"
+style="position:fixed;top:0;left:0;width:100%;height:100%;
+background:linear-gradient(135deg,#0f3d2e,#145a32);
+display:flex;
+flex-direction:column;
+justify-content:center;
+align-items:center;
+z-index:9999;
+color:white;">
+
+<h2 style="color:#ffd700">🔐 SYSTEM LOCKED</h2>
+
+<p style="text-align:center;padding:10px">
+ایپ استعمال کرنے کے لیے ایزی پیسہ پر پیمنٹ کریں اور کوڈ حاصل کریں
+</p>
+
+<a id="waPay"
+target="_blank"
+style="background:#25D366;
+padding:10px 15px;
+border-radius:8px;
+color:white;
+text-decoration:none;
+margin:5px">
+
+📲 WhatsApp پر رابطہ کریں
+
+</a>
+
+<input id="licenseInput"
+placeholder="Enter License Code"
+style="padding:10px;
+margin:10px;
+border-radius:6px;
+border:none;
+text-align:center">
+
+<button onclick="unlockApp()"
+style="padding:10px 20px;
+background:gold;
+border:none;
+border-radius:6px;
+font-weight:bold">
+
+UNLOCK
+
+</button>
+
+<p id="msg"
+style="color:red;margin-top:10px"></p>
+
+</div>
+
+<h2>
+AbuHamad GRFX Calculator 0332-910-6002
+</h2>
+
+<!-- 🔘 Tabs -->
+
+<div class="tabs">
+
+<button onclick="showTab(1)" class="active">
+غوڑگہ
+</button>
+
+<button onclick="showTab(2)">
+درگاہ
+</button>
+
+<button onclick="showTab(3)">
+پشاوری
+</button>
+
+<button onclick="showTab(4)">
+لکی مروت
+</button>
+
+</div>
+
+<!-- Boxes -->
+
+<div id="tab1" class="calcBox" style="display:block;"></div>
+<div id="tab2" class="calcBox"></div>
+<div id="tab3" class="calcBox"></div>
+<div id="tab4" class="calcBox"></div>
+
+<script>
+
+/* =========================
+   🔐 LICENSE SYSTEM
+========================= */
+
+const OWNER_CODE = "ABU-1122";
+
+// WhatsApp Auto Message
+
+document.getElementById("waPay").href =
+"https://wa.me/923329106002?text=" +
+encodeURIComponent("السلام علیکم! مجھے AbuHamad GRFX Calculator کا لائسنس کوڈ چاہیے۔");
+
+// Check Unlock
+
+if(localStorage.getItem("appUnlocked") === OWNER_CODE){
+
+    document.getElementById("lockScreen").style.display = "none";
+
+}
+
+function unlockApp(){
+
+    let code = document.getElementById("licenseInput").value;
+
+    if(code === OWNER_CODE){
+
+        localStorage.setItem("appUnlocked", code);
+
+        document.getElementById("lockScreen").style.display = "none";
+
+    }else{
+
+        document.getElementById("msg").innerText =
+        "❌ غلط کوڈ، دوبارہ کوشش کریں";
+
+    }
+
+}
+
+/* =========================
+   🔥 CUSTOM DATA
+========================= */
+
+let data = {
+
+1: [
+
+{size:18,cut:10},
+{size:17,cut:10},
+{size:16,cut:10},
+{size:15,cut:10},
+{size:14,cut:10},
+{size:13,cut:10},
+{size:12,cut:10},
+{size:11,cut:10},
+{size:10,cut:10},
+{size:9,cut:20},
+{size:8,cut:20},
+{size:7,cut:20},
+{size:6,cut:20},
+{size:5,cut:20}
+
+],
+
+2: [
+
+{size:18,cut:10},
+{size:17,cut:10},
+{size:16,cut:10},
+{size:15,cut:10},
+{size:14,cut:10},
+{size:13,cut:10},
+{size:12,cut:10},
+{size:11,cut:10},
+{size:10,cut:10},
+{size:9,cut:20},
+{size:8,cut:20},
+{size:7,cut:20},
+{size:6,cut:20},
+{size:5,cut:20}
+
+],
+
+3: [
+
+{size:18,cut:20},
+{size:17,cut:20},
+{size:16,cut:20},
+{size:15,cut:20},
+{size:14,cut:20},
+{size:13,cut:20},
+{size:12,cut:20},
+{size:11,cut:20},
+{size:10,cut:20},
+{size:9,cut:20},
+{size:8,cut:20},
+{size:7,cut:20},
+{size:6,cut:20},
+{size:5,cut:20},
+{size:4,cut:20},
+{size:3,cut:20}
+
+],
+
+4: [
+
+{size:18,cut:10},
+{size:17,cut:10},
+{size:16,cut:10},
+{size:15,cut:10},
+{size:14,cut:10},
+{size:13,cut:10},
+{size:12,cut:10},
+{size:11,cut:10},
+{size:10,cut:10},
+{size:9,cut:20},
+{size:8,cut:20},
+{size:7,cut:20},
+{size:6,cut:20},
+{size:5,cut:20}
+
+]
+
+};
+
+/* =========================
+   🔘 TAB SWITCH
+========================= */
+
+function showTab(n){
+
+document.querySelectorAll(".calcBox")
+.forEach(e=>e.style.display="none");
+
+document.getElementById("tab"+n)
+.style.display="block";
+
+document.querySelectorAll(".tabs button")
+.forEach(b=>b.classList.remove("active"));
+
+document.querySelectorAll(".tabs button")[n-1]
+.classList.add("active");
+
+}
+
+/* =========================
+   🔥 CREATE TABLE
+========================= */
+
+function createCalc(id,tabNo){
+
+let html = `
+
+<table>
+
+<thead>
+
+<tr>
+<th>سائز</th>
+<th>کٹنگ</th>
+<th>تعداد</th>
+<th>فٹواری</th>
+<th>سینکڑے</th>
+</tr>
+
+</thead>
+
+<tbody>
+
+`;
+
+data[tabNo].forEach(s=>{
+
+html += `
+
+<tr>
+
+<td class="size">${s.size}</td>
+
+<td class="cut">${s.cut}</td>
+
+<td>
+<input type="number" oninput="calc(this)">
+</td>
+
+<td class="rowTotal">0</td>
+
+<td class="hundred">0</td>
+
+</tr>
+
+`;
+
+});
+
+html += `
+
+</tbody>
+
+<tfoot>
+
+<tr>
+
+<td colspan="3">ٹوٹل</td>
+
+<td class="grandTotal">0</td>
+
+<td class="grandHundred">0</td>
+
+</tr>
+
+</tfoot>
+
+</table>
+
+<div class="rateBox">
+
+<table>
+
+<tr>
+
+<td>فٹواری ریٹ</td>
+
+<td>
+<input type="number" oninput="rateCalc(this)">
+</td>
+
+<td class="rateResult">0</td>
+
+</tr>
+
+<tr>
+
+<td>سینکڑا ریٹ</td>
+
+<td>
+<input type="number" oninput="rateCalc(this)">
+</td>
+
+<td class="rateResult">0</td>
+
+</tr>
+
+</table>
+
+</div>
+
+`;
+
+document.getElementById(id).innerHTML = html;
+
+}
+
+/* =========================
+   🔢 CALCULATION
+========================= */
+
+function calc(input){
+
+let table = input.closest("table");
+
+let rows = table.querySelectorAll("tbody tr");
+
+let total = 0;
+
+let hundred = 0;
+
+rows.forEach(r=>{
+
+let size = +r.children[0].innerText;
+
+let cut = +r.children[1].innerText;
+
+let qty = +r.querySelector("input").value || 0;
+
+let t = size * cut * qty;
+
+let h = t / 100;
+
+r.children[3].innerText = t;
+
+r.children[4].innerText = h.toFixed(2);
+
+total += t;
+
+hundred += h;
+
+});
+
+table.querySelector(".grandTotal")
+.innerText = total;
+
+table.querySelector(".grandHundred")
+.innerText = hundred.toFixed(2);
+
+rateCalc(input);
+
+}
+
+/* =========================
+   💰 RATE SYSTEM
+========================= */
+
+function rateCalc(input){
+
+let box = input.closest(".calcBox");
+
+let table = box.querySelector("table");
+
+let total =
++table.querySelector(".grandTotal").innerText;
+
+let rates =
+box.querySelectorAll(".rateBox input");
+
+let results =
+box.querySelectorAll(".rateResult");
+
+let r1 = +rates[0].value || 0;
+
+let r2 = +rates[1].value || 0;
+
+results[0].innerText =
+(total * r1).toFixed(2);
+
+results[1].innerText =
+(total / 100 * r2).toFixed(2);
+
+}
+
+/* =========================
+   🚀 INIT
+========================= */
+
+createCalc("tab1",1);
+createCalc("tab2",2);
+createCalc("tab3",3);
+createCalc("tab4",4);
+
+/* =========================
+   📲 PWA INSTALL
+========================= */
+
+if ('serviceWorker' in navigator) {
+
+window.addEventListener('load', () => {
+
+navigator.serviceWorker.register('service-worker.js')
+
+.then(() => {
+
+console.log("Service Worker Registered");
+
+})
+
+.catch(err => console.log(err));
+
+});
+
+}
+
+/* =========================
+   📥 INSTALL BUTTON
+========================= */
+
+let deferredPrompt;
+
+window.addEventListener('beforeinstallprompt', (e) => {
+
+e.preventDefault();
+
+deferredPrompt = e;
+
+const installBtn = document.createElement("button");
+
+installBtn.innerText = "📲 INSTALL APP";
+
+installBtn.style.position = "fixed";
+installBtn.style.bottom = "20px";
+installBtn.style.left = "20px";
+installBtn.style.padding = "10px";
+installBtn.style.border = "none";
+installBtn.style.borderRadius = "10px";
+installBtn.style.background = "gold";
+installBtn.style.fontWeight = "bold";
+installBtn.style.zIndex = "99999";
+
+document.body.appendChild(installBtn);
+
+installBtn.addEventListener('click', async () => {
+
+installBtn.remove();
+
+deferredPrompt.prompt();
+
+const { outcome } =
+await deferredPrompt.userChoice;
+
+if(outcome === 'accepted'){
+
+console.log('PWA Installed');
+
+}
+
+deferredPrompt = null;
+
+});
+
+});
+
+</script>
+
+</body>
+  </html>
