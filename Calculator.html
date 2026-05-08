@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="ur" dir="rtl">
 <head>
 <meta charset="UTF-8">
@@ -7,8 +7,8 @@
 <link rel="manifest" href="data:application/manifest+json,{%22name%22:%22AbuHamad%20GRFX%22,%22short_name%22:%22GRFX%20Calc%22,%22start_url%22:%22.%22,%22display%22:%22standalone%22,%22background_color%22:%22#0f3d2e%22,%22theme_color%22:%22#ffd700%22}">
 
 <style>
-/* 🌙 Pro Islamic Design */
-body { font-family: 'Segoe UI', Arial; background: linear-gradient(135deg, #0f3d2e, #145a32); padding: 5px; color: #fff; min-height: 100vh; margin: 0; }
+/* 🌙 Pro Islamic/Premium Design */
+body { font-family: 'Segoe UI', Arial; background: radial-gradient(circle, #0f3d2e, #051a12); padding: 5px; color: #fff; min-height: 100vh; margin: 0; }
 .container { max-width: 500px; margin: auto; padding: 10px; }
 .eng-header { text-align: center; font-family: Arial, sans-serif; font-size: 16px; color: #ffd700; margin-bottom: 10px; font-weight: bold; letter-spacing: 1px; }
 
@@ -18,21 +18,23 @@ body { font-family: 'Segoe UI', Arial; background: linear-gradient(135deg, #0f3d
 .tab-btn.active { background: #ffd700; color: #000; box-shadow: 0 0 8px #ffd700; }
 
 /* 📊 Table Styling */
-table { width: 100%; border-collapse: collapse; background: #000; border: 2px solid #ffd700; border-radius: 5px; }
-th, td { border: 1px solid #ffd700; padding: 6px 2px; text-align: center; font-size: 12px; }
-th { background: #ffd700; color: #000; font-weight: bold; }
-input { width: 55px; padding: 4px; text-align: center; border: 1px solid #ffd700; background: #fff; color: #000; font-weight: bold; }
-
-/* 💳 Payment Box (EasyPaisa) */
-.payment-box { background: rgba(255, 255, 255, 0.1); border: 1px dashed #ffd700; padding: 12px; border-radius: 10px; margin-bottom: 15px; text-align: center; }
-.payment-box p { font-size: 13px; line-height: 1.6; margin: 5px 0; }
-.p-highlight { color: #00ffcc; font-weight: bold; font-size: 15px; }
+table { width: 100%; border-collapse: collapse; background: #fff; border: 2px solid #ffd700; border-radius: 5px; color: #000; overflow: hidden; }
+th, td { border: 1px solid #ccc; padding: 6px 2px; text-align: center; font-size: 13px; font-weight: bold; }
+th { background: #000; color: #fff; font-weight: bold; }
+td.size { background-color: #e0f2f1; }
+td.cut { background-color: #ffe0b2; }
+td.rowTotal { background-color: #e8f5e9; }
+input.qty { width: 65px; padding: 8px; text-align: center; border: 3px solid #999; background: #fff; color: #000; font-weight: bold; border-radius: 4px; }
 
 /* UI Elements */
 .hidden { display: none; }
-.main-card { background: rgba(0,0,0,0.5); padding: 20px; border-radius: 15px; border: 2px solid #ffd700; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
-.reg-input { width: 100%; padding: 12px; margin-bottom: 10px; border-radius: 8px; border: none; box-sizing: border-box; }
-.btn-submit { background: #ffd700; color: #000; width: 100%; padding: 14px; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; font-size: 16px; }
+.main-card { background: rgba(0,0,0,0.5); padding: 25px; border-radius: 20px; border: 2px solid #ffd700; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+.reg-input { width: 100%; padding: 15px; margin-bottom: 15px; border-radius: 8px; border: 1px solid #ccc; box-sizing: border-box; font-size: 16px; text-align: center; color: #000; }
+.btn-submit { background: linear-gradient(to bottom, #ffd700, #b8860b); color: #000; width: 100%; padding: 14px; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; font-size: 18px; }
+
+.reset-box { border: 2px solid #ffd700; border-radius: 10px; padding: 10px; cursor: pointer; margin-top: 20px; display: block; text-decoration: none; text-align: center; }
+.reset-text { color: #ffd700; font-size: 14px; font-weight: bold; }
+
 .btn-lock { background: #ff4444; color: white; border: none; border-radius: 6px; width: 100%; margin-top: 15px; padding: 8px; font-size: 11px; cursor: pointer; }
 </style>
 </head>
@@ -41,66 +43,88 @@ input { width: 55px; padding: 4px; text-align: center; border: 1px solid #ffd700
 <div class="container">
 
     <div id="regArea" class="main-card hidden">
-        <h2 style="text-align: center; color: #ffd700;">رجسٹریشن برائے ممبر شپ</h2>
-        
-        <div class="payment-box">
-            <p>محترم کسٹمر! اس کیلکولیٹر کو مستقل استعمال کرنے کے لیے <span class="p-highlight">350 روپے</span> فیس ادا کرنا لازمی ہے۔</p>
-            <p>رقم اس ایزی پیسہ اکاؤنٹ پر ارسال کریں:</p>
-            <p class="p-highlight">نمبر: 03329106002</p>
-            <p class="p-highlight">نام: Qudrat Ullah khan</p>
-            <p style="color: #ffd700; font-size: 11px;">پیمنٹ کا اسکرین شاٹ واٹس ایپ پر بھیجیں، جس کے بعد آپ کو ان لاک کوڈ مل جائے گا۔</p>
+        <div style="background: rgba(0,0,0,0.3); border: 2px solid #ffd700; padding: 15px; border-radius: 15px; margin-bottom: 20px; text-align: center;">
+            <p style="color: #fff; font-size: 15px; margin-bottom: 12px; font-weight: 500;">
+                محترم و مکرم! اس کیلکولیٹر کو مستقل استعمال کرنے کے لیے فیس ادا کرنا لازمی ہے۔
+            </p>
+            <div style="font-size: 16px; font-weight: bold; color: #ffd700; margin-bottom: 10px;">
+                رجسٹریشن فیس: <span style="color: #00ffcc;">460 روپے</span>
+            </div>
+            <div style="background: #ffd700; color: #000; padding: 8px; border-radius: 8px; font-weight: bold; font-size: 15px; margin-bottom: 5px;">
+                🎊 خوشخبری: خصوصی ڈسکاؤنٹ آفر! 🎊
+            </div>
+            <div style="border: 1px dashed #ffd700; padding: 10px; border-radius: 8px; margin-bottom: 15px;">
+                <p style="margin: 0; font-size: 13px; color: #fff;">
+                    اگر آپ <span style="color: #00ffcc; font-weight: bold;">دو دوست</span> مل کر یا <span style="color: #00ffcc; font-weight: bold;">دو موبائل پر </span> رجسٹر کرواتے ہیں
+                </p>
+                <p style="margin: 5px 0 0 0; font-size: 15px; font-weight: bold; color: #fff;">
+                    تو دونوں کی مجموعی فیس صرف <span style="background: #00ffcc; color: #000; padding: 0 8px; border-radius: 4px;">600 روپے</span> ہوگی
+                </p>
+            </div>
+            <div style="background: rgba(255,255,255,0.1); padding: 10px; border-radius: 10px;">
+                <p style="color: #00ffcc; font-weight: bold; margin: 0; font-size: 16px;">easypaisa No</p>
+                <p style="margin: 5px 0; font-size: 16px; font-weight: bold; color: #fff;">نمبر: 03329106002</p>
+                <p style="margin: 0; font-size: 15px; color: #ffd700;">نام: Qudrat Ullah Khan</p>
+            </div>
         </div>
 
-        <form id="regForm">
-            <input type="text" id="uName" class="reg-input" placeholder="اپنا نام لکھیں" required>
-            <input type="number" id="uMobile" class="reg-input" placeholder="موبائل نمبر درج کریں" required>
-            <button type="submit" class="btn-submit">ڈیٹا رجسٹر کریں</button>
+        <form id="regForm" action="https://formsubmit.co/mirakhel2021@gmail.com" method="POST" target="hidden_iframe" onsubmit="saveAndProceed(event)">
+            <input type="hidden" name="_captcha" value="false">
+            <input type="hidden" name="_subject" value="New Calculator Registration">
+            
+            <input type="text" name="Name" id="uName" class="reg-input" placeholder="اپنا نام لکھیں" required>
+            <input type="number" name="Mobile" id="uMobile" class="reg-input" placeholder="موبائل نمبر درج کریں" required>
+            <input type="hidden" name="DeviceID" id="uDeviceHidden">
+            
+            <button type="submit" class="btn-submit">فارم رجسٹر کریں اور فیس جمع کریں</button>
         </form>
+        <iframe name="hidden_iframe" style="display:none;"></iframe>
     </div>
 
     <div id="lockArea" class="main-card hidden">
-        <h2 style="text-align: center;">سیکیورٹی لاک</h2>
-        <p style="text-align: center; font-size: 12px;">براہ کرم واٹس ایپ سے حاصل کردہ کوڈ لکھیں</p>
-        <input type="password" id="otpInput" class="reg-input" placeholder="کوڈ یہاں لکھیں" style="text-align:center; font-size: 20px; letter-spacing: 5px;">
+        <h2 style="text-align: center; color: #ffd700; font-size: 28px;">سیکیورٹی لاک</h2>
+        <p style="text-align: center; font-size: 13px; color: #ccc;">محترم کسٹمر! اپنا کوپن کوڈ درج کریں</p>
+        <input type="password" id="otpInput" class="reg-input" placeholder="Coupon Code" style="background: #f0f0f0; letter-spacing: 5px; font-size: 22px;">
         <button onclick="unlockApp()" class="btn-submit">ان لاک کریں</button>
-        <p style="text-align: center; margin-top: 15px;"><a id="waLink" href="#" style="color: #00ffcc; text-decoration: none; font-weight: bold;">📱 واٹس ایپ سے کوڈ حاصل کریں</a></p>
+        <p style="text-align: center; margin-top: 15px;">
+            <a id="waLink" href="#" style="color: #00ffcc; text-decoration: none; font-weight: bold;">📱 واٹس ایپ سے کوڈ حاصل کریں</a>
+        </p>
+        <a href="#" class="reset-box" onclick="resetRegistration()">
+            <div class="reset-text">دوبارہ رجسٹریشن کریں</div>
+        </a>
     </div>
 
     <div id="calcArea" class="hidden">
         <div class="eng-header">AbuHamad GRFX - 03329106002</div>
-        
         <div class="tab-container">
             <button class="tab-btn active" onclick="switchTab(0, this)">ناڑی چک</button>
             <button class="tab-btn" onclick="switchTab(1, this)">کانا چک</button>
             <button class="tab-btn" onclick="switchTab(2, this)">پشاوری چک</button>
             <button class="tab-btn" onclick="switchTab(3, this)">لکی مروت</button>
         </div>
-
         <table id="calcTable">
             <thead>
                 <tr><th>سائز</th><th>کٹنگ</th><th>تعداد</th><th>فٹواری</th><th>سینکڑے</th></tr>
             </thead>
             <tbody id="tableBody"></tbody>
             <tfoot>
-                <tr><td colspan="3">ٹوٹل</td><td id="grandTotal">0</td><td id="grandHundred">0</td></tr>
+                <tr style="background: #333; color: #fff;"><td colspan="3">ٹوٹل</td><td id="grandTotal">0</td><td id="grandHundred">0</td></tr>
             </tfoot>
         </table>
-
         <div style="margin-top:10px; background:rgba(0,0,0,0.4); padding:10px; border-radius:10px; border:1px solid #ffd700;">
-            <table style="background:none; border:none;">
+            <table style="background:none; border:none; color: #fff; width: 100%;">
                 <tr style="border:none;">
-                    <td style="border:none;">فٹواری ریٹ</td>
-                    <td style="border:none;"><input type="number" id="rateFotwari" oninput="calculate()"></td>
-                    <td id="fotwariResult" style="border:none; color:#00ffcc; font-weight:bold; font-size:16px;">0</td>
+                    <td style="border:none; text-align: left;">فٹواری ریٹ</td>
+                    <td style="border:none;"><input type="number" id="rateFotwari" oninput="calculate()" style="width: 80px;"></td>
+                    <td id="fotwariResult" style="border:none; color:#00ffcc; font-weight:bold; font-size:18px;">0</td>
                 </tr>
                 <tr style="border:none;">
-                    <td style="border:none;">سینکڑے ریٹ</td>
-                    <td style="border:none;"><input type="number" id="rateHundred" oninput="calculate()"></td>
-                    <td id="hundredResult" style="border:none; color:#00ffcc; font-weight:bold; font-size:16px;">0</td>
+                    <td style="border:none; text-align: left;">سینکڑے ریٹ</td>
+                    <td style="border:none;"><input type="number" id="rateHundred" oninput="calculate()" style="width: 80px;"></td>
+                    <td id="hundredResult" style="border:none; color:#00ffcc; font-weight:bold; font-size:18px;">0</td>
                 </tr>
             </table>
         </div>
-
         <button class="btn-lock" onclick="safeLock()">🔒 کیلکولیٹر لاک کریں</button>
     </div>
 
@@ -110,7 +134,6 @@ input { width: 55px; padding: 4px; text-align: center; border: 1px solid #ffd700
 const SALT = 5050; 
 let activeTab = 0;
 
-// 🛡️ ڈیوائس آئی ڈی جنریٹر
 function getDeviceId() {
     const info = navigator.userAgent + screen.width + screen.height;
     let hash = 0;
@@ -123,9 +146,7 @@ function getDeviceId() {
 
 const configs = [
     { name: "ناڑی چک", data: [[18,10],[17,10],[16,10],[15,10],[14,10],[13,10],[12,10],[11,10],[10,10],[9,20],[8,20],[7,20],[6,20],[5,20]] },
-  
     { name: "کانا چک", data: [[18,10],[17,10],[16,12],[15,12],[14,15],[13,20],[12,25],[11,25],[10,25],[9,25],[8,25],[7,25],[6,25],[5,25]] },
-  
     { name: "پشاوری چک", data: [[18,20],[17,20],[16,20],[15,20],[14,20],[13,20],[12,20],[11,20],[10,20],[9,20],[8,20],[7,20],[6,20],[5,20]] },
     { name: "لکی مروت ", data: [[18,10],[17,10],[16,12],[15,12],[14,15],[13,20],[12,25],[11,25],[10,25],[9,25],[8,25],[7,25],[6,25],[5,25]] },
 ];
@@ -134,7 +155,21 @@ function checkStatus() {
     let status = localStorage.getItem("appStatus");
     if (status === "unlocked") { showSection("calcArea"); initTable(0); }
     else if (status === "pending_otp") { showSection("lockArea"); setupWA(); }
-    else { showSection("regArea"); }
+    else { 
+        showSection("regArea"); 
+        document.getElementById("uDeviceHidden").value = getDeviceId();
+    }
+}
+
+function saveAndProceed(e) {
+    // ڈیٹا محفوظ کریں
+    localStorage.setItem("userPhone", document.getElementById("uMobile").value);
+    localStorage.setItem("uName", document.getElementById("uName").value);
+    localStorage.setItem("appStatus", "pending_otp");
+    
+    // فورا لاک اسکرین دکھائیں
+    showSection("lockArea");
+    setupWA();
 }
 
 function switchTab(index, btn) {
@@ -179,32 +214,37 @@ function safeLock() {
     }
 }
 
-document.getElementById("regForm").onsubmit = function(e) {
-    e.preventDefault();
-    localStorage.setItem("userPhone", document.getElementById("uMobile").value);
-    localStorage.setItem("appStatus", "pending_otp");
-    checkStatus();
-};
+function resetRegistration() {
+    if (confirm("کیا آپ واقعی رجسٹریشن ری سیٹ کرنا چاہتے ہیں؟")) {
+        localStorage.clear();
+        location.reload();
+    }
+}
 
 function setupWA() {
     let p = localStorage.getItem("userPhone");
+    let n = localStorage.getItem("uName");
     let d = getDeviceId();
-    let msg = `محترم قدرت اللہ! میں نے رجسٹریشن کر لی ہے۔%0Aنمبر: ${p}%0Aڈیوائس آئی ڈی: ${d}%0Aبراہ کرم میرا کوڈ بھیج دیں۔`;
+    let msg = `محترم قدرت اللہ! میں نے رجسٹریشن کر لی ہے۔%0Aنام: ${n}%0Aنمبر: ${p}%0Aڈیوائس آئی ڈی: ${d}%0Aبراہ کرم میرا کوڈ بھیج دیں۔`;
     document.getElementById("waLink").href = "https://wa.me/923329106002?text=" + msg;
 }
 
 function unlockApp() {
     let p = localStorage.getItem("userPhone");
     let d = getDeviceId();
-    let inputOtp = document.getElementById("otpInput").value;
+    let inputOtp = document.getElementById("otpInput").value.trim();
+
+    if(!p) { resetRegistration(); return; }
 
     let lastFour = p.slice(-4);
-    let correctCode = (parseInt(lastFour) + parseInt(d) + SALT).toString().slice(-4);
+    let correctCode = (parseInt(lastFour) + parseInt(d) + SALT).toString();
 
     if (inputOtp === correctCode) {
         localStorage.setItem("appStatus", "unlocked");
         checkStatus();
-    } else { alert("غلط کوڈ! براہ کرم ایزی پیسہ پیمنٹ کے بعد درست کوڈ حاصل کریں۔"); }
+    } else { 
+        alert("غلط کوڈ! براہ کرم درست کوڈ حاصل کریں۔"); 
+    }
 }
 
 function showSection(id) {
@@ -213,5 +253,4 @@ function showSection(id) {
 }
 </script>
 </body>
-                      </html>
-                      
+</html>
