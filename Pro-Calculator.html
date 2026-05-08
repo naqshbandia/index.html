@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="ur" dir="rtl">
 <head>
 <meta charset="UTF-8">
@@ -32,38 +32,56 @@ input.qty { width: 65px; padding: 8px; text-align: center; border: 3px solid #99
 .reg-input { width: 100%; padding: 15px; margin-bottom: 15px; border-radius: 8px; border: 1px solid #ccc; box-sizing: border-box; font-size: 16px; text-align: center; color: #000; }
 .btn-submit { background: linear-gradient(to bottom, #ffd700, #b8860b); color: #000; width: 100%; padding: 14px; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; font-size: 18px; }
 
-.reset-box { border: 2px solid #ffd700; border-radius: 10px; padding: 10px; cursor: pointer; margin-top: 20px; display: block; text-decoration: none; text-align: center; }
-.reset-text { color: #ffd700; font-size: 14px; font-weight: bold; }
+/* ٹاپ ویلکم لائن کا ڈیزائن */
+.user-welcome-bar {
+    background: linear-gradient(90deg, #ffd700, #b8860b);
+    color: #000;
+    padding: 10px;
+    text-align: center;
+    font-weight: bold;
+    font-size: 12px;
+    border-radius: 10px;
+    margin-bottom: 15px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+    display: none;
+    border: 2px solid #fff;
+}
 
-.btn-lock { background: #ff4444; color: white; border: none; border-radius: 6px; width: 100%; margin-top: 15px; padding: 8px; font-size: 11px; cursor: pointer; }
+.reset-box { border: 2px solid #ffd700; border-radius: 10px; padding: 10px; cursor: pointer; margin-top: 20px; display: block; text-decoration: none; text-align: center; }
+.reset-text { color: #ffd700; font-size: 14px; font-weight: bold; } 
+ 
+.footer-text { margin-top: 15px; font-size: 12px; color: #aaa; text-align: center; }
+.wa-footer-link { color: #00ffcc; text-decoration: none; font-weight: bold; display: block; margin-top: 5px; }
 </style>
 </head>
 <body onload="checkStatus()">
 
 <div class="container">
 
+    <div id="userWelcome" class="user-welcome-bar"></div>
+
     <div id="regArea" class="main-card hidden">
         <div style="background: rgba(0,0,0,0.3); border: 2px solid #ffd700; padding: 15px; border-radius: 15px; margin-bottom: 20px; text-align: center;">
             <p style="color: #fff; font-size: 15px; margin-bottom: 12px; font-weight: 500;">
                 محترم و مکرم! اس کیلکولیٹر کو مستقل استعمال کرنے کے لیے فیس ادا کرنا لازمی ہے۔
             </p>
-            <div style="font-size: 16px; font-weight: bold; color: #ffd700; margin-bottom: 8px;">
-                رجسٹریشن فیس: <span style="color: #00ffcc;">380 روپے</span>
+            <div style="font-size: 18px; font-weight: bold; color: #ffd700; margin-bottom: 10px;">
+                 رجسٹریشن فیس: <span style="color: #00ffcc;">460 روپے</span>
             </div>
-            <div style="background: #ffd700; color: #000; padding: 8px; border-radius: 8px; font-weight: bold; font-size: 12px; margin-bottom: 2px;">
+            <div style="background: #ffd700; color: #000; padding: 8px; border-radius: 8px; font-weight: bold; font-size: 13px; margin-bottom: 5px;">
                 🎊 خوشخبری: خصوصی ڈسکاؤنٹ آفر! 🎊
             </div>
-            <div style="border: 1px dashed #ffd700; padding: 10px; border-radius: 8px; margin-bottom: 15px;">
-                <p style="margin: 0; font-size: 12px; color: #fff;">
-                    اگر آپ <span style="color: #00ffcc; font-weight: bold;">دو دوست</span> مل کر یا <span style="color: #00ffcc; font-weight: bold;">دو موبائل پر </span> رجسٹر کرواتے ہیں
+            <div style="border: 1px dashed #ffd700; padding: 6px; border-radius: 8px; margin-bottom: 6px;">
+                <p style="margin: 0; font-size: 10.5px; color: #fff;">
+                    اگر آپ <span style="color: #00ffcc; font-weight: bold;">دو دوست</span> مل کر یا <span style="color: #00ffcc; font-weight: bold;">دو موبائل پر</span> رجسٹر کرواتے ہیں
                 </p>
-                <p style="margin: 5px 0 0 0; font-size: 12px; font-weight: bold; color: #fff;">
-                    تو دونوں کی مجموعی فیس صرف <span style="background: #00ffcc; color: #000; padding: 0 4px; border-radius: 2px;">600 روپے</span> ہوگی
+                <p style="margin: 3px 0 0 0; font-size: 13px; font-weight: bold; color: #fff;">
+                    تو دونوں کی مجموعی فیس صرف <span style="background: #00ffcc; color: #000; padding: 0 2px; border-radius: 2px;">600 روپے</span> ہوگی
                 </p>
             </div>
             <div style="background: rgba(255,255,255,0.1); padding: 10px; border-radius: 10px;">
                 <p style="color: #00ffcc; font-weight: bold; margin: 0; font-size: 16px;">easypaisa No</p>
-                <p style="margin: 1px 0; font-size: 16px; font-weight: bold; color: #fff;">نمبر: 03329106002</p>
+                <p style="margin: 2px 0; font-size: 18px; font-weight: bold; color: #fff;">نمبر: 03329106002</p>
                 <p style="margin: 0; font-size: 15px; color: #ffd700;">نام: Qudrat Ullah Khan</p>
             </div>
         </div>
@@ -95,7 +113,7 @@ input.qty { width: 65px; padding: 8px; text-align: center; border: 3px solid #99
     </div>
 
     <div id="calcArea" class="hidden">
-        <div class="eng-header">AbuHamad GRFX - 03329106002</div>
+ 
         <div class="tab-container">
             <button class="tab-btn active" onclick="switchTab(0, this)">ناڑی چک</button>
             <button class="tab-btn" onclick="switchTab(1, this)">کانا چک</button>
@@ -104,7 +122,7 @@ input.qty { width: 65px; padding: 8px; text-align: center; border: 3px solid #99
         </div>
         <table id="calcTable">
             <thead>
-                <tr><th>سائز</th><th>کٹنگ سائز</th><th>تعداد</th><th>فٹواری</th><th>سینکڑے</th></tr>
+                <tr><th>سائز</th><th>کٹنگ</th><th>تعداد</th><th>فٹواری</th><th>سینکڑے</th></tr>
             </thead>
             <tbody id="tableBody"></tbody>
             <tfoot>
@@ -124,10 +142,14 @@ input.qty { width: 65px; padding: 8px; text-align: center; border: 3px solid #99
                     <td id="hundredResult" style="border:none; color:#00ffcc; font-weight:bold; font-size:18px;">0</td>
                 </tr>
             </table>
-        </div>
-        <button class="btn-lock" onclick="safeLock()">🔒 کیلکولیٹر لاک کریں</button>
+        </div> 
+     <!-- فوٹر واٹس ایپ لنک کے ساتھ -->
+    <div class="footer-text">
+        Powered by AbuHamad-GRFX-Designer
+        <a class="wa-footer-link" href="https://wa.me/923329106002?text=محترم قدرت اللہ بھائی! مجھے کیلکولیٹر کے بارے میں رہنمائی / مشورہ چاہیے">
+            💬 رہنمائی یا مشورہ کے لیے واٹس ایپ کریں:03329106002
+        </a>
     </div>
-
 </div>
 
 <script>
@@ -153,21 +175,35 @@ const configs = [
 
 function checkStatus() {
     let status = localStorage.getItem("appStatus");
-    if (status === "unlocked") { showSection("calcArea"); initTable(0); }
-    else if (status === "pending_otp") { showSection("lockArea"); setupWA(); }
+    let name = localStorage.getItem("uName");
+    let phone = localStorage.getItem("userPhone");
+    let welcomeBar = document.getElementById("userWelcome");
+
+    if (status === "unlocked") {
+        showSection("calcArea");
+        initTable(0);
+        if(name && phone) {
+            welcomeBar.innerHTML = `✅ رجسٹرڈ ممبر: ${name} (${phone})`;
+            welcomeBar.style.display = "block";
+        }
+    }
+    else if (status === "pending_otp") {
+        showSection("lockArea");
+        setupWA();
+        welcomeBar.style.display = "none";
+    }
     else { 
         showSection("regArea"); 
         document.getElementById("uDeviceHidden").value = getDeviceId();
+        welcomeBar.style.display = "none";
     }
 }
 
 function saveAndProceed(e) {
-    // ڈیٹا محفوظ کریں
     localStorage.setItem("userPhone", document.getElementById("uMobile").value);
     localStorage.setItem("uName", document.getElementById("uName").value);
     localStorage.setItem("appStatus", "pending_otp");
-    
-    // فورا لاک اسکرین دکھائیں
+    document.getElementById("uDeviceHidden").value = getDeviceId();
     showSection("lockArea");
     setupWA();
 }
@@ -233,12 +269,9 @@ function unlockApp() {
     let p = localStorage.getItem("userPhone");
     let d = getDeviceId();
     let inputOtp = document.getElementById("otpInput").value.trim();
-
     if(!p) { resetRegistration(); return; }
-
     let lastFour = p.slice(-4);
     let correctCode = (parseInt(lastFour) + parseInt(d) + SALT).toString();
-
     if (inputOtp === correctCode) {
         localStorage.setItem("appStatus", "unlocked");
         checkStatus();
@@ -253,4 +286,5 @@ function showSection(id) {
 }
 </script>
 </body>
-</html>
+                                                                                                                                     </html>
+                        
