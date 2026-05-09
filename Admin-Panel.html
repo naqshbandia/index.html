@@ -1,49 +1,24 @@
  <!DOCTYPE html>
-<html lang="ur" dir="rtl">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AbuHamad Admin Panel - Pro Database</title>
+<title>AbuHamad Admin - Professional Tool</title>
 <style>
-    body { 
-        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
-        background: radial-gradient(circle at center, #0a2e1f 0%, #051a12 100%); 
-        color: white; text-align: center; padding: 20px 15px; margin: 0; min-height: 100vh;
-    }
-    .admin-container { 
-        background: rgba(0,0,0,0.8); padding: 25px; border: 2px solid #e0c38c; 
-        border-radius: 20px; display: inline-block; box-shadow: 0 15px 50px rgba(0,0,0,0.8);
-        max-width: 320px; width: 100%; position: relative;
-    }
+    body { font-family: 'Segoe UI', Tahoma, sans-serif; background: radial-gradient(circle at center, #0a2e1f 0%, #051a12 100%); color: white; text-align: center; padding: 20px 15px; margin: 0; min-height: 100vh; }
+    .admin-container { background: rgba(0,0,0,0.85); padding: 25px; border: 2px solid #e0c38c; border-radius: 20px; display: inline-block; box-shadow: 0 15px 50px rgba(0,0,0,0.8); max-width: 350px; width: 100%; }
     h2 { color: #e0c38c; border-bottom: 1px solid rgba(224, 195, 140, 0.3); padding-bottom: 15px; font-size: 20px; }
-    
-    /* سرچ باکس اسٹائل */
-    .search-box {
-        background: rgba(255,255,255,0.1); border: 1px solid #00ffcc; border-radius: 10px;
-        padding: 10px; margin-bottom: 20px;
-    }
-    .search-box input {
-        background: transparent; border: none; color: #00ffcc; text-align: center;
-        width: 100%; outline: none; font-size: 16px;
-    }
-
+    .search-box { background: rgba(0, 255, 204, 0.05); border: 1px solid #00ffcc; border-radius: 10px; padding: 10px; margin-bottom: 20px; }
+    .search-box input { background: transparent; border: none; color: #00ffcc; text-align: center; width: 100%; outline: none; font-size: 16px; font-weight: bold; }
     .input-group { margin-bottom: 15px; text-align: right; }
-    label { display: block; color: #e0c38c; font-size: 13px; margin-bottom: 5px; }
-    input { 
-        padding: 12px; border-radius: 8px; border: 1px solid #e0c38c; 
-        width: 100%; text-align: center; font-size: 16px; box-sizing: border-box;
-    }
-    button { 
-        background: linear-gradient(135deg, #e0c38c 0%, #b8860b 100%); 
-        color: #000; padding: 14px; border: none; font-weight: bold; cursor: pointer; 
-        border-radius: 10px; width: 100%; margin-top: 10px; font-size: 16px;
-    }
+    label { display: block; color: #e0c38c; font-size: 13px; margin-bottom: 5px; font-weight: bold; }
+    input { padding: 12px; border-radius: 8px; border: 1px solid #e0c38c; width: 100%; text-align: center; font-size: 16px; background: #fff; color: #000; }
+    button { background: linear-gradient(135deg, #e0c38c 0%, #b8860b 100%); color: #000; padding: 14px; border: none; font-weight: bold; cursor: pointer; border-radius: 10px; width: 100%; margin-top: 10px; }
     
-    #resultBox, #searchResult { 
-        margin-top: 20px; padding: 15px; border: 2px dashed #00ffcc; 
-        border-radius: 12px; background: rgba(0,255,204,0.1); display: none;
-    }
-    .footer-text { margin-top: 20px; font-size: 10px; color: #aaa; }
+    #resultBox, #searchResult { margin-top: 20px; padding: 15px; border: 2px dashed #00ffcc; border-radius: 12px; background: rgba(0,255,204,0.1); display: none; }
+    .btn-row { display: flex; gap: 5px; margin-top: 10px; }
+    .copy-btn { background: #00ffcc; color: #000; border: none; padding: 10px; flex: 1; border-radius: 5px; font-weight: bold; cursor: pointer; }
+    .wa-btn { background: #25d366; color: white; border: none; padding: 10px; flex: 1; border-radius: 5px; font-weight: bold; cursor: pointer; text-decoration: none; display: block; }
 </style>
 </head>
 <body>
@@ -52,88 +27,88 @@
     <h2>AbuHamad Admin Panel</h2>
 
     <div class="search-box">
-        <label style="text-align: center; display: block; font-size: 11px; color: #00ffcc;">پرانا کوڈ تلاش کریں (نمبر لکھیں)</label>
-        <input type="number" id="searchPhone" placeholder="نمبر لکھ کر تلاش کریں..." oninput="searchData()">
+        <label style="color: #00ffcc;">Search Old Code (Mobile Number)</label>
+        <input type="number" id="searchPhone" placeholder="03XXXXXXXXX" oninput="searchData()">
     </div>
     
     <div id="searchResult">
-        <span style="font-size: 12px;">مل گیا! اس کسٹمر کا کوڈ یہ ہے:</span>
-        <div id="foundCode" style="font-size: 24px; color: #ffd700; font-weight: bold; margin-top: 5px;"></div>
+        <div id="foundCode" style="font-size: 14px; line-height: 1.6; text-align: left; direction: ltr;"></div>
+        <div class="btn-row">
+            <button class="copy-btn" id="copySearchBtn">Copy Message</button>
+            <a id="waSearchBtn" class="wa-btn" href="#">WhatsApp</a>
+        </div>
     </div>
 
     <hr style="border: 0; border-top: 1px solid rgba(224, 195, 140, 0.2); margin: 20px 0;">
 
     <div class="input-group">
-        <label>کسٹمر کا موبائل نمبر:</label>
+        <label>Customer Mobile Number:</label>
         <input type="number" id="custPhone" placeholder="03XXXXXXXXX">
     </div>
-    
     <div class="input-group">
-        <label>ڈیوائس آئی ڈی:</label>
-        <input type="number" id="custDevice" placeholder="1234">
+        <label>Device ID:</label>
+        <input type="number" id="custDevice" placeholder="e.g. 1234">
     </div>
-    
-    <button onclick="generateCode()">کوڈ جنریٹ اور سیو کریں</button>
+    <button onclick="generateCode()">Generate & Save Code</button>
     
     <div id="resultBox">
-        <span style="font-size: 13px;">نیا تیار کردہ کوڈ:</span>
-        <div id="resultText" style="font-size: 28px; color: #00ffcc; font-weight: bold;"></div>
-        <p style="font-size: 11px; color: #fff;">(یہ ڈیٹا خود بخود سیو ہو گیا ہے)</p>
+        <div id="resultText" style="font-size: 14px; line-height: 1.6; text-align: left; direction: ltr;"></div>
+        <div class="btn-row">
+            <button class="copy-btn" id="copyGenBtn">Copy Message</button>
+            <a id="waGenBtn" class="wa-btn" href="#">WhatsApp</a>
+        </div>
     </div>
 
-    <div class="footer-text">Powered by AbuHamad GRFX Database v2.0</div>
+    <div style="margin-top: 20px; font-size: 10px; color: #aaa;">Powered by AbuHamad GRFX v4.5</div>
 </div>
 
 <script>
-// ڈیٹا سیو کرنے اور جنریٹ کرنے کا فنکشن
+const SALT = 5050;
+
 function generateCode() {
-    const pInput = document.getElementById("custPhone");
-    const dInput = document.getElementById("custDevice");
-    const resultBox = document.getElementById("resultBox");
-    const resultText = document.getElementById("resultText");
-    
-    let p = pInput.value.trim();
-    let d = dInput.value.trim();
-    const SALT = 5050;
-
+    let p = document.getElementById("custPhone").value.trim();
+    let d = document.getElementById("custDevice").value.trim();
     if(p.length >= 4 && d !== "") {
-        let lastFour = p.slice(-4); 
-        let finalCode = parseInt(lastFour) + parseInt(d) + SALT;
+        let finalCode = parseInt(p.slice(-4)) + parseInt(d) + SALT;
         
-        // --- ڈیٹا بیس (LocalStorage) میں سیو کریں ---
-        let customers = JSON.parse(localStorage.getItem("abuHamadDB") || "{}");
-        customers[p] = finalCode; // نمبر کے ساتھ کوڈ محفوظ
-        localStorage.setItem("abuHamadDB", JSON.stringify(customers));
-        // ----------------------------------------
+        // آپ کا بتایا ہوا انگلش پیغام
+        let msg = `Dear Customer, your Coupon code is: ${finalCode}. Please do not share your OTP with anyone. For further assistance, please call 03329106002.`;
 
-        resultBox.style.display = "block";
-        resultText.innerText = finalCode;
+        let db = JSON.parse(localStorage.getItem("abuHamadDB") || "{}");
+        db[p] = msg; 
+        localStorage.setItem("abuHamadDB", JSON.stringify(db));
+
+        document.getElementById("resultText").innerText = msg;
+        document.getElementById("resultBox").style.display = "block";
         
-        // فیلڈز خالی کر دیں
-        pInput.value = "";
-        dInput.value = "";
-    } else {
-        alert("براہ کرم تمام معلومات درست لکھیں!");
+        setupButtons("copyGenBtn", "waGenBtn", msg, p);
     }
 }
 
-// سرچ کرنے کا فنکشن
 function searchData() {
     let sPhone = document.getElementById("searchPhone").value.trim();
-    let sResultBox = document.getElementById("searchResult");
-    let foundCodeDiv = document.getElementById("foundCode");
-    
-    let customers = JSON.parse(localStorage.getItem("abuHamadDB") || "{}");
-
-    if(customers[sPhone]) {
-        sResultBox.style.display = "block";
-        foundCodeDiv.innerText = customers[sPhone];
+    let db = JSON.parse(localStorage.getItem("abuHamadDB") || "{}");
+    if(db[sPhone]) {
+        // پرانے اسٹارز کو صاف کرنا
+        let cleanMsg = db[sPhone].replace(/\*/g, ""); 
+        
+        document.getElementById("foundCode").innerText = cleanMsg;
+        document.getElementById("searchResult").style.display = "block";
+        setupButtons("copySearchBtn", "waSearchBtn", cleanMsg, sPhone);
     } else {
-        sResultBox.style.display = "none";
+        document.getElementById("searchResult").style.display = "none";
     }
+}
+
+function setupButtons(copyId, waId, msg, phone) {
+    document.getElementById(copyId).onclick = () => { 
+        navigator.clipboard.writeText(msg); 
+        alert("Message copied successfully!"); 
+    };
+    let formattedPhone = phone.startsWith('0') ? '92' + phone.substring(1) : phone;
+    document.getElementById(waId).href = `https://wa.me/${formattedPhone}?text=${encodeURIComponent(msg)}`;
 }
 </script>
 
 </body>
-        </html>
-        
+</html>
