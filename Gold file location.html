@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Khanqah Dar-ul-Falah - Library</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <style>
+        :root { --gold: #b08d43; --dark: #4e3b2b; --bg: #fdfaf3; --red: #ff0000; --green: #0a5d38; }
+        
+        body { font-family: 'Segoe UI', Arial, sans-serif; background: var(--bg); margin: 0; padding-top: 145px; overflow-x: hidden; }
+
+        .navbar { background: var(--dark); color: white; position: fixed; top: 0; width: 100%; height: auto; display: flex; align-items: center; z-index: 1001; border-bottom: 4px solid var(--gold); padding: 12px 0; }
+        .navbar-text { font-size: 13px; text-align: center; width: 100%; font-weight: bold; line-height: 1.4; padding: 0 10px; }
+
+        .header-controls { display: flex; justify-content: center; align-items: center; gap: 15px; margin-top: 12px; flex-wrap: wrap; }
+        .whatsapp-channel-btn { background-color: #25D366; color: white !important; padding: 2px 8px; border-radius: 50px; text-decoration: none; font-size: 12px; font-weight: bold; display: flex; align-items: center; gap: 2px; transition: 0.3s; box-shadow: 0 3px 6px rgba(0,0,0,0.3); }
+        .app-download-btn { background: linear-gradient(45deg, #3d2e21, #b08d43); border: 2px solid var(--gold); color: white; text-decoration: none; padding: 2px 8px; border-radius: 50px; font-size: 12px; }
+        .header-social { display: flex; gap: 15px; align-items: center; }
+        .header-social a { color: white; text-decoration: none; font-size: 13px; transition: 0.5s ease; }
+
+        .search-container { background: var(--dark); padding: 12px 0; border-bottom: 2px solid var(--gold); position: sticky; top: 130px; z-index: 1000; margin-top: -10px; }
+        .search-box { display: flex; max-width: 330px; margin: 0 auto; background: white; border-radius: 5px; overflow: hidden; border: 1px solid var(--gold); }
+        .search-box input { flex: 1; border: none; padding: 10px; outline: none; font-size: 14px; text-align: right; direction: rtl; }
+        .search-btn { background: var(--gold); color: white; border: none; padding: 0 18px; cursor: pointer; }
+
+        .slider-wrapper { background: #fff; border-bottom: 2px solid var(--gold); overflow-x: auto; scrollbar-width: none; white-space: nowrap; padding: 15px 0; margin-top: 5px; position: relative; z-index: 998; }
+        .menu-slider { display: inline-flex; gap: 12px; padding-left: 15px; animation: autoScroll 40s linear infinite; }
+        @keyframes autoScroll { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+
+        .grid-item { display: inline-block; background: #fff; border: 1px solid #eee; border-radius: 12px; padding: 12px; width: 100px; text-align: center; color: var(--green); box-shadow: 0 2px 5px rgba(0,0,0,0.05); cursor: pointer; }
+        .grid-item i { font-size: 22px; margin-bottom: 6px; display: block; }
+        .grid-item span { font-size: 10px; font-weight: bold; display: block; white-space: normal; line-height: 1.2; }
+
+        .container { max-width:380px; margin: 0 auto; padding: 5px; }
+        .logo-area { width: 100%; margin: 15px auto; background: #3d2e21; border: 2px solid var(--gold); border-radius: 8px; overflow: hidden; box-shadow: 0 4px 8px rgba(0,0,0,0.2); }
+        .logo-area img { width: 100%; display: block; }
+
+        .bayan-card { background: #fff; border: 2.5px solid var(--gold); border-radius: 12px; margin-bottom: 25px; overflow: hidden; box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
+        .bayan-header { background: var(--gold); color: white; padding: 14px; font-weight: bold; text-align: center; font-size: 17px; }
+        
+        .audio-item { padding: 10px; border-bottom: 2px solid #eee; background: #fffcf5; }
+        .title-row { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; direction: rtl; }
+        .bayan-num { background: var(--gold); color: white; width: 24px; height: 24px; display: flex; align-items: center; justify-content: center; border-radius: 50%; font-size: 11px; font-weight: bold; }
+        .audio-title { font-size: 14px; font-weight: bold; color: #2c3e50; flex: 1; text-align: right; }
+
+        /* New Badge Animation - Glowing & Pulsing */
+.new-badge {
+    background: #ff0000;
+    background: linear-gradient(45deg, #ff0000, #ff4d4d);
+    color: white;
+    font-size: 10px;
+    padding: 2px 8px;
+    border-radius: 4px;
+    margin-right: 8px; /* اردو سیٹنگ کے لیے */
+    font-weight: bold;
+    display: inline-block;
+    box-shadow: 0 0 10px rgba(255, 0, 0, 0.7);
+    /* یہاں اینیمیشن کی رفتار اور نام ہے */
+    animation: glow-pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes glow-pulse {
+    0% {
+        transform: scale(1);
+        box-shadow: 0 0 5px rgba(255, 0, 0, 0.5);
+    }
+    50% {
+        transform: scale(1.1); /* سائز تھوڑا بڑھے گا */
+        box-shadow: 0 0 15px rgba(255, 0, 0, 1); /* چمک بڑھے گی */
+        background: #ff3333;
+    }
+    100% {
+        transform: scale(1);
+        box-shadow: 0 0 5px rgba(255, 0, 0, 0.5);
+    }
+}
+        
+        .player-row { background: #111; padding: 5px; border-radius: 8px; margin: 5px 0; position: relative; border: 1px solid var(--gold); }
+        audio { width: 100%; height: 32px; filter: invert(100%) hue-rotate(180deg); }
+        
+        .q-spinner { 
+            position: absolute; left: 9.5%; top: 46.5%; transform: translate(-50%, -50%); 
+            width: 18px; height: 18px; border: 3px solid rgba(255,255,255,0.2); 
+            border-top-color: #25D366; border-radius: 50%; 
+            animation: spin 0.8s linear infinite; display: none; z-index: 10; 
+        }
+        @keyframes spin { to { transform: translate(-50%, -50%) rotate(360deg); } }
+
+        .dl-hint-urdu { background: var(--dark); color: var(--gold); font-size: 11px; text-align: center; padding: 8px; font-weight: bold; border-radius: 4px; margin-top: 5px; direction: rtl; }
+
+        .meta-info { display: flex; justify-content: space-between; font-size: 10px; color: #666; margin-top: 6px; direction: ltr; }
+        .pagination-row { display: flex; gap: 10px; padding: 12px; background: #f1f1f1; }
+        .btn-page { background: var(--dark); color: white; border: 1px solid var(--gold); padding: 10px; border-radius: 6px; font-size: 12px; cursor: pointer; flex: 1; font-weight: bold; }
+
+        .audio-popup-control {
+            position: fixed; bottom: -100px; left: 50%; transform: translateX(-50%);
+            width: 90%; max-width: 350px; background: var(--dark); border: 2px solid var(--gold);
+            border-radius: 50px; display: flex; justify-content: space-around; align-items: center;
+            padding: 10px; z-index: 2000; transition: 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 -5px 20px rgba(0,0,0,0.4);
+        }
+        .audio-popup-control.active { bottom: 20px; }
+        .popup-btn { background: none; border: none; color: var(--gold); font-size: 20px; cursor: pointer; }
+        .play-main { background: var(--gold); color: white; width: 45px; height: 45px; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
+    </style>
+</head>
+<body>
+
+<div class="navbar">
+    <div class="navbar-text">
+        SHEIKH-UL-HADEES HAZRAT MAULANA PEER MUHAMMAD JAMSHAID NAQSHBANDI (D.B)<br>
+        <span style="font-size: 10px; color: var(--gold);">KHANQAH DAR-UL-FALAH DIGITAL LIBRARY</span>
+        <div class="header-controls">
+            <a href="https://whatsapp.com/channel/0029VaHFtAKDDmFU33nD360K" class="whatsapp-channel-btn" target="_blank"><i class="fab fa-whatsapp"></i> Channel</a>
+            <div class="header-social">
+                <a href="https://api.whatsapp.com/send?phone=923329106002" target="_blank"><i class="fab fa-whatsapp"></i></a>
+                <a href="https://www.facebook.com/profile.php?id=100068373408345" target="_blank"><i class="fab fa-facebook-f"></i></a>
+                <a href="https://youtube.com/@peermolanamuhammadjamshedn1391" target="_blank"><i class="fab fa-youtube"></i></a>
+                <a href="https://archive.org/download/khanqah-darul-falah/%20Khanqah%20Darul%20falah.apk" class="app-download-btn"><i class="fab fa-android"></i> App</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="search-container">
+    <div class="search-box">
+        <input type="text" id="gSearch" placeholder="بیان کا نام یا مقام سرچ کریں" onkeyup="smartSearch()">
+        <button class="search-btn"><i class="fa fa-search"></i></button>
+    </div>
+</div>
+
+<div class="slider-wrapper">
+    <div class="menu-slider" id="catMenu"></div>
+</div>
+
+<div class="container">
+     <div class="logo-area">
+        <img src="https://archive.org/download/20260422_20260422_1213/%D8%B4%DB%8C%D8%AE%20%D8%B5%D8%A7%D8%AD%D8%A8%20%D9%84%D9%88%DA%AF%D9%88%20%D9%84%DA%A9%DA%91%DB%8C%20%D9%88%D8%A7%D9%84%D8%A7.png" alt="Logo">
+     </div>
+    <div id="master-root">
+        <div style="text-align:center; padding:40px; color:var(--gold); font-weight: bold;">🌿 لائبریری لوڈ ہو رہی ہے...</div>
+    </div>
+</div>
+
+<div id="audioPopup" class="audio-popup-control">
+    <button class="popup-btn" onclick="playPrev()"><i class="fa fa-backward-step"></i></button>
+    <button class="popup-btn play-main" onclick="toggleMainPlay()"><i id="popupPlayIcon" class="fa fa-pause"></i></button>
+    <button class="popup-btn" onclick="playNext()"><i class="fa fa-forward-step"></i></button>
+</div>
+
+<script>
+    const libraryData = [
+        { id:"noor-e-nisbat", title: "Sulook ila Allah ke Aasaan Usool", icon: "fa-compass" },
+        { id:"20250918_20250918_0142", title: "Sulook ila Allah", icon: "fa-compass" },
+        { id: "13-2024_202510", title: "HAFTAVAR ZIKAR MAJALIS", icon: "fa-microphone-lines" },
+        { id: "001_20251018", title: "DARS-E-QURAN DARULHUDA", icon: "fa-mosque" },
+        { id: "20260205_20260205_1013", title: "DASTAR-E-FAZILAT 2026", icon: "fa-graduation-cap" },
+        { id: "22-2017_202509", title: "ISLAHI MAJALIS", icon: "fa-users-gear" },
+        { id: "143_20251113", title: "DARS-E-QURAN MASJED ISLAMUDDIN", icon: "fa-book-quran" },
+        { id: "20251018_20251018_0949", title: "HAMD-O-NAAT", icon: "fa-heart" }
+    ];
+
+    let cardProgress = {};
+    let currentPlayingId = null;
+
+    function createSliderMenu() {
+        const menu = document.getElementById('catMenu');
+        libraryData.forEach(item => {
+            const div = document.createElement('div');
+            div.className = 'grid-item';
+            div.innerHTML = `<i class="fa ${item.icon}"></i><span>${item.title}</span>`;
+            div.onclick = () => { 
+                const target = document.getElementById(`card-${item.id}`);
+                window.scrollTo({ top: target.offsetTop - 200, behavior: 'smooth' });
+            };
+            menu.appendChild(div);
+        });
+    }
+
+    async function loadLibrary() {
+        createSliderMenu();
+        const root = document.getElementById('master-root');
+        root.innerHTML = '';
+        for (const cat of libraryData) {
+            try {
+                const res = await fetch(`https://archive.org/metadata/${cat.id}`);
+                const data = await res.json();
+                let mp3s = data.files.filter(f => f.name.toLowerCase().endsWith('.mp3'));
+                if (mp3s.length > 0) {
+                    mp3s.sort((a, b) => (b.mtime || 0) - (a.mtime || 0));
+                    cardProgress[cat.id] = 0;
+                    const card = document.createElement('div');
+                    card.className = 'bayan-card';
+                    card.id = `card-${cat.id}`;
+                    card.innerHTML = `<div class="bayan-header">${cat.title}</div><div id="list-${cat.id}"></div>
+                        <div class="pagination-row">
+                            <button class="btn-page" id="back-${cat.id}" onclick="showLess('${cat.id}')" style="display:none;">BACK</button>
+                            <button class="btn-page" id="more-${cat.id}" onclick="loadMoreFiles('${cat.id}')">NEXT MORE</button>
+                        </div>`;
+                    root.appendChild(card);
+                    card.dataset.fullList = JSON.stringify(mp3s);
+                    loadMoreFiles(cat.id, 2);
+                }
+            } catch (err) {}
+        }
+    }
+
+    function loadMoreFiles(catId, count = 10) {
+        const card = document.getElementById(`card-${catId}`);
+        const allFiles = JSON.parse(card.dataset.fullList);
+        const start = cardProgress[catId];
+        const end = start + count;
+        renderFiles(catId, allFiles.slice(start, end), false);
+        cardProgress[catId] = end;
+        if(start > 0) document.getElementById(`back-${catId}`).style.display = 'block';
+        if (end >= allFiles.length) document.getElementById(`more-${catId}`).style.display = 'none';
+    }
+
+    function renderFiles(catId, files, clearOld = true) {
+        const target = document.getElementById(`list-${catId}`);
+        if(clearOld) target.innerHTML = '';
+        
+        const now = Math.floor(Date.now() / 1000);
+        const sevenDays = 7 * 24 * 60 * 60;
+
+        files.forEach((file, index) => {
+            const globalIdx = clearOld ? index : (target.children.length);
+            const url = `https://archive.org/download/${catId}/${encodeURIComponent(file.name)}`;
+            let title = file.title || file.name.replace('.mp3', '');
+
+let location = "";
+const match = title.match(/\[(.*?)\]/);
+
+if (match) {
+    location = match[1];
+    title = title.replace(/\[(.*?)\]/, '').trim();
+}
+            
+            const isNew = (now - parseInt(file.mtime)) < sevenDays;
+            const newTag = isNew ? `<span class="new-badge">NEW</span>` : '';
+
+            const itemHtml = `
+                <div class="audio-item">
+                    <div class="title-row">
+                        <span class="bayan-num">${globalIdx + 1}</span>
+                        <span class="audio-title">${newTag} ${title}</span>
+                    </div>
+                    <div class="player-row">
+                        <div id="spin-${catId}-${globalIdx}" class="q-spinner"></div>
+                        <audio id="aud-${catId}-${globalIdx}" controls preload="none" 
+                               onplay="handlePlay('${catId}', ${globalIdx})" 
+                               onended="playNext()"
+                               onwaiting="toggleSpin('${catId}', ${globalIdx}, true)" 
+                               onplaying="toggleSpin('${catId}', ${globalIdx}, false)"
+                               oncanplay="toggleSpin('${catId}', ${globalIdx}, false)">
+                            <source src="${url}" type="audio/mpeg">
+                        </audio>
+                    </div>
+                    <div id="hint-${catId}-${globalIdx}" class="dl-hint-urdu" style="display:none;">
+                        ڈاؤن لوڈ کرنے کے لئے تین نقطوں پر کلک کریں
+                    </div>
+                    <div class="meta-info">
+    <span>📅 ${new Date(parseInt(file.mtime)*1000).toLocaleDateString("en-GB")}</span>
+
+    ${location ? `<span style="color:#0a5d38;font-weight:bold;">📍 ${location}</span>` : ''}
+
+    <span>💾 ${(file.size/(1024*1024)).toFixed(1)} MB</span>
+</div>
+                </div>`;
+            target.insertAdjacentHTML('beforeend', itemHtml);
+        });
+    }
+
+    function handlePlay(catId, idx) {
+        currentPlayingId = {cat: catId, index: idx};
+        document.getElementById('audioPopup').classList.add('active');
+        document.getElementById('popupPlayIcon').className = 'fa fa-pause';
+
+        const hint = document.getElementById(`hint-${catId}-${idx}`);
+        if(hint) hint.style.display = 'block';
+
+        document.querySelectorAll('audio').forEach(a => { 
+            if(a.id !== `aud-${catId}-${idx}`) {
+                a.pause();
+                const hid = a.id.replace('aud-', 'hint-');
+                if(document.getElementById(hid)) document.getElementById(hid).style.display = 'none';
+            }
+        });
+    }
+
+    function toggleMainPlay() {
+        if(!currentPlayingId) return;
+        const aud = document.getElementById(`aud-${currentPlayingId.cat}-${currentPlayingId.index}`);
+        const icon = document.getElementById('popupPlayIcon');
+        if(aud.paused) { aud.play(); icon.className = 'fa fa-pause'; }
+        else { aud.pause(); icon.className = 'fa fa-play'; }
+    }
+
+    function playNext() {
+        if(!currentPlayingId) return;
+        const nextAud = document.getElementById(`aud-${currentPlayingId.cat}-${currentPlayingId.index + 1}`);
+        if(nextAud) { nextAud.play(); nextAud.scrollIntoView({ behavior: 'smooth', block: 'center' }); }
+    }
+
+    function playPrev() {
+        if(!currentPlayingId || currentPlayingId.index === 0) return;
+        const prevAud = document.getElementById(`aud-${currentPlayingId.cat}-${currentPlayingId.index - 1}`);
+        if(prevAud) { prevAud.play(); prevAud.scrollIntoView({ behavior: 'smooth', block: 'center' }); }
+    }
+
+    function toggleSpin(catId, idx, show) {
+        const s = document.getElementById(`spin-${catId}-${idx}`);
+        if(s) s.style.display = show ? 'block' : 'none';
+    }
+
+    function smartSearch() {
+        const query = document.getElementById('gSearch').value.toLowerCase();
+        const cards = document.getElementsByClassName('bayan-card');
+        for (let card of cards) {
+            const catId = card.id.replace('card-', '');
+            const allFiles = JSON.parse(card.dataset.fullList);
+            const matched = allFiles.filter(f => (f.title || f.name).toLowerCase().includes(query));
+            if (matched.length > 0) {
+                card.style.display = "block";
+                renderFiles(catId, query === "" ? allFiles.slice(0, 2) : matched, true);
+            } else { card.style.display = "none"; }
+        }
+    }
+
+    loadLibrary();
+</script>
+
+</body>
+        </html>
+    
