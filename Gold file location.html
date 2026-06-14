@@ -12,7 +12,7 @@
         body { font-family: 'Segoe UI', Arial, sans-serif; background: var(--bg); margin: 0; padding-top: 145px; overflow-x: hidden; }
 
         .navbar { background: var(--dark); color: white; position: fixed; top: 0; width: 100%; height: auto; display: flex; align-items: center; z-index: 1001; border-bottom: 4px solid var(--gold); padding: 12px 0; }
-        .navbar-text { font-size: 13px; text-align: center; width: 100%; font-weight: bold; line-height: 1.4; padding: 0 10px; }
+        .navbar-text { font-size: 16px; text-align: center; width: 100%; font-weight: bold; line-height: 1.4; padding: 0 10px; }
 
         .header-controls { display: flex; justify-content: center; align-items: center; gap: 15px; margin-top: 12px; flex-wrap: wrap; }
         .whatsapp-channel-btn { background-color: #25D366; color: white !important; padding: 2px 8px; border-radius: 50px; text-decoration: none; font-size: 12px; font-weight: bold; display: flex; align-items: center; gap: 2px; transition: 0.3s; box-shadow: 0 3px 6px rgba(0,0,0,0.3); }
@@ -41,43 +41,31 @@
         .bayan-header { background: var(--gold); color: white; padding: 14px; font-weight: bold; text-align: center; font-size: 17px; }
         
         .audio-item { padding: 10px; border-bottom: 2px solid #eee; background: #fffcf5; }
-        .title-row { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; direction: rtl; }
+        .title-row { display: flex; align-items: center; gap: 8px; margin-bottom: 2px; direction: rtl; }
         .bayan-num { background: var(--gold); color: white; width: 24px; height: 24px; display: flex; align-items: center; justify-content: center; border-radius: 50%; font-size: 11px; font-weight: bold; }
         .audio-title { font-size: 14px; font-weight: bold; color: #2c3e50; flex: 1; text-align: right; }
 
-        /* New Badge Animation - Glowing & Pulsing */
-.new-badge {
-    background: #ff0000;
-    background: linear-gradient(45deg, #ff0000, #ff4d4d);
-    color: white;
-    font-size: 10px;
-    padding: 2px 8px;
-    border-radius: 4px;
-    margin-right: 8px; /* اردو سیٹنگ کے لیے */
-    font-weight: bold;
-    display: inline-block;
-    box-shadow: 0 0 10px rgba(255, 0, 0, 0.7);
-    /* یہاں اینیمیشن کی رفتار اور نام ہے */
-    animation: glow-pulse 1.5s ease-in-out infinite;
-}
+        .new-badge {
+            background: #ff0000;
+            background: linear-gradient(45deg, #ff0000, #ff4d4d);
+            color: white;
+            font-size: 12px;
+            padding: 0px 8px;
+            border-radius: 4px;
+            margin-right: 0px;
+            font-weight: bold;
+            display: inline-block;
+            box-shadow: 0 0 10px rgba(255, 0, 0, 0.7);
+            animation: glow-pulse 1.5s ease-in-out infinite;
+        }
 
-@keyframes glow-pulse {
-    0% {
-        transform: scale(1);
-        box-shadow: 0 0 5px rgba(255, 0, 0, 0.5);
-    }
-    50% {
-        transform: scale(1.1); /* سائز تھوڑا بڑھے گا */
-        box-shadow: 0 0 15px rgba(255, 0, 0, 1); /* چمک بڑھے گی */
-        background: #ff3333;
-    }
-    100% {
-        transform: scale(1);
-        box-shadow: 0 0 5px rgba(255, 0, 0, 0.5);
-    }
-}
+        @keyframes glow-pulse {
+            0% { transform: scale(1); box-shadow: 0 0 5px rgba(255, 0, 0, 0.5); }
+            50% { transform: scale(1.1); box-shadow: 0 0 15px rgba(255, 0, 0, 1); background: #ff3333; }
+            60% { transform: scale(1); box-shadow: 0 0 5px rgba(255, 0, 0, 0.5); }
+        }
         
-        .player-row { background: #111; padding: 5px; border-radius: 8px; margin: 5px 0; position: relative; border: 1px solid var(--gold); }
+        .player-row { background: #111; padding: 0px; border-radius: 8px; margin: 0px 0; position: relative; border: 1.5px solid var(--gold); }
         audio { width: 100%; height: 32px; filter: invert(100%) hue-rotate(180deg); }
         
         .q-spinner { 
@@ -88,15 +76,15 @@
         }
         @keyframes spin { to { transform: translate(-50%, -50%) rotate(360deg); } }
 
-        .dl-hint-urdu { background: var(--dark); color: var(--gold); font-size: 11px; text-align: center; padding: 8px; font-weight: bold; border-radius: 4px; margin-top: 5px; direction: rtl; }
+        .dl-hint-urdu { background: var(--dark); color: var(--gold); font-size: 11px; text-align: center; padding: 2px; font-weight: bold; border-radius: 4px; margin-top: 2px; direction: rtl; }
 
-        .meta-info { display: flex; justify-content: space-between; font-size: 10px; color: #666; margin-top: 6px; direction: ltr; }
+        .meta-info { display: flex; justify-content: space-between; font-size: 10px; color: #666; margin-top: 0px; direction: ltr; }
         .pagination-row { display: flex; gap: 10px; padding: 12px; background: #f1f1f1; }
-        .btn-page { background: var(--dark); color: white; border: 1px solid var(--gold); padding: 10px; border-radius: 6px; font-size: 12px; cursor: pointer; flex: 1; font-weight: bold; }
+        .btn-page { background: var(--dark); color: white; border: 2px solid var(--gold); padding: 8px; border-radius: 6px; font-size: 12px; cursor: pointer; flex: 1; font-weight: bold; }
 
         .audio-popup-control {
             position: fixed; bottom: -100px; left: 50%; transform: translateX(-50%);
-            width: 90%; max-width: 350px; background: var(--dark); border: 2px solid var(--gold);
+            width: 60%; max-width: 320px; background: var(--dark); border: 2px solid var(--gold);
             border-radius: 50px; display: flex; justify-content: space-around; align-items: center;
             padding: 10px; z-index: 2000; transition: 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             box-shadow: 0 -5px 20px rgba(0,0,0,0.4);
@@ -104,26 +92,106 @@
         .audio-popup-control.active { bottom: 20px; }
         .popup-btn { background: none; border: none; color: var(--gold); font-size: 20px; cursor: pointer; }
         .play-main { background: var(--gold); color: white; width: 45px; height: 45px; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
+        
+ 
+
     </style>
 </head>
 <body>
 
-<div class="navbar">
-    <div class="navbar-text">
-        SHEIKH-UL-HADEES HAZRAT MAULANA PEER MUHAMMAD JAMSHAID NAQSHBANDI (D.B)<br>
-        <span style="font-size: 10px; color: var(--gold);">KHANQAH DAR-UL-FALAH DIGITAL LIBRARY</span>
-        <div class="header-controls">
-            <a href="https://whatsapp.com/channel/0029VaHFtAKDDmFU33nD360K" class="whatsapp-channel-btn" target="_blank"><i class="fab fa-whatsapp"></i> Channel</a>
-            <div class="header-social">
-                <a href="https://api.whatsapp.com/send?phone=923329106002" target="_blank"><i class="fab fa-whatsapp"></i></a>
-                <a href="https://www.facebook.com/profile.php?id=100068373408345" target="_blank"><i class="fab fa-facebook-f"></i></a>
-                <a href="https://youtube.com/@peermolanamuhammadjamshedn1391" target="_blank"><i class="fab fa-youtube"></i></a>
-                <a href="https://archive.org/download/khanqah-darul-falah/%20Khanqah%20Darul%20falah.apk" class="app-download-btn"><i class="fab fa-android"></i> App</a>
+<div class="header-controls" style="display: flex; justify-content: flex-start; align-items: center; margin-top: 10px; width: 100%; direction: ltr; padding: 0 15px; box-sizing: border-box;">
+    
+    <button style="background: none; border: none; color: var(--gold); font-size: 22px; cursor: pointer; padding: 5px 10px;" onclick="event.stopPropagation(); toggleNavMenu(true);">
+        <i class="fa fa-bars"></i>
+    </button>
+
+    <div id="menuOverlay" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 2001; display: none; opacity: 0; transition: opacity 0.6s ease;" onclick="toggleNavMenu(false)"></div>
+
+    <div id="customNavMenu" style="position: fixed; top: 0; left: -290px; width: 260px; height: 100%; background: #3d2e21; border-right: 3px solid var(--gold); z-index: 2002; box-shadow: 5px 0 25px rgba(0,0,0,0.5); padding: 20px 15px; box-sizing: border-box; transition: left 0.6s cubic-bezier(0.25, 1, 0.5, 1); direction: rtl; text-align: right;">
+        
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px;">
+            <span style="color: var(--gold); font-weight: bold; font-size: 16px; letter-spacing: 1px;">LIBRARY MENU</span>
+            <button style="background: none; border: none; color: #ff4d4d; font-size: 20px; cursor: pointer;" onclick="toggleNavMenu(false);"><i class="fa fa-times"></i></button>
+        </div>
+        
+        <div class="menu-fade-item" style="opacity: 0; transform: translateY(10px); transition: all 0.4s ease 0.2s;">
+            <a href="https://archive.org/download/khanqah-darul-falah/%20Khanqah%20Darul%20falah.apk" style="background: linear-gradient(45deg, #2c1f15, #b08d43); border: 1px solid var(--gold); color: white !important; text-decoration: none; padding: 10px; border-radius: 8px; font-size: 13px; display: flex; align-items: center; justify-content: center; gap: 8px; font-weight: bold; margin-bottom: 20px; box-shadow: 0 4px 10px rgba(0,0,0,0.2);" target="_blank">
+                <i class="fab fa-android" style="color: #25D366; font-size: 16px;"></i> Android App Download
+            </a>
+        </div>
+
+        <hr style="border: 0; border-top: 1px dashed rgba(176, 141, 67, 0.3); margin: 15px 0;">
+
+        <div class="menu-fade-item" style="opacity: 0; transform: translateY(10px); transition: all 0.4s ease 0.35s;">
+            <div style="color: var(--gold); font-size: 11px; font-weight: bold; margin-bottom: 10px; text-align: center; letter-spacing: 1px;">SOCIAL MEDIA</div>
+            <div style="display: flex; justify-content: space-around; background: rgba(0,0,0,0.3); padding: 10px; border-radius: 8px; margin-bottom: 20px;">
+                <a href="https://api.whatsapp.com/send?phone=923329106002" target="_blank" style="color: white; font-size: 20px;"><i class="fab fa-whatsapp" style="color: #25D366;"></i></a>
+                <a href="https://www.facebook.com/profile.php?id=100068373408345" target="_blank" style="color: white; font-size: 20px;"><i class="fab fa-facebook-f" style="color: #1877F2;"></i></a>
+                <a href="https://youtube.com/@peermolanamuhammadjamshedn1391" target="_blank" style="color: white; font-size: 20px;"><i class="fab fa-youtube" style="color: #FF0000;"></i></a>
+            </div>
+        </div>
+
+        <hr style="border: 0; border-top: 1px dashed rgba(176, 141, 67, 0.3); margin: 15px 0;">
+
+        <div class="menu-fade-item" style="opacity: 0; transform: translateY(10px); transition: all 0.4s ease 0.5s;">
+            <div style="color: var(--gold); font-size: 11px; font-weight: bold; margin-bottom: 10px; text-align: center; letter-spacing: 1px;">WHATSAPP LINKS</div>
+            <div style="display: flex; flex-direction: column; gap: 8px; max-height: calc(100vh - 260px); overflow-y: auto; padding-left: 3px;">
+              
+                <a href="https://whatsapp.com/channel/0029VaHFtAKDDmFU33nD360K" style="background: #25D366; color: white !important; text-decoration: none; font-size: 12px; padding: 8px 12px; border-radius: 6px; font-weight: bold; display: flex; align-items: center; gap: 8px;" target="_blank"><i class="fab fa-whatsapp"></i> Official Channel</a>
+
+                <a href="https://chat.whatsapp.com/F8R7NYrrC9y8Qh3ahZjbKP" style="background: rgba(37, 211, 102, 0.1); color: #25D366 !important; border: 1px solid rgba(37, 211, 102, 0.4); text-decoration: none; font-size: 12px; padding: 8px 12px; border-radius: 6px; font-weight: bold; display: flex; align-items: center; gap: 8px;" target="_blank"><i class="fa fa-users"></i>اصلاح و تربیت</a>
+                
+                <a href="https://chat.whatsapp.com/DvTQSQgBY047UpvZaG4j1n" style="background: rgba(37, 211, 102, 0.1); color: #25D366 !important; border: 1px solid rgba(37, 211, 102, 0.4); text-decoration: none; font-size: 12px; padding: 8px 12px; border-radius: 6px; font-weight: bold; display: flex; align-items: center; gap: 8px;" target="_blank"><i class="fa fa-users"></i>ِشارٹ بیانات</a>
+               
+                <a href="https://chat.whatsapp.com/LMrsIec0blR3YgPgtj7pZw" style="background: rgba(37, 211, 102, 0.1); color: #25D366 !important; border: 1px solid rgba(37, 211, 102, 0.4); text-decoration: none; font-size: 12px; padding: 8px 12px; border-radius: 6px; font-weight: bold; display: flex; align-items: center; gap: 8px;" target="_blank"><i class="fa fa-users"></i> درسِ قرآن</a >
+                  
+                 <a href="https://chat.whatsapp.com/LfAEjp6PNFXExk9VfnnGuy?s=sh&p=a&mlu=3" style="background: rgba(37, 211, 102, 0.1); color: #25D366 !important; border: 1px solid rgba(37, 211, 102, 0.4); text-decoration: none; font-size: 12px; padding: 8px 12px; border-radius: 6px; font-weight: bold; display: flex; align-items: center; gap: 8px;" target="_blank"><i class="fa fa-users"></i>مجالسِ محبت الٰہی</a>
             </div>
         </div>
     </div>
 </div>
 
+
+
+<div class="navbar">
+    <div class="navbar-text">
+        SHEIKH-UL-HADEES HAZRAT MAULANA PEER MUHAMMAD JAMSHAID NAQSHBANDI (D.B)<br>
+        <span style="font-size: 16px; color: var(--gold);">KHANQAH DAR-UL-FALAH DIGITAL LIBRARY</span>
+ <div class="header-controls">
+    <div class="header-social">
+        <a href="https://api.whatsapp.com/send?phone=923329106002" target="_blank"><i class="fab fa-whatsapp"></i></a>
+        <a href="https://www.facebook.com/profile.php?id=100068373408345" target="_blank"><i class="fab fa-facebook-f"></i></a>
+        <a href="https://youtube.com/@peermolanamuhammadjamshedn1391" target="_blank"><i class="fab fa-youtube"></i></a>
+        <a href="https://archive.org/download/khanqah-darul-falah/%20Khanqah%20Darul%20falah.apk" class="app-download-btn"><i class="fab fa-android"></i> App</a>
+    </div>
+</div>
+
+<!-- نئی لکیر اور واٹس ایپ گروپس سیکشن -->
+<hr style="border: 0; height: 1px; background: linear-gradient(to right, transparent, var(--gold), transparent); margin: 4px auto; width: 100%;">
+<div style="width: 100%; max-width: 350px; margin: 0 auto; direction: rtl; text-align: right;">
+    <button style="background: transparent; border: none; color: #25D366; font-size: 13px; font-weight: bold; width: 100%; text-align: center; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 5px;" onclick="document.getElementById('wgMenu').style.display = (document.getElementById('wgMenu').style.display === 'grid') ? 'none' : 'grid';">
+        <i class="fab fa-whatsapp"></i> WHATSAPP GROUPS <i class="fa fa-chevron-down" style="font-size: 16px;"></i>
+    </button>
+    <div id="wgMenu" style="display: none; margin-top: 8px; background: rgba(0,0,0,0.2); padding: 8px; border-radius: 6px; border: 1px solid rgba(176, 141, 67, 0.3); grid-template-columns: 1fr 1fr; gap: 6px;">
+        
+        <!-- واٹس ایپ چینل (یہاں منتقل کر دیا گیا ہے) -->
+        <a href="https://whatsapp.com/channel/0029VaHFtAKDDmFU33nD360K" style="background: #25D366; color: white !important; text-decoration: none; font-size: 16px; padding: 5px; border-radius: 4px; text-align: center; font-weight: bold; display: block; border-bottom: 2px solid #1da851;" target="_blank"><i class="fab fa-whatsapp"></i> Channel</a>
+        
+        <!-- واٹس ایپ گروپس کے لنکس -->
+        <a href="https://chat.whatsapp.com/F8R7NYrrC9y8Qh3ahZjbKP" style="background: #25D366; color: white !important; text-decoration: none; font-size: 16px; padding: 5px; border-radius: 4px; text-align: center; font-weight: bold; display: block; border-bottom: 2px solid #1da851;" target="_blank"><i class="fa fa-users"></i> اصلاح و تربیت</a>
+        <a href="https://chat.whatsapp.com/DvTQSQgBY047UpvZaG4j1n" style="background: #25D366; color: white !important; text-decoration: none; font-size: 16px; padding: 5px; border-radius: 4px; text-align: center; font-weight: bold; display: block; border-bottom: 2px solid #1da851;" target="_blank"><i class="fa fa-users"></i> شارٹ بیانات</a>
+        <a href="https://chat.whatsapp.com/LMrsIec0blR3YgPgtj7pZw" style="background: #25D366; color: white !important; text-decoration: none; font-size: 16px; padding: 5px; border-radius: 4px; text-align: center; font-weight: bold; display: block; border-bottom: 2px solid #1da851;" target="_blank"><i class="fa fa-users"></i> درسِ قرآن </a>
+     
+        <a href="https://chat.whatsapp.com/KOMhllk91BM6XagfBrHnAD" style="background: #25D366; color: white !important; text-decoration: none; font-size: 16px; padding: 8px; border-radius: 8px; text-align: center; font-weight: bold; display: block; border-bottom: 2px solid #1da851;" target="_blank"><i class="fa fa-users"></i> دردِ دل</a>
+        
+         <a href="https://chat.whatsapp.com/LfAEjp6PNFXExk9VfnnGuy?s=sh&p=a&mlu=3" style="background: #25D366; color: white !important; text-decoration: none; font-size: 16px; padding: 8px; border-radius: 8px; text-align: center; font-weight: bold; display: block; border-bottom: 2px solid #1da851;" target="_blank"><i class="fa fa-users"></i> مجالسِ محبت الٰہی</a>
+        
+    </div>
+</div>
+
+        </div>
+    </div>
+</div>
 <div class="search-container">
     <div class="search-box">
         <input type="text" id="gSearch" placeholder="بیان کا نام یا مقام سرچ کریں" onkeyup="smartSearch()">
@@ -159,7 +227,8 @@
         { id: "20260205_20260205_1013", title: "DASTAR-E-FAZILAT 2026", icon: "fa-graduation-cap" },
         { id: "22-2017_202509", title: "ISLAHI MAJALIS", icon: "fa-users-gear" },
         { id: "143_20251113", title: "DARS-E-QURAN MASJED ISLAMUDDIN", icon: "fa-book-quran" },
-        { id: "20251018_20251018_0949", title: "HAMD-O-NAAT", icon: "fa-heart" }
+        { id: "20251018_20251018_0949", title: "HAMD-O-NAAT", icon: "fa-heart" },
+                { id: "2_20250901", title: "Mehman ulama e keraam db", icon: "fa-tree" }
     ];
 
     let cardProgress = {};
@@ -212,31 +281,60 @@
         const allFiles = JSON.parse(card.dataset.fullList);
         const start = cardProgress[catId];
         const end = start + count;
-        renderFiles(catId, allFiles.slice(start, end), false);
+        
+        // اگر پہلی بار لوڈ ہو رہا ہے تو لسٹ کلیئر کریں، ورنہ نیچے مزید فائلیں جوڑیں
+        renderFiles(catId, allFiles.slice(start, end), start === 0);
         cardProgress[catId] = end;
-        if(start > 0) document.getElementById(`back-${catId}`).style.display = 'block';
+        
+        if(cardProgress[catId] > count) document.getElementById(`back-${catId}`).style.display = 'block';
         if (end >= allFiles.length) document.getElementById(`more-${catId}`).style.display = 'none';
     }
 
-    function renderFiles(catId, files, clearOld = true) {
-        const target = document.getElementById(`list-${catId}`);
+    function showLess(catId, count = 10) {
+        const card = document.getElementById(`card-${catId}`);
+        const allFiles = JSON.parse(card.dataset.fullList);
+        
+        // موجودہ انڈیکس سے پیچھے جائیں
+        let currentEnd = cardProgress[catId] - count;
+        if (currentEnd < 2) currentEnd = 2; // اگر بالکل شروع میں آ جائیں تو کم از کم پہلی دو فائلیں دکھائیں
+        
+        let currentStart = currentEnd - count;
+        if (currentStart < 0) currentStart = 0;
+
+        // لسٹ کو کلیئر کر کے پچھلی فائلز رینڈر کریں
+        renderFiles(catId, allFiles.slice(currentStart, currentEnd), true, currentStart);
+        cardProgress[catId] = currentEnd;
+
+        // بٹنز کی ویزیبلٹی درست کریں
+        if(currentStart === 0) document.getElementById(`back-${catId}`).style.display = 'none';
+        document.getElementById(`more-${catId}`).style.display = 'block';
+        
+        // اسکرول کر کے کارڈ کے اوپری حصے پر لے جائیں
+        card.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
+    function renderFiles(catId, files, clearOld = true, startIndex = null) {
+        const target = document.getElementById('list-' + catId);
         if(clearOld) target.innerHTML = '';
         
         const now = Math.floor(Date.now() / 1000);
         const sevenDays = 7 * 24 * 60 * 60;
 
+        // اگر بیس انڈیکس نہیں دیا گیا تو لسٹ کی موجودہ لمبائی کو استعمال کریں
+        let baseIdx = startIndex !== null ? startIndex : (clearOld ? 0 : target.children.length);
+
         files.forEach((file, index) => {
-            const globalIdx = clearOld ? index : (target.children.length);
+            const globalIdx = baseIdx + index;
             const url = `https://archive.org/download/${catId}/${encodeURIComponent(file.name)}`;
             let title = file.title || file.name.replace('.mp3', '');
 
-let location = "";
-const match = title.match(/\[(.*?)\]/);
+            let location = "";
+            const match = title.match(/\[(.*?)\]/);
 
-if (match) {
-    location = match[1];
-    title = title.replace(/\[(.*?)\]/, '').trim();
-}
+            if (match) {
+                location = match[1];
+                title = title.replace(/\[(.*?)\]/, '').trim();
+            }
             
             const isNew = (now - parseInt(file.mtime)) < sevenDays;
             const newTag = isNew ? `<span class="new-badge">NEW</span>` : '';
@@ -261,13 +359,26 @@ if (match) {
                     <div id="hint-${catId}-${globalIdx}" class="dl-hint-urdu" style="display:none;">
                         ڈاؤن لوڈ کرنے کے لئے تین نقطوں پر کلک کریں
                     </div>
-                    <div class="meta-info">
-    <span>📅 ${new Date(parseInt(file.mtime)*1000).toLocaleDateString("en-GB")}</span>
+                    <div class="meta-info">                     <div class="meta-info" style="display: flex; justify-content: space-between; align-items: center; width: 100%; direction: rtl; padding: 4px 0;">
+                     <!-- فکسڈ میٹا انفارمیشن (اردو تاریخ، دن، متوازن لوکیشن اور سائز) -->
+                    <div class="meta-info" style="display: flex; justify-content: space-between; align-items: center; width: 100%; direction: rtl; padding: 6px 0; border-top: 1px dashed #eee; margin-top: 8px;">
+                        <!-- 1. دن اور تاریخ (دائیں طرف) -->
+                        <span style="flex: 1.3; text-align: right; font-size: 11px; color: #2c3e50;"> ${(() => {
+                            const d = new Date(parseInt(file.mtime) * 1000);
+                            const days = ["اتوار", "پیر", "منگل", "بدھ", "جمعرات", "جمعہ", "ہفتہ"];
+                            const months = ["جنوری", "فروری", "مارچ", "اپریل", "مئی", "جون", "جولائی", "اگست", "ستمبر", "اکتوبر", "نومبر", "دسمبر"];
+                            return `بروز ${days[d.getDay()]}، ${d.getDate()} ${months[d.getMonth()]} ${d.getFullYear()}`;
+                        })()}</span>
 
-    ${location ? `<span style="color:#0a5d38;font-weight:bold;">📍 ${location}</span>` : ''}
+                        <!-- 2. لوکیشن (بالکل درمیان میں) -->
+                        <span style="flex: 1; text-align: center; font-size: 11px;">
+                            ${location ? `<span style="color:#0a5d38; font-weight:bold;">📍 ${location}</span>` : ''}
+                        </span>
 
-    <span>💾 ${(file.size/(1024*1024)).toFixed(1)} MB</span>
-</div>
+                        <!-- 3. فائل سائز (بائیں طرف) -->
+                        <span style="flex: 0.8; text-align: left; font-size: 11px; direction: ltr; color: #666000; font-weight: 500;"> ${(file.size/(1024*1024)).toFixed(1)} MB</span>
+                    </div>
+
                 </div>`;
             target.insertAdjacentHTML('beforeend', itemHtml);
         });
@@ -298,11 +409,31 @@ if (match) {
         else { aud.pause(); icon.className = 'fa fa-play'; }
     }
 
-    function playNext() {
-        if(!currentPlayingId) return;
-        const nextAud = document.getElementById(`aud-${currentPlayingId.cat}-${currentPlayingId.index + 1}`);
-        if(nextAud) { nextAud.play(); nextAud.scrollIntoView({ behavior: 'smooth', block: 'center' }); }
+      function playNext() {
+
+    if (!currentPlayingId) return;
+
+    const currentAudio = document.getElementById(
+        `aud-${currentPlayingId.cat}-${currentPlayingId.index}`
+    );
+
+    const allAudios = [...document.querySelectorAll('audio')];
+
+    const currentIndex = allAudios.indexOf(currentAudio);
+
+    if (currentIndex !== -1 && currentIndex < allAudios.length - 1) {
+
+        const nextAudio = allAudios[currentIndex + 1];
+
+        setTimeout(() => {
+            nextAudio.play();
+            nextAudio.scrollIntoView({
+                behavior: 'smooth',
+                block: 'center'
+            });
+        }, 1000); // 1 سیکنڈ بعد اگلا بیان
     }
+}
 
     function playPrev() {
         if(!currentPlayingId || currentPlayingId.index === 0) return;
@@ -330,8 +461,42 @@ if (match) {
     }
 
     loadLibrary();
+    // بائیں طرف سے آرام سے کھلنے اور مینو آئٹمز کے باری باری شو ہونے کا فنکشن
+function toggleNavMenu(open) {
+    const menu = document.getElementById('customNavMenu');
+    const overlay = document.getElementById('menuOverlay');
+    const fadeItems = document.querySelectorAll('.menu-fade-item');
+    
+    if (open) {
+        overlay.style.display = 'block';
+        setTimeout(() => {
+            overlay.style.opacity = '1';
+            menu.style.left = '0'; // مینو آرام سے بائیں طرف سے باہر آئے گا
+            
+            // اندرونی مینو آئٹمز ایک ایک کر کے آرام سے نمودار ہوں گے
+            fadeItems.forEach(item => {
+                item.style.opacity = '1';
+                item.style.transform = 'translateY(0)';
+            });
+        }, 30);
+    } else {
+        menu.style.left = '-290px'; // مینو واپس بائیں طرف چھپ جائے گا
+        overlay.style.opacity = '0';
+        
+        // بند کرتے وقت اندرونی مینو آئٹمز کو دوبارہ پرانی حالت میں لانا
+        fadeItems.forEach(item => {
+            item.style.opacity = '0';
+            item.style.transform = 'translateY(10px)';
+        });
+        
+        setTimeout(() => {
+            overlay.style.display = 'none';
+        }, 600); // اینیمیشن کی رفتار کے مطابق ٹائم سیٹ کیا ہے
+    }
+}
+
+    
 </script>
 
 </body>
-        </html>
-    
+</html>
