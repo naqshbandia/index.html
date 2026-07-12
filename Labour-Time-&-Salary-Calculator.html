@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html lang="ur" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>لیبر لیجر پرو - Labour Ledger Pro</title>
+    <style>
+        /* اردو فونٹس */
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Arabic:wght@400;600;700&display=swap');
+
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #16a085;
+            --bg-color: #f7f9fa;
+            --card-bg: #ffffff;
+            --text-color: #2c3e50;
+            --border-color: #ced4da;
+            --danger-color: #d63031;
+            --success-color: #27ae60;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Noto Sans Arabic', Tahoma, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.5;
+            padding: 10px;
+            -webkit-text-size-adjust: 100%;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 15px;
+            background: var(--primary-color);
+            color: white;
+            padding: 15px 10px;
+            border-radius: 8px;
+        }
+
+        header h1 { font-size: 20px; margin-bottom: 3px; }
+        header p { font-size: 12px; opacity: 0.9; }
+
+        /* ڈیش بورڈ گریڈ */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+            gap: 8px;
+            margin-bottom: 15px;
+        }
+
+        .card {
+            background: var(--card-bg);
+            padding: 10px 5px;
+            border-radius: 8px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+            border-top: 4px solid var(--primary-color);
+            text-align: center;
+        }
+
+        .card.success { border-top-color: var(--success-color); }
+        .card.danger { border-top-color: var(--danger-color); }
+        .card.secondary { border-top-color: var(--secondary-color); }
+
+        .card h3 {
+            font-size: 11px;
+            color: #7f8c8d;
+            margin-bottom: 5px;
+            white-space: nowrap;
+        }
+
+        .card .value {
+            font-size: 13px;
+            font-weight: bold;
+            color: var(--text-color);
+        }
+
+        /* لے آؤٹ سیٹنگز */
+        .main-layout {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 15px;
+        }
+
+        @media (min-width: 768px) {
+            .main-layout {
+                grid-template-columns: 1fr 2fr;
+            }
+            .dashboard-grid {
+                grid-template-columns: repeat(5, 1fr);
+            }
+            .card h3 { font-size: 13px; }
+            .card .value { font-size: 15px; }
+        }
+
+        .form-section {
+            background: var(--card-bg);
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+        }
+
+        .form-section h2 {
+            font-size: 16px;
+            margin-bottom: 12px;
+            padding-bottom: 5px;
+            border-bottom: 2px solid var(--bg-color);
+            color: var(--primary-color);
+        }
+
+        .form-group { margin-bottom: 12px; }
+        .form-group label {
+            display: block;
+            margin-bottom: 4px;
+            font-weight: 600;
+            font-size: 13px;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 8px 10px;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            font-size: 13px;
+            background-color: #fff;
+        }
+
+        .row-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+        }
+
+        /* بٹنز */
+        .btn {
+            display: inline-block;
+            background: var(--primary-color);
+            color: white;
+            padding: 10px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: bold;
+            width: 100%;
+            text-align: center;
+            transition: background 0.2s;
+        }
+
+        .btn:hover { opacity: 0.9; }
+        .btn-success { background-color: var(--success-color); }
+        .btn-danger { background-color: var(--danger-color); }
+        .btn-secondary { background-color: var(--secondary-color); }
+
+        .btn-group-sm { display: flex; gap: 4px; }
+        .btn-group-sm .btn { padding: 4px 6px; font-size: 11px; }
+
+        .search-box {
+            background: var(--card-bg);
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+        }
+
+        /* ٹیبل ریسپونسیو کنٹینر */
+        .table-container {
+            background: var(--card-bg);
+            border-radius: 8px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+            overflow-x: auto;
+            margin-bottom: 15px;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: right;
+            font-size: 13px;
+        }
+
+        th, td {
+            padding: 10px 12px;
+            border-bottom: 1px solid #edf2f7;
+            white-space: nowrap;
+        }
+
+        th {
+            background-color: #f7fafc;
+            color: var(--primary-color);
+            font-weight: 600;
+        }
+
+        /* ٹولز */
+        .tools-section {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+            background: var(--card-bg);
+            padding: 12px;
+            border-radius: 8px;
+        }
+        .tools-section .btn { width: auto; flex: 1; min-width: 100px; }
+
+        .report-summary {
+            background: #eef2f3;
+            padding: 10px;
+            border-radius: 6px;
+            margin-top: 10px;
+            display: none;
+            font-size: 12px;
+        }
+
+        /* پرنٹ اور پی ڈی ایف فارمیٹنگ */
+        @media print {
+            @page {
+                size: landscape;
+                margin: 10mm;
+            }
+            body { background: white; padding: 0; font-size: 12px; color: #000; }
+            .form-section, .search-box, .tools-section, .btn-group-sm, header { display: none !important; }
+            .main-layout { grid-template-columns: 1fr; }
+            .table-container { box-shadow: none; overflow: visible; }
+            table { border: 1px solid #000; }
+            th, td { border: 1px solid #000; padding: 8px; white-space: normal; text-align: center; }
+            th { background-color: #eaeded !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+            .dashboard-grid { display: grid !important; grid-template-columns: repeat(5, 1fr) !important; gap: 10px; margin-bottom: 20px; }
+            .card { border: 1px solid #000; padding: 8px; background: #fff !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+            .card h3 { color: #000; font-size: 12px; }
+            .card .value { color: #000; font-size: 14px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <h1>Labour Time & Salary Calculator</h1>
+            <p>موبائل اور پرنٹ فرینڈلی ڈیجیٹل کھاتہ</p>
+        </header>
+
+        <div class="dashboard-grid">
+            <div class="card secondary">
+                <h3>کل دن</h3>
+                <div class="value" id="dash-days">0</div>
+            </div>
+            <div class="card secondary">
+                <h3>کل گھنٹے</h3>
+                <div class="value" id="dash-hours">0</div>
+            </div>
+            <div class="card">
+                <h3>کل مزدوری</h3>
+                <div class="value" id="dash-labour">0</div>
+            </div>
+            <div class="card success">
+                <h3>وصول شدہ</h3>
+                <div class="value" id="dash-received">0</div>
+            </div>
+            <div class="card danger">
+                <h3>باقی رقم</h3>
+                <div class="value" id="dash-balance">0</div>
+            </div>
+        </div>
+
+        <div class="main-layout">
+            <div class="side-panel">
+                <div class="form-section" style="margin-bottom: 15px;">
+                    <h2>بنیادی سیٹنگز</h2>
+                    <div class="form-group">
+                        <label>یومیہ اجرت / دیہاڑی (روپے):</label>
+                        <input type="number" id="cfg-daily-wage" class="form-control" value="1000" oninput="calculateHourlyRate()">
+                    </div>
+                    <div class="form-group">
+                        <label>فی گھنٹہ ریٹ (خودکار):</label>
+                        <input type="text" id="cfg-hourly-rate" class="form-control" readonly style="background:#e9ecef;">
+                    </div>
+                </div>
+
+                <div class="form-section">
+                    <h2 id="form-title">روزانہ انٹری فارم</h2>
+                    <form id="ledger-form">
+                        <input type="hidden" id="entry-id">
+                        <div class="form-group">
+                            <label>تاریخ:</label>
+                            <input type="date" id="f-date" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label>ٹھیکیدار کا نام:</label>
+                            <input type="text" id="f-contractor" class="form-control" required placeholder=" یہاں ">
+                        </div>
+                        <div class="form-group">
+                            <label>کام کی جگہ:</label>
+                            <input type="text" id="f-location" class="form-control" required placeholder="یہاں ">
+                        </div>
+                        <div class="row-2">
+                            <div class="form-group">
+                                <label>شروع وقت:</label>
+                                <input type="time" id="f-start" class="form-control" value="08:00" required>
+                            </div>
+                            <div class="form-group">
+                                <label>ختم وقت:</label>
+                                <input type="time" id="f-end" class="form-control" value="16:00" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>وصول شدہ رقم (روپے):</label>
+                            <input type="number" id="f-received" class="form-control" value="0" min="0">
+                        </div>
+                        <div class="form-group">
+                            <label>تفصیل / نوٹس:</label>
+                            <textarea id="f-notes" class="form-control" rows="2" placeholder="تفصیلات..."></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-success" id="btn-submit">محفوظ کریں</button>
+                        <button type="button" class="btn btn-danger" id="btn-cancel-edit" style="display:none; margin-top: 5px;" onclick="resetForm()">ترمیم منسوخ کریں</button>
+                    </form>
+                </div>
+            </div>
+
+            <div class="data-panel">
+                <div class="search-box">
+                    <div class="row-2" style="grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));">
+                        <div class="form-group">
+                            <label>تلاش بحساب لفظ:</label>
+                            <input type="text" id="search-text" class="form-control" placeholder="نام یا جگہ..." oninput="filterData()">
+                        </div>
+                        <div class="form-group">
+                            <label>تلاش بحساب تاریخ:</label>
+                            <input type="date" id="search-date" class="form-control" oninput="filterData()">
+                        </div>
+                        <div class="form-group">
+                            <label>رپورٹ فلٹر:</label>
+                            <select id="report-period" class="form-control" onchange="generateReport()">
+                                <option value="">منتخب کریں...</option>
+                                <option value="daily">آج کی رپورٹ</option>
+                                <option value="monthly">موجودہ مہینہ</option>
+                                <option value="yearly">موجودہ سال</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div id="report-summary-view" class="report-summary">
+                        <strong>خلاصہ:</strong> <span id="report-text"></span>
+                    </div>
+                </div>
+
+                <h2 style="font-size: 16px; margin-bottom: 8px;">لیجر ہسٹری (Ledger History)</h2>
+                <div class="table-container">
+                    <table id="ledger-table">
+                        <thead>
+                            <tr>
+                                <th>تاریخ</th>
+                                <th>ٹھیکیدار</th>
+                                <th>جگہ</th>
+                                <th>اوقات</th>
+                                <th>گھنٹے</th>
+                                <th>مزدوری</th>
+                                <th>وصول</th>
+                                <th>باقی</th>
+                                <th>نوٹس</th>
+                                <th>ایکشن</th>
+                            </tr>
+                        </thead>
+                        <tbody id="ledger-tbody"></tbody>
+                    </table>
+                </div>
+
+                <div class="tools-section">
+                    <button class="btn" onclick="window.print()">پرنٹ / PDF نکالیں</button>
+                    <button class="btn btn-secondary" onclick="exportJSON()">بیک اب (JSON)</button>
+                    <button class="btn btn-danger" onclick="document.getElementById('import-file').click()">ری اسٹور</button>
+                    <input type="file" id="import-file" style="display: none;" accept=".json" onchange="importJSON(this)">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let ledgerData = JSON.parse(localStorage.getItem('labour_ledger_data')) || [];
+        
+        document.addEventListener("DOMContentLoaded", () => {
+            document.getElementById('f-date').valueAsDate = new Date();
+            calculateHourlyRate();
+            updateApp();
+        });
+
+        function calculateHourlyRate() {
+            const dailyWage = parseFloat(document.getElementById('cfg-daily-wage').value) || 0;
+            const hourlyRate = dailyWage / 8;
+            document.getElementById('cfg-hourly-rate').value = hourlyRate.toFixed(2) + " روپے";
+            return hourlyRate;
+        }
+
+        document.getElementById('ledger-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const entryId = document.getElementById('entry-id').value;
+            const date = document.getElementById('f-date').value;
+            const contractor = document.getElementById('f-contractor').value.trim();
+            const location = document.getElementById('f-location').value.trim();
+            const startTime = document.getElementById('f-start').value;
+            const endTime = document.getElementById('f-end').value;
+            const received = parseFloat(document.getElementById('f-received').value) || 0;
+            const notes = document.getElementById('f-notes').value.trim();
+
+            const start = new Date(`2000-01-01T${startTime}`);
+            let end = new Date(`2000-01-01T${endTime}`);
+            if (end < start) end.setDate(end.getDate() + 1);
+
+            const diffMins = Math.floor((end - start) / 1000 / 60);
+            const workedHours = Math.floor(diffMins / 60);
+            const workedMinutes = diffMins % 60;
+            const decimalHours = diffMins / 60;
+
+            const hourlyRate = calculateHourlyRate();
+            const todayLabour = Math.round(decimalHours * hourlyRate);
+            const todayRemaining = todayLabour - received;
+
+            const record = {
+                id: entryId ? entryId : Date.now().toString(),
+                date, contractor, location, startTime, endTime,
+                workedHours, workedMinutes, decimalHours,
+                todayLabour, received, todayRemaining, notes
+            };
+
+            if (entryId) {
+                ledgerData = ledgerData.map(item => item.id === entryId ? record : item);
+            } else {
+                ledgerData.push(record);
+            }
+
+            saveData();
+            updateApp();
+            resetForm();
+        });
+
+        function saveData() {
+            localStorage.setItem('labour_ledger_data', JSON.stringify(ledgerData));
+        }
+
+        function updateApp(dataToDisplay = null) {
+            const records = dataToDisplay || ledgerData;
+            const tbody = document.getElementById('ledger-tbody');
+            tbody.innerHTML = '';
+
+            let totalDays = records.length;
+            let totalDecimalHours = 0;
+            let totalLabour = 0;
+            let totalReceived = 0;
+            let totalBalance = 0;
+
+            records.forEach(item => {
+                totalDecimalHours += item.decimalHours;
+                totalLabour += item.todayLabour;
+                totalReceived += item.received;
+                totalBalance += item.todayRemaining;
+
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td>${item.date}</td>
+                    <td><strong>${item.contractor}</strong></td>
+                    <td>${item.location}</td>
+                    <td><small>${item.startTime}-${item.endTime}</small></td>
+                    <td>${item.workedHours} گھنٹے ${item.workedMinutes} منٹ</td>
+                    <td>${item.todayLabour.toLocaleString()}</td>
+                    <td style="color:var(--success-color);">${item.received.toLocaleString()}</td>
+                    <td style="color:${item.todayRemaining > 0 ? 'var(--danger-color)' : 'var(--text-color)'};">${item.todayRemaining.toLocaleString()}</td>
+                    <td><small>${item.notes || '-'}</small></td>
+                    <td>
+                        <div class="btn-group-sm">
+                            <button class="btn btn-secondary" onclick="editEntry('${item.id}')">ترمیم</button>
+                            <button class="btn btn-danger" onclick="deleteEntry('${item.id}')">حذف</button>
+                        </div>
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            });
+
+            const dHours = Math.floor(totalDecimalHours);
+            const dMins = Math.round((totalDecimalHours - dHours) * 60);
+
+            document.getElementById('dash-days').innerText = totalDays;
+            document.getElementById('dash-hours').innerText = `${dHours} گھنٹے ${dMins} منٹ`;
+            document.getElementById('dash-labour').innerText = totalLabour.toLocaleString();
+            document.getElementById('dash-received').innerText = totalReceived.toLocaleString();
+            document.getElementById('dash-balance').innerText = totalBalance.toLocaleString();
+        }
+
+        function filterData() {
+            const searchText = document.getElementById('search-text').value.toLowerCase();
+            const searchDate = document.getElementById('search-date').value;
+            const filtered = ledgerData.filter(item => {
+                const matchesText = item.contractor.toLowerCase().includes(searchText) || item.location.toLowerCase().includes(searchText);
+                const matchesDate = searchDate ? item.date === searchDate : true;
+                return matchesText && matchesDate;
+            });
+            updateApp(filtered);
+        }
+
+        function editEntry(id) {
+            const entry = ledgerData.find(item => item.id === id);
+            if (!entry) return;
+            document.getElementById('entry-id').value = entry.id;
+            document.getElementById('f-date').value = entry.date;
+            document.getElementById('f-contractor').value = entry.contractor;
+            document.getElementById('f-location').value = entry.location;
+            document.getElementById('f-start').value = entry.startTime;
+            document.getElementById('f-end').value = entry.endTime;
+            document.getElementById('f-received').value = entry.received;
+            document.getElementById('f-notes').value = entry.notes;
+
+            document.getElementById('form-title').innerText = "ترمیم کھاتہ";
+            document.getElementById('btn-submit').innerText = "اپڈیٹ کریں";
+            document.getElementById('btn-cancel-edit').style.display = "block";
+            document.getElementById('ledger-form').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function deleteEntry(id) {
+            if (confirm("کیا ریکارڈ حذف کرنا چاہتے ہیں؟")) {
+                ledgerData = ledgerData.filter(item => item.id !== id);
+                saveData();
+                updateApp();
+            }
+        }
+
+        function resetForm() {
+            document.getElementById('entry-id').value = '';
+            document.getElementById('ledger-form').reset();
+            document.getElementById('f-date').valueAsDate = new Date();
+            document.getElementById('form-title').innerText = "روزانہ انٹری فارم";
+            document.getElementById('btn-submit').innerText = "محفوظ کریں";
+            document.getElementById('btn-cancel-edit').style.display = "none";
+        }
+
+        function generateReport() {
+            const period = document.getElementById('report-period').value;
+            const reportSummary = document.getElementById('report-summary-view');
+            const reportText = document.getElementById('report-text');
+            if (!period) { reportSummary.style.display = "none"; updateApp(); return; }
+
+            const todayStr = new Date().toISOString().split('T')[0];
+            let filtered = [];
+            if (period === 'daily') {
+                filtered = ledgerData.filter(item => item.date === todayStr);
+                reportText.innerText = "آج کا ڈیٹا۔";
+            } else if (period === 'monthly') {
+                filtered = ledgerData.filter(item => item.date.startsWith(todayStr.substring(0, 7)));
+                reportText.innerText = "موجودہ مہینے کا ڈیٹا۔";
+            } else if (period === 'yearly') {
+                filtered = ledgerData.filter(item => item.date.startsWith(todayStr.substring(0, 4)));
+                reportText.innerText = "موجودہ سال کا ڈیٹا۔";
+            }
+            reportSummary.style.display = "block";
+            updateApp(filtered);
+        }
+
+        function exportJSON() {
+            if(ledgerData.length === 0) return alert("ڈیٹا خالی ہے!");
+            const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(ledgerData));
+            const dl = document.createElement('a');
+            dl.setAttribute("href", dataStr);
+            dl.setAttribute("download", `ledger_${new Date().toISOString().split('T')[0]}.json`);
+            dl.click();
+        }
+
+        function importJSON(element) {
+            const file = element.files[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                try {
+                    const parsed = JSON.parse(e.target.result);
+                    if (Array.isArray(parsed)) {
+                        if (confirm("پرانا ڈیٹا اوور رائٹ ہو جائے گا۔ کیا آپ متفق ہیں؟")) {
+                            ledgerData = parsed; saveData(); updateApp();
+                        }
+                    } else { alert("فائل درست فارمیٹ میں نہیں ہے!"); }
+                } catch (err) { alert("غلط فائل فارمیٹ!"); }
+            };
+            reader.readAsText(file);
+            element.value = '';
+        }
+    </script>
+</body>
+</html>
