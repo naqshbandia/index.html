@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Heron's Formula - Separate Area Calculator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #8cb4e2;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        .container {
+            width: 100%;
+            max-width: 500px;
+            background-color: #8cb4e2;
+            text-align: center;
+            box-sizing: border-box;
+            padding-bottom: 30px;
+        }
+        .header {
+            background-color: #fff;
+            padding: 10px;
+            font-weight: bold;
+        }
+        .header a {
+            color: #0066cc;
+            text-decoration: none;
+            font-size: 18px;
+            cursor: pointer;
+        }
+        .header a:hover {
+            text-decoration: underline;
+        }
+        .title {
+            color: #d91e18;
+            font-size: 26px;
+            font-weight: bold;
+            margin: 15px 0 5px 0;
+        }
+        .subtitle {
+            color: #1e5a3c;
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+        .dropdown-box {
+            background-color: #fff;
+            padding: 15px;
+            margin: 10px 20px;
+            border: 2px solid #000;
+            border-radius: 5px;
+        }
+        .dropdown-box label {
+            color: red;
+            font-weight: bold;
+            display: block;
+            margin-bottom: 5px;
+        }
+        .dropdown-box select {
+            width: 100%;
+            padding: 10px;
+            font-size: 20px;
+            font-weight: bold;
+            border: none;
+            background: #f0f0f0;
+            text-align: center;
+        }
+        
+        /* Table Styling */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: #000;
+            margin-top: 15px;
+        }
+        th, td {
+            border: 1px solid #444;
+            padding: 6px 4px;
+            text-align: center;
+            color: #fff;
+            font-size: 14px;
+        }
+        th {
+            background-color: #8cb4e2;
+            font-weight: normal;
+        }
+        .tr-title-1 { color: #fff; }
+        .tr-title-2 { color: #f39c12; }
+        .tr-title-3 { color: #e67e22; }
+        .tr-title-4 { color: #e74c3c; }
+        .tr-title-5 { color: #c0392b; }
+
+        .input-cell {
+            background-color: #7ed321;
+            border: 1px solid #fff;
+            border-radius: 5px;
+            width: 90%;
+            padding: 8px 0;
+            font-size: 16px;
+            text-align: center;
+            color: #333;
+        }
+        .area-col {
+            font-weight: bold;
+            color: #fff;
+        }
+
+        /* Enter Button */
+        .btn-enter {
+            width: 100%;
+            background-color: red;
+            color: white;
+            font-size: 28px;
+            font-weight: bold;
+            padding: 12px;
+            border: none;
+            cursor: pointer;
+            letter-spacing: 2px;
+        }
+        
+        /* Semi-perimeters (S) section */
+        .footer-results {
+            display: flex;
+            justify-content: space-around;
+            padding: 15px 5px;
+            background-color: #8cb4e2;
+            margin-bottom: 10px;
+        }
+        .res-box {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            font-size: 14px;
+            font-weight: bold;
+            color: #000;
+        }
+
+        /* Separate Results Styling */
+        .result-container {
+            margin: 15px 20px;
+            display: none; 
+        }
+        .result-block {
+            background-color: #ffffff;
+            border: 2px solid #2c3e50;
+            border-radius: 8px;
+            padding: 12px 15px;
+            margin-bottom: 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+            text-align: left;
+            animation: fadeInLeft 0.5s ease-in-out both;
+        }
+        .result-title {
+            font-size: 18px;
+            font-weight: bold;
+            color: #2c3e50;
+        }
+        .result-value {
+            font-size: 22px;
+            font-weight: bold;
+            color: #d91e18; 
+        }
+        
+        .b-sqft { border-left: 8px solid #3498db; }
+        .b-kanal { border-left: 8px solid #9b59b6; }
+        .b-marla { border-left: 8px solid #f1c40f; }
+        .b-sarsai { border-left: 8px solid #2ecc71; }
+
+        @keyframes fadeInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="header">
+        <a onclick="resetCalculator()">BACK TO HOME</a>
+    </div>
+
+    <div class="title">ENGr NAIMAT ULLAH KHAN</div>
+    <div class="subtitle">For Scalene Triangle</div>
+
+    <div class="dropdown-box">
+        <label>Select Your Scal Below</label>
+        <select id="unitScale">
+            <option value="feet">With Feet Scal</option>
+        </select>
+    </div>
+
+    <table>
+        <thead>
+            <tr>
+                <th></th>
+                <th>1st Side</th>
+                <th>2nd side</th>
+                <th>3rd side</th>
+                <th>Area</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td class="tr-title-1">Triangle 1</td>
+                <td><input type="number" class="input-cell" id="t1_s1" value=""></td>
+                <td><input type="number" class="input-cell" id="t1_s2" value=""></td>
+                <td><input type="number" class="input-cell" id="t1_s3" value=""></td>
+                <td class="area-col" id="t1_area">0.0</td>
+            </tr>
+            <tr>
+                <td class="tr-title-2">Triangle 2</td>
+                <td><input type="number" class="input-cell" id="t2_s1" value=""></td>
+                <td><input type="number" class="input-cell" id="t2_s2" value=""></td>
+                <td><input type="number" class="input-cell" id="t2_s3" value=""></td>
+                <td class="area-col" id="t2_area">0.0</td>
+            </tr>
+            <tr>
+                <td class="tr-title-3">Triangle 3</td>
+                <td><input type="number" class="input-cell" id="t3_s1"></td>
+                <td><input type="number" class="input-cell" id="t3_s2"></td>
+                <td><input type="number" class="input-cell" id="t3_s3"></td>
+                <td class="area-col" id="t3_area">0.0</td>
+            </tr>
+            <tr>
+                <td class="tr-title-4">Triangle 4</td>
+                <td><input type="number" class="input-cell" id="t4_s1"></td>
+                <td><input type="number" class="input-cell" id="t4_s2"></td>
+                <td><input type="number" class="input-cell" id="t4_s3"></td>
+                <td class="area-col" id="t4_area">0.0</td>
+            </tr>
+            <tr>
+                <td class="tr-title-5">Triangle 5</td>
+                <td><input type="number" class="input-cell" id="t5_s1"></td>
+                <td><input type="number" class="input-cell" id="t5_s2"></td>
+                <td><input type="number" class="input-cell" id="t5_s3"></td>
+                <td class="area-col" id="t5_area">0.0</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <button class="btn-enter" onclick="calculateAllTriangles()">ENTER</button>
+
+    <div class="footer-results">
+        <div class="res-box"><span>S1</span><span id="s1_val">0</span></div>
+        <div class="res-box"><span>S2</span><span id="s2_val">0</span></div>
+        <div class="res-box"><span>S3</span><span id="s3_val">0</span></div>
+        <div class="res-box"><span>S4</span><span id="s4_val">0</span></div>
+        <div class="res-box"><span>S5</span><span id="s5_val">0</span></div>
+    </div>
+
+    <div class="result-container" id="all_results_box">
+        
+        <div class="result-block b-sqft">
+            <span class="result-title">Total Area (Sq.Ft) ➔</span>
+            <span class="result-value" id="out_sqft">0.00</span>
+        </div>
+
+        <div class="result-block b-kanal">
+            <span class="result-title">Total Kanal ➔</span>
+            <span class="result-value" id="out_kanal">0</span>
+        </div>
+
+        <div class="result-block b-marla">
+            <span class="result-title">Total Marla ➔</span>
+            <span class="result-value" id="out_marla">0</span>
+        </div>
+
+        <div class="result-block b-sarsai">
+            <span class="result-title">Total Sarsai (Safai) ➔</span>
+            <span class="result-value" id="out_sarsai">0</span>
+        </div>
+
+    </div>
+</div>
+
+<script>
+    function calculateHeron(a, b, c) {
+        if (a + b > c && a + c > b && b + c > a) {
+            const s = (a + b + c) / 2;
+            const area = Math.sqrt(s * (s - a) * (s - b) * (s - c));
+            return { s: s, area: area };
+        }
+        return { s: 0, area: 0 };
+    }
+
+    function calculateAllTriangles() {
+        let totalSqFt = 0;
+
+        for (let i = 1; i <= 5; i++) {
+            const s1 = parseFloat(document.getElementById(`t${i}_s1`).value) || 0;
+            const s2 = parseFloat(document.getElementById(`t${i}_s2`).value) || 0;
+            const s3 = parseFloat(document.getElementById(`t${i}_s3`).value) || 0;
+
+            if (s1 > 0 && s2 > 0 && s3 > 0) {
+                const result = calculateHeron(s1, s2, s3);
+                document.getElementById(`t${i}_area`).innerText = result.area.toFixed(1);
+                document.getElementById(`s${i}_val`).innerText = result.s.toFixed(1);
+                totalSqFt += result.area;
+            } else {
+                document.getElementById(`t${i}_area`).innerText = "0.0";
+                document.getElementById(`s${i}_val`).innerText = "0";
+            }
+        }
+
+        if(totalSqFt > 0) {
+            document.getElementById("out_sqft").innerText = totalSqFt.toFixed(2) + " Sq.Ft";
+
+            const sqftInMarla = 272.25;
+            const sqftInSarsai = 30.25; 
+            
+            let remainingSqFt = totalSqFt;
+
+            const sqftInKanal = sqftInMarla * 20; 
+            const kanal = Math.floor(remainingSqFt / sqftInKanal);
+            remainingSqFt = remainingSqFt % sqftInKanal;
+
+            const marla = Math.floor(remainingSqFt / sqftInMarla);
+            remainingSqFt = remainingSqFt % sqftInMarla;
+
+            const sarsai = Math.floor(remainingSqFt / sqftInSarsai);
+            remainingSqFt = remainingSqFt % sqftInSarsai;
+            
+            const finalSarsai = sarsai + (remainingSqFt / sqftInSarsai);
+
+            document.getElementById("out_kanal").innerText = kanal + " Kanal";
+            document.getElementById("out_marla").innerText = marla + " Marla";
+            document.getElementById("out_sarsai").innerText = finalSarsai.toFixed(1) + " Sarsai";
+
+            const el = document.getElementById("all_results_box");
+            el.style.display = "none";
+            setTimeout(() => { el.style.display = "block"; }, 10);
+        } else {
+            document.getElementById("all_results_box").style.display = "none";
+        }
+    }
+
+    // نیا ری سیٹ فنکشن جو سب کچھ مٹا دے گا
+    function resetCalculator() {
+        // تمام ان پٹ بکسز کو خالی کرنا
+        for (let i = 1; i <= 5; i++) {
+            document.getElementById(`t${i}_s1`).value = "";
+            document.getElementById(`t${i}_s2`).value = "";
+            document.getElementById(`t${i}_s3`).value = "";
+            
+            // ٹیبل کے اندر کا رقبہ زیرو کرنا
+            document.getElementById(`t${i}_area`).innerText = "0.0";
+            
+            // نیچے والے S1، S2 والی ویلیوز زیرو کرنا
+            document.getElementById(`s${i}_val`).innerText = "0";
+        }
+
+        // فائنل رزلٹ کارڈ کو چھپانا اور زیرو کرنا
+        document.getElementById("out_sqft").innerText = "0.00";
+        document.getElementById("out_kanal").innerText = "0";
+        document.getElementById("out_marla").innerText = "0";
+        document.getElementById("out_sarsai").innerText = "0";
+        document.getElementById("all_results_box").style.display = "none";
+    }
+</script>
+
+</body>
+</html>

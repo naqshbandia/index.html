@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="ur">
+<head>
+<meta charset="UTF-8">
+<title>لاکڈ مزدوری سسٹم</title>
+
+<style>
+body{
+    font-family: Arial;
+    direction: rtl;
+    background:#f2f2f2;
+    text-align:right;
+}
+.container{
+    max-width:600px;
+    margin:auto;
+    background:white;
+    padding:15px;
+    margin-top:20px;
+    border-radius:10px;
+    box-shadow:0 0 10px gray;
+}
+input, button{
+    width:100%;
+    padding:10px;
+    margin-top:10px;
+    font-size:16px;
+}
+button{
+    background:green;
+    color:white;
+    border:none;
+}
+.red{background:red;}
+table{
+    width:100%;
+    margin-top:15px;
+    border-collapse:collapse;
+}
+td,th{
+    border:1px solid #ccc;
+    padding:6px;
+    text-align:center;
+}
+h2,h3{text-align:center;}
+.lock{
+    color:gray;
+    font-size:14px;
+    text-align:center;
+}
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<h2>مزدوری ٹائم سسٹم (لاکڈ)</h2>
+
+<div class="lock">
+فی گھنٹہ ریٹ: 125 روپے (فکسڈ - تبدیل نہیں ہو سکتا)
+</div>
+
+<label>شروع وقت</label>
+<input type="time" id="start">
+
+<label>ختم وقت</label>
+<input type="time" id="end">
+
+<button onclick="add()">حساب لگائیں</button>
+<button class="red" onclick="clearAll()">سب صاف کریں</button>
+
+<h3>روزانہ رپورٹ</h3>
+
+<table>
+<tr>
+<th>تاریخ</th>
+<th>وقت</th>
+<th>گھنٹے</th>
+<th>آمدنی</th>
+</tr>
+<tbody id="table"></tbody>
+</table>
+
+<h3 id="total">کل آمدنی: 0 روپے</h3>
+
+</div>
+
+<script>
+
+const RATE = 125; // 🔒 FIXED RATE (LOCKED)
+
+let data = JSON.parse(localStorage.getItem("locked_labour")) || [];
+
+function add(){
+
+let start = document.getElementById("start").value;
+let end = document.getElementById("end").value;
+
+if(!start || !end){
+alert("وقت ضرور ڈالیں");
+return;
+}
+
+let [sh, sm] = start.split(":").map(Number);
+let [eh, em] = end.split(":").map(Number);
+
+let startMin = sh*60 + sm;
+let endMin = eh*60 + em;
+
+let diff = endMin - startMin;
+
+// overnight shift support
+if(diff < 0){
+diff = (24*60 - startMin) + endMin;
+}
+
+let hours = diff / 60;
+
+// salary
+let income = hours * RATE;
+
+let date = new Date().toLocaleDateString();
+
+data.push({
+date,
+start,
+end,
+hours: hours.toFixed(2),
+income: income.toFixed(2)
+});
+
+localStorage.setItem("locked_labour", JSON.stringify(data));
+
+show();
+
+}
+
+function show(){
+
+let table = document.getElementById("table");
+table.innerHTML = "";
+
+let total = 0;
+
+data.forEach(d=>{
+total += Number(d.income);
+
+table.innerHTML += `
+<tr>
+<td>${d.date}</td>
+<td>${d.start} - ${d.end}</td>
+<td>${d.hours}</td>
+<td>${d.income}</td>
+</tr>`;
+});
+
+document.getElementById("total").innerText =
+"کل آمدنی: " + total.toFixed(2) + " روپے";
+}
+
+function clearAll(){
+if(confirm("کیا آپ واقعی سب ڈیٹا ختم کرنا چاہتے ہیں؟")){
+localStorage.removeItem("locked_labour");
+data = [];
+show();
+}
+}
+
+show();
+
+</script>
+
+</body>
+</html>
