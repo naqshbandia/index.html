@@ -1,29 +1,322 @@
-  <!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="ur" dir="rtl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
-        body { margin: 0; padding: 0; background: transparent; }
-        .category-box { background: transparent; overflow: hidden; font-family: 'Segoe UI', Tahoma, sans-serif; max-width: 320px; margin: 0 auto; direction: rtl; }
-        
-        .search-container { margin-bottom: 10px; display: flex; gap: 5px; }
-        .search-input { flex: 1; padding: 6px 10px; border: 1px solid #d4c4a8; border-radius: 5px; font-size: 12px; outline: none; text-align: right; }
-        
-        .cat-header { background: #006400; color: #fff; padding: 10px 10px; display: flex; flex-direction: row-reverse; justify-content: space-between; align-items: center; font-weight: bold; border-bottom: 2px solid #b08d43; border-radius: 10px 10px 0 0; font-size: 11px; }
-        .view-all-btn { background: #b08d43; color: white; border: none; padding: 5px 10px; border-radius: 5px; cursor: pointer; font-size: 10px; font-weight: bold; }
-        
-        .audio-item { padding: 8px; margin-top: 5px; background: #fdfaf3; text-align: right; position: relative; border: 1px solid #d4c4a8; border-radius: 10px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05); }
-        .bayan-num { background: #b08d43; color: #ffffff; width: 20px; height: 20px; display: inline-flex; align-items: center; justify-content: center; border-radius: 50%; font-size: 11px; margin-left: 6px; border: 1.5px solid #006400; }
-        .audio-title { font-size: 12.5px; font-weight: bold; color: #004d00; line-height: 1.2; }
-        
-        .new-label { background: #ff0000; color: white; font-size: 9px; padding: 1px 5px; border-radius: 3px; margin-left: 5px; font-weight: bold; animation: blinker 1s linear infinite; display: inline-block; vertical-align: middle; }
-        @keyframes blinker { 50% { opacity: 0; } }
+        body {
+            margin: 0;
+            padding: 0;
+            background: transparent;
+        }
 
-        .player-bg { background: linear-gradient(90deg, #004d00, #fff000 ,#004d00); padding: 2px; border-radius: 7px; margin-top: 5px; border: 1px solid #fff; position: relative; z-index: 2; }
-        audio { width: 100%; height: 32px; display: block; }
+        .category-box {
+            background: transparent;
+            overflow: visible;
+            font-family: 'Segoe UI', 'Noto Sans Arabic', Tahoma, sans-serif;
+            max-width: 340px;
+            width: 100%;
+            margin: 0 auto;
+            direction: rtl;
+        }
 
-        /* اسپینر ڈیزائن */
+        /* سرچ بار */
+        .search-container {
+            margin-bottom: 10px;
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 8px 34px 8px 12px;
+            border: 1.5px solid #c9b382;
+            border-radius: 25px;
+            font-size: 12px;
+            outline: none;
+            text-align: right;
+            background: #fffdf8;
+            color: #004d00;
+            box-shadow: 0 2px 6px rgba(0, 77, 0, 0.06);
+            transition: all 0.3s ease;
+            box-sizing: border-box;
+        }
+
+        .search-input:focus {
+            border-color: #006400;
+            box-shadow: 0 0 8px rgba(0, 100, 0, 0.2);
+            background: #ffffff;
+        }
+
+        .search-icon {
+            position: absolute;
+            right: 12px;
+            font-size: 13px;
+            color: #b08d43;
+            pointer-events: none;
+        }
+
+        /* ہیڈر */
+        .cat-header {
+            background: linear-gradient(135deg, #004d00 0%, #007300 50%, #004d00 100%);
+            color: #fff;
+            padding: 10px 12px;
+            display: flex;
+            flex-direction: row-reverse;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 6px;
+            font-weight: bold;
+            border-bottom: 3px solid #d4af37;
+            border-radius: 12px 12px 4px 4px;
+            font-size: 12px;
+            box-shadow: 0 4px 10px rgba(0, 77, 0, 0.2);
+        }
+
+        .header-title-wrap {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            direction: ltr;
+        }
+
+        .cat-count {
+            background: rgba(255, 255, 255, 0.18);
+            border: 1px solid #d4af37;
+            color: #fff7b2;
+            font-size: 10px;
+            padding: 1px 7px;
+            border-radius: 12px;
+            display: none;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* مکمل فولڈر ڈاؤن لوڈ بٹن */
+        .download-all-btn {
+            background: linear-gradient(135deg, #d4af37, #a67c2e);
+            color: #fff;
+            border: 1px solid rgba(255, 255, 255, 0.45);
+            padding: 5px 10px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 10.5px;
+            font-weight: bold;
+            text-decoration: none;
+            display: none;
+            align-items: center;
+            gap: 4px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.22);
+            transition: transform 0.2s ease, filter 0.2s ease;
+        }
+
+        .download-all-btn:hover {
+            filter: brightness(1.1);
+            transform: scale(1.03);
+        }
+
+        /* آڈیو کارڈ */
+        .audio-item {
+            padding: 10px;
+            margin-top: 8px;
+            background: linear-gradient(180deg, #fffdf8 0%, #f7efdc 100%);
+            text-align: right;
+            position: relative;
+            border: 1.5px solid #d4c4a8;
+            border-radius: 12px;
+            box-shadow: 0 3px 6px rgba(0, 0, 0, 0.06);
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .audio-item > * {
+            position: relative;
+            z-index: 2;
+        }
+
+        /* پلے ہونے پر سائیڈوں اور بارڈر پر چمکتی ہوئی خوبصورت اینیمیشن */
+        .audio-item.is-playing {
+            border-color: transparent;
+            transform: translateY(-1px);
+            box-shadow: 0 0 14px rgba(255, 215, 0, 0.7), 0 0 26px rgba(0, 150, 0, 0.45);
+            animation: cardOuterGlow 1.6s ease-in-out infinite alternate;
+        }
+
+        .audio-item.is-playing::before {
+            content: "";
+            position: absolute;
+            inset: -60%;
+            background-color: #ffd700;
+            background: conic-gradient(
+                from 0deg,
+                #006400,
+                #ffd700,
+                #00e676,
+                #fff700,
+                #b08d43,
+                #008000,
+                #ffd700,
+                #006400
+            );
+            animation: rotateShineBorder 2.4s linear infinite;
+            z-index: 0;
+        }
+
+        .audio-item.is-playing::after {
+            content: "";
+            position: absolute;
+            inset: 3px;
+            background: linear-gradient(180deg, #fffff7 0%, #f5ebd2 100%);
+            border-radius: 9.5px;
+            z-index: 1;
+            box-shadow:
+                inset 8px 0 16px -6px rgba(255, 215, 0, 0.9),
+                inset -8px 0 16px -6px rgba(0, 170, 0, 0.85);
+            animation: sideShimmer 1.4s ease-in-out infinite alternate;
+        }
+
+        @keyframes rotateShineBorder {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        @keyframes cardOuterGlow {
+            0% { box-shadow: 0 0 10px rgba(255, 215, 0, 0.55), 0 0 18px rgba(0, 130, 0, 0.35); }
+            100% { box-shadow: 0 0 18px rgba(255, 215, 0, 0.95), 0 0 32px rgba(0, 190, 60, 0.65); }
+        }
+
+        @keyframes sideShimmer {
+            0% {
+                box-shadow: inset 6px 0 12px -5px rgba(255, 215, 0, 0.65),
+                            inset -6px 0 12px -5px rgba(0, 160, 0, 0.55);
+            }
+            100% {
+                box-shadow: inset 12px 0 20px -4px rgba(255, 215, 0, 1),
+                            inset -12px 0 20px -4px rgba(0, 200, 60, 0.95);
+            }
+        }
+
+        .title-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 6px;
+        }
+
+        .title-left {
+            display: flex;
+            align-items: center;
+            flex: 1;
+        }
+
+        .bayan-num {
+            background: linear-gradient(135deg, #d4af37, #9e7728);
+            color: #ffffff;
+            min-width: 22px;
+            height: 22px;
+            padding: 0 4px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            font-size: 10.5px;
+            font-weight: bold;
+            margin-left: 7px;
+            border: 1.5px solid #006400;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+            flex-shrink: 0;
+            box-sizing: border-box;
+        }
+
+        .audio-title {
+            font-size: 12.5px;
+            font-weight: bold;
+            color: #004d00;
+            line-height: 1.35;
+        }
+
+        .new-label {
+            background: linear-gradient(90deg, #ff0000, #d40000);
+            color: white;
+            font-size: 9px;
+            padding: 1px 5px;
+            border-radius: 4px;
+            margin-left: 5px;
+            font-weight: bold;
+            animation: blinker 1s linear infinite;
+            display: inline-block;
+            vertical-align: middle;
+        }
+
+        @keyframes blinker { 50% { opacity: 0.2; } }
+
+        /* متحرک ساؤنڈ بارز (صرف پلے ہونے پر) */
+        .playing-badge {
+            display: none;
+            align-items: flex-end;
+            gap: 2px;
+            height: 14px;
+            padding: 2px 5px;
+            background: #006400;
+            border-radius: 6px;
+            border: 1px solid #ffd700;
+            flex-shrink: 0;
+        }
+
+        .audio-item.is-playing .playing-badge {
+            display: inline-flex;
+        }
+
+        .eq-bar {
+            width: 2.5px;
+            background: #ffd700;
+            border-radius: 2px;
+            animation: eqBounce 0.6s ease-in-out infinite alternate;
+        }
+        .eq-bar:nth-child(2) { animation-delay: 0.2s; }
+        .eq-bar:nth-child(3) { animation-delay: 0.4s; }
+
+        @keyframes eqBounce {
+            0% { height: 3px; }
+            100% { height: 11px; }
+        }
+
+        /* آڈیو پلیئر */
+        .player-bg {
+            background: linear-gradient(90deg, #004d00, #d4af37, #004d00);
+            background-size: 200% 100%;
+            padding: 2.5px;
+            border-radius: 9px;
+            margin-top: 7px;
+            border: 1px solid #fff;
+            position: relative;
+            z-index: 2;
+            direction: ltr;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.12);
+        }
+
+        .audio-item.is-playing .player-bg {
+            background: linear-gradient(90deg, #006400, #fff000, #00c853, #ffd700, #006400);
+            background-size: 300% 100%;
+            animation: playerShine 2s linear infinite;
+            box-shadow: 0 0 10px rgba(255, 215, 0, 0.85);
+        }
+
+        @keyframes playerShine {
+            0% { background-position: 0% 50%; }
+            100% { background-position: 300% 50%; }
+        }
+
+        audio {
+            width: 100%;
+            height: 32px;
+            display: block;
+            border-radius: 7px;
+        }
+
+        /* اسپینر */
         .spinner {
             position: absolute;
             top: 50%;
@@ -31,132 +324,529 @@
             transform: translate(-50%, -50%);
             width: 20px;
             height: 20px;
-            border: 2.5px solid rgba(255, 255, 255, 0.3);
+            border: 2.5px solid rgba(255, 255, 255, 0.35);
             border-radius: 50%;
             border-top-color: #ff0000;
-            animation: spin 1s ease-in-out infinite;
-            display: none; /* شروع میں چھپا ہوا */
+            animation: spin 0.9s linear infinite;
+            display: none;
             z-index: 10;
+            pointer-events: none;
         }
-        @keyframes spin { to { transform: translate(-50%, -50%) rotate(360deg); } }
 
-        .download-hint { background: #b08d43; color: white; font-size: 10px; text-align: center; padding: 4px; border-radius: 0 0 8px 8px; margin-top: -5px; display: none; animation: slideDown 0.5s ease forwards; font-weight: bold; z-index: 1; }
-        @keyframes slideDown { from { transform: translateY(-100%); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+        @keyframes spin {
+            to { transform: translate(-50%, -50%) rotate(360deg); }
+        }
 
-        .meta-row { display: flex; justify-content: space-between; font-size: 9px; color: #555; margin-top: 5px; padding: 0 3px; direction: ltr; align-items: center; }
-        .maqam-text { color: #ff0000; font-weight: bold; font-size: 10px; direction: rtl; }
+        /* ڈاؤن لوڈ اور واٹس ایپ شیئر بٹن */
+        .action-row {
+            display: flex;
+            gap: 6px;
+            margin-top: 7px;
+        }
+
+        .action-btn {
+            flex: 1;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+            padding: 6px 8px;
+            border-radius: 8px;
+            font-size: 11px;
+            font-weight: bold;
+            cursor: pointer;
+            text-decoration: none;
+            border: none;
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.2s ease, filter 0.2s ease;
+            font-family: inherit;
+        }
+
+        .action-btn:hover {
+            filter: brightness(1.07);
+            transform: translateY(-1px);
+        }
+
+        .dl-btn {
+            background: linear-gradient(135deg, #005c00, #008200);
+            color: #ffffff;
+            border: 1px solid #d4af37;
+            box-shadow: 0 2px 5px rgba(0, 100, 0, 0.2);
+        }
+
+        .dl-progress {
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            width: 0%;
+            background: linear-gradient(90deg, rgba(212, 175, 55, 0.5), rgba(255, 215, 0, 0.78));
+            transition: width 0.15s linear;
+            z-index: 0;
+        }
+
+        .dl-text {
+            position: relative;
+            z-index: 1;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .wa-btn {
+            background: linear-gradient(135deg, #25d366, #128c7e);
+            color: #ffffff;
+            border: 1px solid #0e6f63;
+            box-shadow: 0 2px 5px rgba(18, 140, 126, 0.22);
+        }
+
+        .meta-row {
+            display: flex;
+            justify-content: space-between;
+            font-size: 9.5px;
+            color: #555;
+            margin-top: 6px;
+            padding: 0 4px;
+            direction: ltr;
+            align-items: center;
+        }
+
+        .maqam-text {
+            color: #c40000;
+            font-weight: bold;
+            font-size: 10px;
+            direction: rtl;
+        }
+
+        /* Back اور Next بٹن بار */
+        .pagination-bar {
+            display: none;
+            align-items: center;
+            justify-content: space-between;
+            gap: 6px;
+            margin-top: 10px;
+            padding: 8px 10px;
+            background: linear-gradient(135deg, #004d00 0%, #006b00 100%);
+            border: 1.5px solid #d4af37;
+            border-radius: 12px;
+            box-shadow: 0 3px 8px rgba(0, 77, 0, 0.18);
+        }
+
+        .page-btn {
+            background: linear-gradient(135deg, #d4af37, #a67c2e);
+            color: #ffffff;
+            border: 1px solid rgba(255, 255, 255, 0.45);
+            padding: 6px 15px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: bold;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            transition: transform 0.2s ease, opacity 0.2s ease, filter 0.2s ease;
+            font-family: inherit;
+        }
+
+        .page-btn:hover:not(:disabled) {
+            transform: scale(1.04);
+            filter: brightness(1.08);
+        }
+
+        .page-btn:disabled {
+            opacity: 0.42;
+            cursor: not-allowed;
+            filter: grayscale(40%);
+        }
+
+        .page-info {
+            color: #fff7b2;
+            font-size: 11px;
+            font-weight: bold;
+            text-align: center;
+            direction: ltr;
+        }
+
+        .empty-msg {
+            text-align: center;
+            padding: 18px 10px;
+            color: #006400;
+            font-size: 12px;
+            background: #fdfaf3;
+            border: 1px dashed #c9b382;
+            border-radius: 10px;
+            margin-top: 6px;
+        }
     </style>
 </head>
 <body>
 
     <div class="category-box">
         <div class="search-container">
-            <input type="text" id="audio-search" class="search-input" placeholder="بیان تلاش کریں..." onkeyup="filterList()">
+            <span class="search-icon">🔍</span>
+            <input type="text" class="search-input" placeholder="بیان یا نعت تلاش کریں...">
         </div>
 
         <div class="cat-header">
-            <span>TELAWAT-HAMD-NAAT</span>
-            <button id="toggle-btn" class="view-all-btn" onclick="toggleDisplay()">View All +</button>
+            <div class="header-title-wrap">
+                <span class="cat-title">LOADING...</span>
+                <span class="cat-count">0</span>
+            </div>
+            <a href="#" class="download-all-btn" title="پورا فولڈر ZIP فائل میں ڈاؤن لوڈ کریں">⬇️ Download All</a>
         </div>
-        <div id="bayan-list-container">
-            <div style="text-align:center; padding:15px; color:#006400; font-size:12px;">لوڈنگ ہو رہی ہے...</div>
+
+        <div class="bayan-list-container">
+            <div class="empty-msg">لوڈنگ ہو رہی ہے...</div>
         </div>
+
+        <div class="pagination-bar">
+            <button type="button" class="page-btn prev-btn">→ Back</button>
+            <span class="page-info">Page 1 / 1</span>
+            <button type="button" class="page-btn next-btn">Next ←</button>
+        </div>
+
+        <script>
+            (function () {
+                // ==========================================================
+                // سیٹنگز: ہر نئے فولڈر یا نئی بلاگر پوسٹ کیلئے صرف نیچے والی 2 لائنیں بدلیں
+                // ==========================================================
+                const CONFIG = {
+                    archiveID: "20260220_20260220_0620", // یہاں نئی Archive.org کی ID لکھیں
+                    title: "TELAWAT-HAMD-NAAT",          // یہاں پوسٹ یا فولڈر کا نام لکھیں
+                    itemsPerPage: 6,                     // ایک صفحے پر کتنی آڈیوز دکھانی ہیں
+                    defaultMaqam: "پاکستان",             // اگر عنوان میں [مقام] نہ ہو تو یہ دکھائے
+                    includeFolderNameInFile: true        // سنگل فائل کے نام کے ساتھ فولڈر کا نام شامل کرے (true/false)
+                };
+                // ==========================================================
+
+                const root = document.currentScript.closest('.category-box');
+                const titleEl = root.querySelector('.cat-title');
+                const countEl = root.querySelector('.cat-count');
+                const downloadAllBtn = root.querySelector('.download-all-btn');
+                const searchInput = root.querySelector('.search-input');
+                const listContainer = root.querySelector('.bayan-list-container');
+                const paginationBar = root.querySelector('.pagination-bar');
+                const prevBtn = root.querySelector('.prev-btn');
+                const nextBtn = root.querySelector('.next-btn');
+                const pageInfo = root.querySelector('.page-info');
+
+                titleEl.textContent = CONFIG.title;
+
+                let bayanFiles = [];
+                let filteredFiles = [];
+                let currentPage = 1;
+
+                function escapeHTML(str) {
+                    return String(str)
+                        .replace(/&/g, "&amp;")
+                        .replace(/</g, "&lt;")
+                        .replace(/>/g, "&gt;")
+                        .replace(/"/g, "&quot;")
+                        .replace(/'/g, "&#39;");
+                }
+
+                async function loadList() {
+                    try {
+                        const res = await fetch(`https://archive.org/metadata/${encodeURIComponent(CONFIG.archiveID)}`);
+                        if (!res.ok) throw new Error("Network error");
+                        const data = await res.json();
+
+                        if (data && Array.isArray(data.files)) {
+                            bayanFiles = data.files.filter(f => f.name && f.name.toLowerCase().endsWith('.mp3'));
+                            bayanFiles.sort((a, b) => (Number(b.mtime) || 0) - (Number(a.mtime) || 0));
+                            filteredFiles = [...bayanFiles];
+
+                            countEl.textContent = bayanFiles.length;
+                            countEl.style.display = 'inline-flex';
+
+                            // مکمل فولڈر ZIP ڈاؤن لوڈ لنک سیٹ کرنا
+                            if (bayanFiles.length > 0) {
+                                const mp3Formats = [...new Set(bayanFiles.map(f => f.format).filter(Boolean))];
+                                const formatPart = mp3Formats.length > 0
+                                    ? `formats=${encodeURIComponent(mp3Formats.join(','))}&`
+                                    : '';
+                                const safeZipName = (CONFIG.title || CONFIG.archiveID).replace(/[\\/:*?"<>|]+/g, '-').trim() + '.zip';
+                                const fullZipUrl = `https://archive.org/compress/${encodeURIComponent(CONFIG.archiveID)}/${formatPart}file=/${encodeURIComponent(safeZipName)}`;
+
+                                downloadAllBtn.href = fullZipUrl;
+                                downloadAllBtn.setAttribute('download', safeZipName);
+                                downloadAllBtn.style.display = 'inline-flex';
+                            }
+
+                            currentPage = 1;
+                            updateView();
+                        } else {
+                            listContainer.innerHTML = `<div class="empty-msg">اس فولڈر میں کوئی آڈیو فائل موجود نہیں ہے۔</div>`;
+                            paginationBar.style.display = 'none';
+                        }
+                    } catch (e) {
+                        listContainer.innerHTML = `<div class="empty-msg" style="color:#c00;">ڈیٹا لوڈ نہیں ہو سکا۔ براہ کرم Archive ID چیک کریں۔</div>`;
+                        paginationBar.style.display = 'none';
+                    }
+                }
+
+                downloadAllBtn.addEventListener('click', () => {
+                    const origText = downloadAllBtn.textContent;
+                    downloadAllBtn.textContent = "⏳ ZIP تیار ہو رہا ہے...";
+                    setTimeout(() => {
+                        downloadAllBtn.textContent = origText;
+                    }, 4000);
+                });
+
+                function updateView() {
+                    const totalItems = filteredFiles.length;
+                    const totalPages = Math.max(1, Math.ceil(totalItems / CONFIG.itemsPerPage));
+
+                    if (currentPage > totalPages) currentPage = totalPages;
+                    if (currentPage < 1) currentPage = 1;
+
+                    if (totalPages <= 1) {
+                        paginationBar.style.display = 'none';
+                    } else {
+                        paginationBar.style.display = 'flex';
+                        pageInfo.textContent = `Page ${currentPage} / ${totalPages}`;
+                        prevBtn.disabled = (currentPage === 1);
+                        nextBtn.disabled = (currentPage === totalPages);
+                    }
+
+                    const startIndex = (currentPage - 1) * CONFIG.itemsPerPage;
+                    render(filteredFiles.slice(startIndex, startIndex + CONFIG.itemsPerPage), startIndex);
+                }
+
+                // اسی پیج کے اندر ڈائریکٹ ڈاؤن لوڈ شروع کرنے کا فنکشن (بغیر نیا ٹیب کھولے)
+                function startDirectDownload(btn, url, fileName) {
+                    if (btn.dataset.downloading === "true") return;
+                    btn.dataset.downloading = "true";
+
+                    const labelEl = btn.querySelector('.dl-text');
+                    const progressFill = btn.querySelector('.dl-progress');
+                    const originalHTML = labelEl.innerHTML;
+
+                    labelEl.textContent = "⏳ شروع ہو رہا ہے...";
+                    progressFill.style.width = "0%";
+
+                    const xhr = new XMLHttpRequest();
+                    xhr.open("GET", url, true);
+                    xhr.responseType = "blob";
+
+                    xhr.onprogress = function (event) {
+                        if (event.lengthComputable && event.total > 0) {
+                            const percent = Math.round((event.loaded / event.total) * 100);
+                            labelEl.textContent = `⏳ ${percent}% ڈاؤن لوڈ...`;
+                            progressFill.style.width = percent + "%";
+                        } else {
+                            const mb = (event.loaded / (1024 * 1024)).toFixed(1);
+                            labelEl.textContent = `⏳ ${mb} MB...`;
+                        }
+                    };
+
+                    xhr.onload = function () {
+                        if (xhr.status >= 200 && xhr.status < 300) {
+                            const blob = xhr.response;
+                            const blobUrl = URL.createObjectURL(blob);
+                            const a = document.createElement("a");
+                            a.style.display = "none";
+                            a.href = blobUrl;
+                            a.download = fileName;
+                            document.body.appendChild(a);
+                            a.click();
+
+                            setTimeout(() => {
+                                document.body.removeChild(a);
+                                URL.revokeObjectURL(blobUrl);
+                            }, 5000);
+
+                            progressFill.style.width = "100%";
+                            labelEl.textContent = "✅ ڈاؤن لوڈ مکمل!";
+                            setTimeout(() => {
+                                labelEl.innerHTML = originalHTML;
+                                progressFill.style.width = "0%";
+                                btn.dataset.downloading = "false";
+                            }, 3000);
+                        } else {
+                            fallbackDownload();
+                        }
+                    };
+
+                    xhr.onerror = function () {
+                        fallbackDownload();
+                    };
+
+                    function fallbackDownload() {
+                        const a = document.createElement("a");
+                        a.href = url;
+                        a.setAttribute("download", fileName);
+                        a.style.display = "none";
+                        document.body.appendChild(a);
+                        a.click();
+                        document.body.removeChild(a);
+
+                        labelEl.textContent = "⬇️ ڈاؤن لوڈ...";
+                        progressFill.style.width = "0%";
+                        setTimeout(() => {
+                            labelEl.innerHTML = originalHTML;
+                            btn.dataset.downloading = "false";
+                        }, 2500);
+                    }
+
+                    xhr.send();
+                }
+
+                function render(files, startIndex) {
+                    if (!files.length) {
+                        listContainer.innerHTML = `<div class="empty-msg">کوئی آڈیو نہیں ملی۔</div>`;
+                        return;
+                    }
+
+                    let html = '';
+                    const newestName = bayanFiles.length > 0 ? bayanFiles[0].name : null;
+                    const pageUrl = (window.location.href && window.location.href.startsWith('http')) ? window.location.href : '';
+                    const safeFolderPrefix = CONFIG.title.replace(/[\\/:*?"<>|]/g, '').trim();
+
+                    files.forEach((file, index) => {
+                        const safePath = file.name.split('/').map(encodeURIComponent).join('/');
+                        const url = `https://archive.org/download/${encodeURIComponent(CONFIG.archiveID)}/${safePath}`;
+                        const size = file.size ? (Number(file.size) / (1024 * 1024)).toFixed(1) + " MB" : "---";
+                        const date = file.mtime ? new Date(parseInt(file.mtime, 10) * 1000).toLocaleDateString("en-GB") : "Recent";
+
+                        let rawTitle = file.title || file.name.split('/').pop().replace(/\.mp3$/i, '');
+                        let maqam = CONFIG.defaultMaqam;
+                        const match = rawTitle.match(/\[(.*?)\]/);
+                        if (match) {
+                            maqam = match[1];
+                            rawTitle = rawTitle.replace(match[0], '').trim();
+                        }
+
+                        const cleanTrackName = rawTitle ? rawTitle.replace(/[\\/:*?"<>|]/g, '').trim() : 'audio';
+                        const cleanFileName = (CONFIG.includeFolderNameInFile && safeFolderPrefix)
+                            ? `${safeFolderPrefix} - ${cleanTrackName}.mp3`
+                            : `${cleanTrackName}.mp3`;
+
+                        const isNew = (newestName && file.name === newestName) ? '<span class="new-label">NEW</span> ' : '';
+
+                        let waText = `🎙️ *${rawTitle}*\n📂 فولڈر: ${CONFIG.title}\n📍 مقام: ${maqam}\n\n🎧 آڈیو سنیں یا ڈاؤن لوڈ کریں:\n${url}`;
+                        if (pageUrl) {
+                            waText += `\n\n🌐 ویب پیج:\n${pageUrl}`;
+                        }
+                        const waLink = `https://api.whatsapp.com/send?text=${encodeURIComponent(waText)}`;
+
+                        html += `
+                            <div class="audio-item">
+                                <div class="title-row">
+                                    <div class="title-left">
+                                        <span class="bayan-num">${startIndex + index + 1}</span>
+                                        <span class="audio-title">${isNew}${escapeHTML(rawTitle)}</span>
+                                    </div>
+                                    <span class="playing-badge" title="چل رہا ہے">
+                                        <span class="eq-bar"></span>
+                                        <span class="eq-bar"></span>
+                                        <span class="eq-bar"></span>
+                                    </span>
+                                </div>
+                                <div class="player-bg">
+                                    <div class="spinner"></div>
+                                    <audio class="q-player" controls preload="none">
+                                        <source src="${url}" type="audio/mpeg">
+                                    </audio>
+                                </div>
+                                <div class="action-row">
+                                    <button type="button" class="action-btn dl-btn" data-url="${escapeHTML(url)}" data-filename="${escapeHTML(cleanFileName)}">
+                                        <span class="dl-progress"></span>
+                                        <span class="dl-text">⬇️ ڈاؤن لوڈ</span>
+                                    </button>
+                                    <a href="${escapeHTML(waLink)}" target="_blank" rel="noopener noreferrer" class="action-btn wa-btn">
+                                        <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                                            <path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.816 9.816 0 0 0 12.04 2m5.81 14.08c-.25.7-1.44 1.34-2 1.43-.52.08-1.18.11-1.91-.12-.44-.14-1.01-.33-1.74-.65-3.06-1.32-5.06-4.41-5.21-4.61-.15-.2-1.24-1.65-1.24-3.15s.78-2.24 1.06-2.55c.28-.3.61-.38.81-.38.2 0 .41 0 .59.01.19.01.44-.07.69.53.25.61.86 2.11.94 2.26.08.15.13.33.03.53-.1.2-.15.33-.3.5-.15.18-.32.4-.46.54-.15.15-.31.32-.13.62.18.3.79 1.3 1.7 2.11 1.17 1.04 2.15 1.36 2.45 1.51.3.15.48.13.66-.08.18-.2.76-.89.96-1.19.2-.3.4-.25.68-.15.28.1 1.77.84 2.07.99.3.15.51.23.58.35.08.13.08.73-.17 1.43Z"/>
+                                        </svg>
+                                        <span>واٹس ایپ شیئر</span>
+                                    </a>
+                                </div>
+                                <div class="meta-row">
+                                    <span>${size}</span>
+                                    <span class="maqam-text">📍 ${escapeHTML(maqam)}</span>
+                                    <span>${date}</span>
+                                </div>
+                            </div>`;
+                    });
+
+                    listContainer.innerHTML = html;
+
+                    // کارڈز پر ایونٹس لگانا
+                    listContainer.querySelectorAll('.audio-item').forEach((card) => {
+                        const audio = card.querySelector('.q-player');
+                        const spinner = card.querySelector('.spinner');
+                        const dlBtn = card.querySelector('.dl-btn');
+
+                        dlBtn.addEventListener('click', () => {
+                            startDirectDownload(dlBtn, dlBtn.dataset.url, dlBtn.dataset.filename);
+                        });
+
+                        audio.addEventListener('play', () => {
+                            document.querySelectorAll('.q-player').forEach(p => {
+                                if (p !== audio && !p.paused) p.pause();
+                            });
+                            document.querySelectorAll('.audio-item').forEach(el => {
+                                if (el !== card) el.classList.remove('is-playing');
+                            });
+
+                            card.classList.add('is-playing');
+                            if (audio.readyState < 3 && spinner) spinner.style.display = 'block';
+                        });
+
+                        audio.addEventListener('playing', () => {
+                            if (spinner) spinner.style.display = 'none';
+                            card.classList.add('is-playing');
+                        });
+
+                        audio.addEventListener('canplay', () => {
+                            if (spinner) spinner.style.display = 'none';
+                        });
+
+                        audio.addEventListener('waiting', () => {
+                            if (spinner) spinner.style.display = 'block';
+                        });
+
+                        audio.addEventListener('pause', () => {
+                            if (spinner) spinner.style.display = 'none';
+                            card.classList.remove('is-playing');
+                        });
+
+                        audio.addEventListener('ended', () => {
+                            if (spinner) spinner.style.display = 'none';
+                            card.classList.remove('is-playing');
+                        });
+                    });
+                }
+
+                searchInput.addEventListener('input', () => {
+                    const query = searchInput.value.trim().toLowerCase();
+                    filteredFiles = bayanFiles.filter(f => (f.title || f.name).toLowerCase().includes(query));
+                    currentPage = 1;
+                    updateView();
+                });
+
+                prevBtn.addEventListener('click', () => {
+                    if (currentPage > 1) {
+                        currentPage--;
+                        updateView();
+                        root.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    }
+                });
+
+                nextBtn.addEventListener('click', () => {
+                    const totalPages = Math.ceil(filteredFiles.length / CONFIG.itemsPerPage);
+                    if (currentPage < totalPages) {
+                        currentPage++;
+                        updateView();
+                        root.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    }
+                });
+
+                loadList();
+            })();
+        </script>
     </div>
 
-    <script>
-        const audioID = "20260220_20260220_0620"; 
-        let bayanFiles = [];
-        let filteredFiles = [];
-        let showingAll = false;
-
-        async function loadList() {
-            try {
-                const res = await fetch(`https://archive.org/metadata/${audioID}`);
-                const data = await res.json();
-                if (data.files) {
-                    bayanFiles = data.files.filter(f => f.name.toLowerCase().endsWith('.mp3'));
-                    bayanFiles.sort((a, b) => (b.mtime || 0) - (a.mtime || 0));
-                    filteredFiles = [...bayanFiles];
-                    render(filteredFiles.slice(0, 6)); 
-                }
-            } catch (e) { document.getElementById('bayan-list-container').innerHTML = "ڈیٹا لوڈ نہیں ہو سکا۔"; }
-        }
-
-        function render(files) {
-            const container = document.getElementById('bayan-list-container');
-            container.innerHTML = '';
-            files.forEach((file, index) => {
-                const url = `https://archive.org/download/${audioID}/${encodeURIComponent(file.name)}`;
-                const size = file.size ? (file.size/(1024*1024)).toFixed(1) + "MB" : "---";
-                const date = file.mtime ? new Date(parseInt(file.mtime)*1000).toLocaleDateString("en-GB") : "Recent";
-                
-                let fullTitle = file.title || file.name.replace('.mp3','');
-                let maqam = "پاکستان";
-                const match = fullTitle.match(/\[(.*?)\]/);
-                if (match) { maqam = match[1]; fullTitle = fullTitle.replace(match[0], '').trim(); }
-
-                const isNew = (index === 0 && !showingAll) ? '<span class="new-label">NEW</span> ' : '';
-
-                container.innerHTML += `
-                    <div class="audio-item">
-                        <div style="display:flex; align-items:center;">
-                            <span class="bayan-num">${index + 1}</span>
-                            <span class="audio-title">${isNew}${fullTitle}</span>
-                        </div>
-                        <div class="player-bg">
-                            <div id="spinner-${index}" class="spinner"></div>
-                            <audio id="player-${index}" class="q-player" controls preload="none" 
-                                onplay="handlePlay(${index})" 
-                                onplaying="hideSpinner(${index})" 
-                                onwaiting="showSpinner(${index})"
-                                onpause="hideSpinner(${index})">
-                                <source src="${url}" type="audio/mpeg">
-                            </audio>
-                        </div>
-                        <div id="hint-${index}" class="download-hint">ڈاؤن لوڈ کیلئے تھری ڈاٹ (⋮) پر کلک کریں</div>
-                        <div class="meta-row">
-                            <span>${size}</span> 
-                            <span class="maqam-text">📍 ${maqam}</span>
-                            <span>${date}</span>
-                        </div>
-                    </div>`;
-            });
-        }
-
-        function handlePlay(idx) {
-            stopOthers(document.getElementById(`player-${idx}`));
-            showHint(idx);
-            // اگر آڈیو ابھی لوڈ ہو رہی ہو تو اسپینر دکھائیں
-            const audio = document.getElementById(`player-${idx}`);
-            if (audio.readyState < 3) showSpinner(idx);
-        }
-
-        function showSpinner(idx) { document.getElementById(`spinner-${idx}`).style.display = 'block'; }
-        function hideSpinner(idx) { document.getElementById(`spinner-${idx}`).style.display = 'none'; }
-
-        function showHint(idx) {
-            document.querySelectorAll('.download-hint').forEach(el => el.style.display = 'none');
-            const h = document.getElementById(`hint-${idx}`);
-            if(h) h.style.display = 'block';
-        }
-
-        function filterList() {
-            const query = document.getElementById('audio-search').value.toLowerCase();
-            filteredFiles = bayanFiles.filter(f => (f.title || f.name).toLowerCase().includes(query));
-            render(showingAll ? filteredFiles : filteredFiles.slice(0, 8));
-        }
-
-        function toggleDisplay() {
-            showingAll = !showingAll;
-            document.getElementById('toggle-btn').innerText = showingAll ? "Show Less -" : "View All +";
-            render(showingAll ? filteredFiles : filteredFiles.slice(0, 5));
-        }
-
-        function stopOthers(curr) {
-            document.querySelectorAll('.q-player').forEach(p => { if (p !== curr) p.pause(); });
-        }
-
-        loadList();
-    </script>
 </body>
 </html>
