@@ -1,136 +1,345 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="ur" dir="rtl">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>News Updates - خانقاہ دارالفلاح</title>
 
 <style>
-:root { --gold:#b08d43; --dark:#4e3b2b; --bg:#fdfaf3; }
+:root { --gold:#b08d43; --dark:#4e3b2b; --bg:#fdfaf3; --wa:#25D366; }
 
 body{
-font-family:sans-serif;
-background:var(--bg);
-margin:0;
-padding:15px;
+  font-family:sans-serif;
+  background:var(--bg);
+  margin:0;
+  padding:12px;
+  color:#2c1f15;
 }
 
-.container{max-width:360px;margin:auto;}
+.container{max-width:380px;margin:auto;}
 
 .lib-card{
-background:#fff;
-border:1px solid #e0d5ba;
-border-radius:10px;
-overflow:hidden;
-box-shadow:0 5px 20px rgba(0,0,0,0.1);
+  background:#fff;
+  border:2px solid var(--gold);
+  border-radius:12px;
+  overflow:hidden;
+  box-shadow:0 5px 20px rgba(0,0,0,0.12);
 }
 
 .lib-header{
-background:var(--dark);
-color:#fff;
-padding:10px;
-text-align:center;
-font-weight:bold;
-border-bottom:3px solid var(--gold);
+  background:var(--dark);
+  color:#fff;
+  padding:10px 12px;
+  font-weight:bold;
+  border-bottom:3px solid var(--gold);
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  font-size:15px;
 }
 
-/* slider */
+.counter-badge{
+  background:rgba(0,0,0,0.35);
+  color:#ffd700;
+  border:1px solid rgba(176,141,67,0.6);
+  padding:2px 9px;
+  border-radius:50px;
+  font-size:12px;
+}
+
+/* Slider */
 .slider-area{
-height:380px;
-position:relative;
-overflow:hidden;
-background:white;
-touch-action:pan-y;
+  height:380px;
+  position:relative;
+  overflow:hidden;
+  background:#fff;
+  touch-action:pan-y;
 }
 
 .slider-area img{
-width:100%;
-height:100%;
-object-fit:contain;
-position:absolute;
-opacity:0;
-transition:0.5s;
-padding:10px;
-box-sizing:border-box;
-cursor:pointer;
+  width:100%;
+  height:100%;
+  object-fit:contain;
+  position:absolute;
+  top:0; left:0;
+  opacity:0;
+  transition:0.4s ease;
+  padding:10px;
+  box-sizing:border-box;
+  cursor:pointer;
+  pointer-events:none;
 }
 
-.slider-area img.active{opacity:1;}
+.slider-area img.active{
+  opacity:1;
+  pointer-events:auto;
+}
 
-/* dots */
+/* Floating Left / Right Arrows on Slider */
+.nav-arrow{
+  position:absolute;
+  top:50%;
+  transform:translateY(-50%);
+  z-index:5;
+  width:36px;
+  height:36px;
+  border-radius:50%;
+  border:1px solid rgba(255,255,255,0.4);
+  background:rgba(0,0,0,0.55);
+  color:#fff;
+  font-size:16px;
+  cursor:pointer;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  transition:0.2s;
+}
+.nav-arrow:hover{ background:var(--gold); }
+.nav-arrow.prev-btn{ right:8px; }
+.nav-arrow.next-btn{ left:8px; }
+
+/* Title Bar */
+.img-title-bar{
+  background:#f8f1e1;
+  color:var(--dark);
+  text-align:center;
+  padding:7px 10px;
+  font-size:13px;
+  font-weight:bold;
+  border-top:1px solid #eadcc0;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+
+/* Dots */
 .dots-container{
-text-align:center;
-padding:8px;
-background:#fffcf5;
+  text-align:center;
+  padding:7px;
+  background:#fffcf5;
 }
 
 .dot{
-height:8px;width:8px;
-background:#ccc;
-border-radius:50%;
-display:inline-block;
-margin:3px;
+  height:8px;width:8px;
+  background:#ccc;
+  border-radius:50%;
+  display:inline-block;
+  margin:3px;
+  cursor:pointer;
+  transition:0.2s;
 }
 
 .dot.active{
-background:var(--dark);
-transform:scale(1.2);
+  background:var(--gold);
+  width:18px;
+  border-radius:10px;
 }
 
-/* buttons */
+/* Footer Buttons */
 .footer{
-display:flex;
-gap:8px;
-padding:12px;
+  padding:10px 12px 12px;
+  display:flex;
+  flex-direction:column;
+  gap:8px;
+  border-top:1px solid #eee2c8;
+}
+
+.btn-row{
+  display:flex;
+  gap:8px;
 }
 
 .btn{
-flex:1;
-padding:8px;
-border:none;
-border-radius:6px;
-font-size:12px;
-color:white;
-cursor:pointer;
+  flex:1;
+  padding:9px 8px;
+  border:none;
+  border-radius:8px;
+  font-size:12px;
+  font-weight:bold;
+  color:white;
+  cursor:pointer;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:5px;
+  transition:0.2s;
+}
+.btn:active{ transform:scale(0.96); }
+
+.btn-nav{
+  background:#efe4cc;
+  color:var(--dark);
+  border:1px solid var(--gold);
+}
+.btn-nav:hover{ background:#e3d1ab; }
+
+.view{ background:#2563eb; }
+.view:hover{ background:#1d4ed8; }
+
+.btn-dl{
+  background:linear-gradient(135deg, #b08d43, #8c6d2b);
+}
+.btn-dl:hover{ opacity:0.92; }
+
+.btn-wa{
+  background:var(--wa);
+}
+.btn-wa:hover{ background:#1faa4e; }
+
+/* GRID VIEW */
+.grid-wrapper{ display:none; }
+
+.grid-topbar{
+  background:var(--dark);
+  color:#fff;
+  padding:10px 12px;
+  border-radius:10px;
+  border:2px solid var(--gold);
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  margin-bottom:10px;
+  position:sticky;
+  top:6px;
+  z-index:10;
 }
 
-.view{background:#2563eb;}
+.btn-back-slider{
+  background:var(--gold);
+  color:#fff;
+  border:none;
+  padding:6px 12px;
+  border-radius:6px;
+  font-size:12px;
+  font-weight:bold;
+  cursor:pointer;
+}
 
-/* GRID */
 .grid{
-display:none;
-grid-template-columns:1fr 1fr;
-gap:8px;
-margin-top:10px;
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:8px;
 }
 
 .item{
-background:white;
-border:1px solid #ddd;
-border-radius:8px;
-padding:5px;
+  background:white;
+  border:1px solid #d9c9a8;
+  border-radius:10px;
+  padding:6px;
+  display:flex;
+  flex-direction:column;
+  justify-content:space-between;
+  box-shadow:0 2px 8px rgba(0,0,0,0.06);
 }
 
 .item img{
-width:100%;
-height:220px;
-object-fit:contain;
+  width:100%;
+  height:185px;
+  object-fit:contain;
+  cursor:pointer;
+}
+
+.item-title{
+  font-size:11px;
+  font-weight:bold;
+  text-align:center;
+  margin:5px 0;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  color:var(--dark);
+}
+
+.item-actions{
+  display:flex;
+  gap:4px;
+}
+
+.item-actions button{
+  flex:1;
+  border:none;
+  border-radius:6px;
+  padding:6px 4px;
+  font-size:10px;
+  font-weight:bold;
+  color:#fff;
+  cursor:pointer;
 }
 
 /* FULL SCREEN */
 .fullscreen{
-position:fixed;
-top:0;left:0;
-width:100%;height:100%;
-background:black;
-display:none;
-align-items:center;
-justify-content:center;
-z-index:9999;
+  position:fixed;
+  top:0;left:0;
+  width:100%;height:100%;
+  background:rgba(0,0,0,0.95);
+  display:none;
+  flex-direction:column;
+  justify-content:space-between;
+  padding:12px;
+  box-sizing:border-box;
+  z-index:9999;
 }
 
-.fullscreen img{
-width:100%;
-height:auto;
+.fs-top{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  color:#ffd700;
+  font-size:13px;
+  font-weight:bold;
+}
+
+.fs-close{
+  background:rgba(255,255,255,0.18);
+  color:#fff;
+  border:none;
+  border-radius:50%;
+  width:34px;
+  height:34px;
+  font-size:16px;
+  cursor:pointer;
+}
+
+.fs-center{
+  flex:1;
+  position:relative;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  overflow:hidden;
+  margin:8px 0;
+}
+
+.fs-center img{
+  max-width:100%;
+  max-height:100%;
+  object-fit:contain;
+}
+
+.fs-bottom{
+  display:flex;
+  gap:8px;
+  max-width:360px;
+  width:100%;
+  margin:auto;
+}
+
+/* Toast Notification */
+.toast{
+  position:fixed;
+  bottom:18px;
+  left:50%;
+  transform:translateX(-50%);
+  background:#0a5d38;
+  color:#fff;
+  padding:8px 16px;
+  border-radius:50px;
+  font-size:12px;
+  font-weight:bold;
+  z-index:10000;
+  display:none;
+  box-shadow:0 4px 15px rgba(0,0,0,0.3);
+  white-space:nowrap;
 }
 </style>
 </head>
@@ -139,141 +348,319 @@ height:auto;
 
 <div class="container">
 
-<div class="lib-card">
+  <!-- SLIDER CARD -->
+  <div class="lib-card" id="libCard">
+    <div class="lib-header">
+      <span>📚 News Updates</span>
+      <span class="counter-badge" id="counter">0 / 0</span>
+    </div>
 
-<div class="lib-header">📚 News Updates</div>
+    <div class="slider-area" id="slider">
+      <button class="nav-arrow prev-btn" onclick="prevSlide(event)" title="بیک">❮</button>
+      <button class="nav-arrow next-btn" onclick="nextSlide(event)" title="نیکسٹ">❯</button>
+    </div>
 
-<div class="slider-area" id="slider"></div>
+    <div class="img-title-bar" id="imgTitle">لوڈ ہو رہا ہے...</div>
 
-<div class="dots-container" id="dots"></div>
+    <div class="dots-container" id="dots"></div>
 
-<div class="footer">
-<button class="btn view" onclick="toggleView()">➕ VIEW ALL</button>
-</div>
+    <div class="footer">
+      <!-- Row 1: Back / View All / Next -->
+      <div class="btn-row">
+        <button class="btn btn-nav" onclick="prevSlide(event)">◀ بیک</button>
+        <button class="btn view" onclick="toggleView()">➕ سب دیکھیں</button>
+        <button class="btn btn-nav" onclick="nextSlide(event)">نیکسٹ ▶</button>
+      </div>
 
-</div>
+      <!-- Row 2: Download & WhatsApp Share -->
+      <div class="btn-row">
+        <button class="btn btn-dl" onclick="downloadCurrent(event)">⬇ ڈاؤن لوڈ</button>
+        <button class="btn btn-wa" onclick="shareWhatsAppCurrent(event)">💬 واٹس ایپ شیئر</button>
+      </div>
+    </div>
+  </div>
 
-<div id="grid" class="grid"></div>
+  <!-- GRID VIEW -->
+  <div id="gridWrapper" class="grid-wrapper">
+    <div class="grid-topbar">
+      <span style="font-size:13px;font-weight:bold;">تمام اعلانات و اشتہارات</span>
+      <button class="btn-back-slider" onclick="toggleView()">🔙 واپس سلائیڈر</button>
+    </div>
+    <div id="grid" class="grid"></div>
+  </div>
 
 </div>
 
 <!-- FULL SCREEN VIEW -->
 <div class="fullscreen" id="fs" onclick="closeFS()">
-<img id="fsImg">
+  <div class="fs-top" onclick="event.stopPropagation()">
+    <span id="fsTitle"></span>
+    <button class="fs-close" onclick="closeFS()">✕</button>
+  </div>
+
+  <div class="fs-center">
+    <button class="nav-arrow prev-btn" onclick="prevSlide(event)">❮</button>
+    <img id="fsImg" onclick="event.stopPropagation()">
+    <button class="nav-arrow next-btn" onclick="nextSlide(event)">❯</button>
+  </div>
+
+  <div class="fs-bottom" onclick="event.stopPropagation()">
+    <button class="btn btn-dl" onclick="downloadCurrent(event)">⬇ ڈاؤن لوڈ</button>
+    <button class="btn btn-wa" onclick="shareWhatsAppCurrent(event)">💬 واٹس ایپ شیئر</button>
+  </div>
 </div>
 
+<div class="toast" id="toast"></div>
+
 <script>
+const myID = "20260422_20260422_1213";
 
-const myID="20260422_20260422_1213";
+let items = [];
+let index = 0;
+let pauseAutoUntil = 0;
 
-let imgs=[];
-let index=0;
+const libCard = document.getElementById("libCard");
+const slider = document.getElementById("slider");
+const dots = document.getElementById("dots");
+const imgTitle = document.getElementById("imgTitle");
+const counter = document.getElementById("counter");
+const gridWrapper = document.getElementById("gridWrapper");
+const grid = document.getElementById("grid");
+const fs = document.getElementById("fs");
+const fsImg = document.getElementById("fsImg");
+const fsTitle = document.getElementById("fsTitle");
+const toastEl = document.getElementById("toast");
 
-const slider=document.getElementById("slider");
-const dots=document.getElementById("dots");
-const grid=document.getElementById("grid");
-const fs=document.getElementById("fs");
-const fsImg=document.getElementById("fsImg");
+function showToast(msg) {
+  toastEl.textContent = msg;
+  toastEl.style.display = "block";
+  clearTimeout(window.__toastTimer);
+  window.__toastTimer = setTimeout(() => {
+    toastEl.style.display = "none";
+  }, 3000);
+}
 
 /* LOAD */
-async function load(){
+async function load() {
+  try {
+    let res = await fetch(`https://archive.org/metadata/${myID}`);
+    let data = await res.json();
 
-let res=await fetch(`https://archive.org/metadata/${myID}`);
-let data=await res.json();
+    let files = (data.files || []).filter(f =>
+      /\.(png|jpe?g|webp)$/i.test(f.name) &&
+      !f.name.includes("_thumb") &&
+      !f.name.startsWith("__")
+    );
 
-let files=data.files.filter(f=>
-f.name.match(/\.(png|jpeg)$/i)
-);
+    files.sort((a, b) => (parseInt(b.mtime) || 0) - (parseInt(a.mtime) || 0));
 
-files.forEach((f,i)=>{
+    if (files.length === 0) {
+      imgTitle.textContent = "کوئی تصویر موجود نہیں";
+      return;
+    }
 
-let url=`https://archive.org/download/${myID}/${encodeURIComponent(f.name)}`;
-imgs.push(url);
+    files.forEach((f, i) => {
+      let url = `https://archive.org/download/${myID}/${encodeURIComponent(f.name)}`;
+      let title = f.name.replace(/\.(png|jpe?g|webp)$/i, "").trim();
+      items.push({ name: f.name, title, url });
 
-slider.innerHTML+=`
-<img src="${url}" class="${i==0?'active':''}" onclick="openFS('${url}')">`;
+      let imgEl = document.createElement("img");
+      imgEl.src = url;
+      imgEl.alt = title;
+      if (i === 0) imgEl.className = "active";
+      imgEl.onclick = () => openFS(i);
+      slider.appendChild(imgEl);
 
-dots.innerHTML+=`<span class="dot ${i==0?'active':''}"></span>`;
-});
+      let dotEl = document.createElement("span");
+      dotEl.className = i === 0 ? "dot active" : "dot";
+      dotEl.onclick = () => {
+        pauseAutoUntil = Date.now() + 10000;
+        index = i;
+        update();
+      };
+      dots.appendChild(dotEl);
+    });
 
-initSwipe();
-autoSlide();
+    update();
+    initSwipe();
+    autoSlide();
+  } catch (e) {
+    imgTitle.textContent = "لوڈنگ میں خرابی پیش آئی";
+  }
 }
 
 /* UPDATE */
-function update(){
+function update() {
+  if (items.length === 0) return;
 
-let slides=slider.querySelectorAll("img");
-let dotsEl=dots.querySelectorAll(".dot");
+  let slides = slider.querySelectorAll("img");
+  let dotsEl = dots.querySelectorAll(".dot");
 
-slides.forEach(s=>s.classList.remove("active"));
-dotsEl.forEach(d=>d.classList.remove("active"));
+  slides.forEach(s => s.classList.remove("active"));
+  dotsEl.forEach(d => d.classList.remove("active"));
 
-slides[index].classList.add("active");
-dotsEl[index].classList.add("active");
+  slides[index].classList.add("active");
+  dotsEl[index].classList.add("active");
+
+  imgTitle.textContent = items[index].title;
+  counter.textContent = `${index + 1} / ${items.length}`;
+
+  if (fs.style.display === "flex") {
+    fsImg.src = items[index].url;
+    fsTitle.textContent = items[index].title;
+  }
 }
 
-/* AUTO */
-function autoSlide(){
-setInterval(()=>{
-index=(index+1)%imgs.length;
-update();
-},8000);
+/* NEXT & BACK */
+function nextSlide(e) {
+  if (e) e.stopPropagation();
+  if (items.length === 0) return;
+  pauseAutoUntil = Date.now() + 10000;
+  index = (index + 1) % items.length;
+  update();
+}
+
+function prevSlide(e) {
+  if (e) e.stopPropagation();
+  if (items.length === 0) return;
+  pauseAutoUntil = Date.now() + 10000;
+  index = (index - 1 + items.length) % items.length;
+  update();
+}
+
+/* DOWNLOAD */
+async function downloadByIndex(idx, e) {
+  if (e) e.stopPropagation();
+  const item = items[idx];
+  if (!item) return;
+
+  showToast("ڈاؤن لوڈ شروع ہو رہا ہے...");
+  try {
+    const res = await fetch(item.url, { mode: "cors" });
+    if (!res.ok) throw new Error("Download error");
+    const blob = await res.blob();
+    const blobUrl = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = blobUrl;
+    a.download = item.name;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    setTimeout(() => URL.revokeObjectURL(blobUrl), 30000);
+    showToast("تصویر فون میں محفوظ ہو گئی!");
+  } catch (err) {
+    const a = document.createElement("a");
+    a.href = item.url;
+    a.download = item.name;
+    a.target = "_blank";
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+  }
+}
+
+function downloadCurrent(e) {
+  downloadByIndex(index, e);
+}
+
+/* WHATSAPP SHARE */
+async function shareWhatsAppByIndex(idx, e) {
+  if (e) e.stopPropagation();
+  const item = items[idx];
+  if (!item) return;
+
+  const text = `📢 *خانقاہ دارالفلاح — تازہ اعلان*\n\n📌 ${item.title}\n\n🔗 تصویر دیکھیں:\n${item.url}`;
+
+  try {
+    if (navigator.share && navigator.canShare) {
+      const res = await fetch(item.url, { mode: "cors" });
+      const blob = await res.blob();
+      const file = new File([blob], item.name, { type: blob.type || "image/png" });
+      if (navigator.canShare({ files: [file] })) {
+        await navigator.share({
+          title: item.title,
+          text: `📢 خانقاہ دارالفلاح: ${item.title}`,
+          files: [file]
+        });
+        return;
+      }
+    }
+  } catch (err) {
+    // Fallback to WhatsApp link below
+  }
+
+  window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(text)}`, "_blank");
+}
+
+function shareWhatsAppCurrent(e) {
+  shareWhatsAppByIndex(index, e);
+}
+
+/* AUTO SLIDE */
+function autoSlide() {
+  setInterval(() => {
+    if (Date.now() < pauseAutoUntil) return;
+    if (fs.style.display === "flex" || gridWrapper.style.display === "block") return;
+    if (items.length <= 1) return;
+    index = (index + 1) % items.length;
+    update();
+  }, 8000);
 }
 
 /* SWIPE */
-function initSwipe(){
-let startX=0;
-
-slider.addEventListener("touchstart",e=>{
-startX=e.touches[0].clientX;
-});
-
-slider.addEventListener("touchend",e=>{
-let endX=e.changedTouches[0].clientX;
-
-if(startX-endX>50) index=(index+1)%imgs.length;
-if(endX-startX>50) index=(index-1+imgs.length)%imgs.length;
-
-update();
-});
+function initSwipe() {
+  let startX = 0;
+  slider.addEventListener("touchstart", e => {
+    startX = e.touches[0].clientX;
+  });
+  slider.addEventListener("touchend", e => {
+    let endX = e.changedTouches[0].clientX;
+    if (startX - endX > 45) nextSlide();
+    if (endX - startX > 45) prevSlide();
+  });
 }
 
 /* FULL SCREEN */
-function openFS(src){
-fs.style.display="flex";
-fsImg.src=src;
+function openFS(idx) {
+  if (typeof idx === "number") index = idx;
+  if (!items[index]) return;
+  fs.style.display = "flex";
+  fsImg.src = items[index].url;
+  fsTitle.textContent = items[index].title;
 }
 
-function closeFS(){
-fs.style.display="none";
+function closeFS() {
+  fs.style.display = "none";
 }
 
-/* VIEW ALL */
-function toggleView(){
+/* VIEW ALL (GRID) */
+function toggleView() {
+  if (gridWrapper.style.display === "block") {
+    gridWrapper.style.display = "none";
+    libCard.style.display = "block";
+    return;
+  }
 
-if(grid.style.display=="grid"){
-grid.style.display="none";
-document.querySelector(".lib-card").style.display="block";
-return;
-}
+  grid.innerHTML = "";
+  items.forEach((item, idx) => {
+    let card = document.createElement("div");
+    card.className = "item";
+    card.innerHTML = `
+      <img src="${item.url}" alt="${item.title}" onclick="openFS(${idx})">
+      <div class="item-title">${item.title}</div>
+      <div class="item-actions">
+        <button class="btn-dl" onclick="downloadByIndex(${idx}, event)">⬇ ڈاؤن لوڈ</button>
+        <button class="btn-wa" onclick="shareWhatsAppByIndex(${idx}, event)">💬 شیئر</button>
+      </div>
+    `;
+    grid.appendChild(card);
+  });
 
-let html="";
-imgs.forEach(i=>{
-html+=`
-<div class="item" onclick="openFS('${i}')">
-<img src="${i}">
-</div>`;
-});
-
-grid.innerHTML=html;
-
-grid.style.display="grid";
-document.querySelector(".lib-card").style.display="none";
+  gridWrapper.style.display = "block";
+  libCard.style.display = "none";
 }
 
 load();
-
 </script>
 
 </body>
